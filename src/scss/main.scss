@@ -1,0 +1,6 @@
+// vuetify 기본 설정
+@use 'vuetify' with (
+  // 전역 폰트 설정
+  $font-size-root: 16px,
+  $body-font-family: ('Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif)
+);
