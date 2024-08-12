@@ -2,14 +2,16 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useLayout = defineStore('layout', () => {
-  const sider = ref(false);
+  const header = ref(false);
+  const sideBar = ref(false);
 
-  const toggleSider = () => {
-    sider.value = !sider.value;
+  const toggleSideBar = () => {
+    sideBar.value = !sideBar.value;
   };
 
   return {
-    sider,
-    toggleSider
+    header,
+    sideBar,
+    toggleSideBar
   };
 });

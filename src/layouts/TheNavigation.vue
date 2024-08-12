@@ -1,5 +1,5 @@
 <template>
-  <VNavigationDrawer v-model="sider" temporary>
+  <VNavigationDrawer v-model="sidebar" temporary>
     <!-- <VList :items="childMenus" item-title="menuNm" item-value="menuCd"></VList> -->
 
     <v-list class="py-2">
@@ -27,7 +27,7 @@ import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 
 const layoutStore = useLayout();
-const { sider } = storeToRefs(layoutStore);
+const { sidebar } = storeToRefs(layoutStore);
 
 const menuStore = useMenu();
 const { menus, mainMenu } = storeToRefs(menuStore);

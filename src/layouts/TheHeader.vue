@@ -1,7 +1,7 @@
 <template>
   <VAppBar :elevation="2" full-height color="primary">
     <VContainer class="d-flex flex-nowrap align-center" fluid>
-      <VAppBarNavIcon @click="toggleSider"></VAppBarNavIcon>
+      <VAppBarNavIcon @click="toggleSideBar"></VAppBarNavIcon>
 
       <h2 class="ml-2">SM2S</h2>
 
@@ -41,13 +41,13 @@ const layoutStore = useLayout();
 const menuStore = useMenu();
 
 const { menus } = menuStore;
-const { sider } = storeToRefs(layoutStore);
+const { sideBar } = storeToRefs(layoutStore);
 const { mainMenu } = storeToRefs(menuStore);
-const { toggleSider } = layoutStore;
+const { toggleSideBar } = layoutStore;
 
 const handleMenu = (menu) => {
-  if (!sider.value) {
-    sider.value = true;
+  if (!sideBar.value) {
+    sideBar.value = true;
   }
 
   mainMenu.value = menu;
