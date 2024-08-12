@@ -1,5 +1,5 @@
 <template>
-  <main>main</main>
+  <VMain>main</VMain>
 </template>
 
 <script setup></script>
