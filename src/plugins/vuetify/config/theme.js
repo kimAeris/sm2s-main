@@ -4,7 +4,7 @@ export default {
     light: {
       dark: false,
       colors: {
-        // background: '#FFFFFF',
+        background: '#F8F9FE',
         // surface: '#FFFFFF',
         primary: '#002b5c'
         // 'primary-darken-1': '#3700B3',

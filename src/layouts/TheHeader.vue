@@ -1,5 +1,5 @@
 <template>
-  <VAppBar :elevation="2" full-height color="primary">
+  <VAppBar v-if="header" :elevation="2" full-height color="primary">
     <VContainer class="d-flex flex-nowrap align-center" fluid>
       <VAppBarNavIcon @click="toggleSideBar"></VAppBarNavIcon>
 
@@ -41,7 +41,7 @@ const layoutStore = useLayout();
 const menuStore = useMenu();
 
 const { menus } = menuStore;
-const { sideBar } = storeToRefs(layoutStore);
+const { header, sideBar } = storeToRefs(layoutStore);
 const { mainMenu } = storeToRefs(menuStore);
 const { toggleSideBar } = layoutStore;
 
