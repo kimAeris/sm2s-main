@@ -13,6 +13,7 @@ module.exports = {
   },
   rules: {
     'prettier/prettier': 'error',
+    'linebreak-style': 'off', // 줄 바꿈 스타일 규칙 비활성화
     'no-console': ['error', { allow: ['info', 'warn', 'error'] }]
   }
 };
