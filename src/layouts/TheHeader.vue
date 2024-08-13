@@ -25,8 +25,8 @@
       <div class="d-flex align-center ml-auto ga-3">
         <span style="white-space: nowrap" class="text-body-2">사용자</span>
 
-        <VBtn icon>
-          <VIcon icon="mdi-logout" size="small" @click="handleLogout"></VIcon>
+        <VBtn icon @click="handleLogout">
+          <VIcon icon="mdi-logout" size="small"></VIcon>
         </VBtn>
       </div>
     </VContainer>
@@ -58,10 +58,11 @@ const handleMenu = (menu) => {
 };
 
 const route = useRoute();
+const commonPath = ['/', '/login'];
 watch(
   () => route.path,
   (newPath) => {
-    if (newPath === '/login') header.value = false;
+    if (commonPath.includes(newPath)) header.value = false;
     else header.value = true;
   }
 );
@@ -71,4 +72,8 @@ const handleLogout = () => {
 };
 </script>
 
-<style scoped></style>
+<style>
+.v-input__control {
+  border-color: #ff5733 !important; /* 원하는 색상으로 변경 */
+}
+</style>
