@@ -1,5 +1,5 @@
 <template>
-  <VSheet class="h-100 bg-background pa-12 d-flex" rounded>
+  <VSheet class="w-100 h-100 bg-background pa-12 d-flex" rounded>
     <VCard class="ma-auto px-10 py-8 text-center" min-width="600">
       <VForm validate-on="submit lazy" @submit.prevent="login">
         <h4 class="mb-6 text-primary font-weight-bold">SM2S</h4>

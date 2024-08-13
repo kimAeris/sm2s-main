@@ -26,7 +26,7 @@
         <span style="white-space: nowrap" class="text-body-2">사용자</span>
 
         <VBtn icon>
-          <VIcon icon="mdi-logout" size="small"></VIcon>
+          <VIcon icon="mdi-logout" size="small" @click="handleLogout"></VIcon>
         </VBtn>
       </div>
     </VContainer>
@@ -34,6 +34,7 @@
 </template>
 
 <script setup>
+import router from '@/router';
 import { useLayout } from '@/stores/useLayout';
 import { useMenu } from '@/stores/useMenu';
 import { storeToRefs } from 'pinia';
@@ -64,6 +65,10 @@ watch(
     else header.value = true;
   }
 );
+
+const handleLogout = () => {
+  router.push({ name: 'Login' });
+};
 </script>
 
 <style scoped></style>
