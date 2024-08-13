@@ -6,35 +6,40 @@ export const useMenu = defineStore('menu', () => {
   const menus = ref([
     {
       menuCd: 1,
-      menuNm: '모니터링',
+      menuNm: '시스템',
       childList: [
         {
           menuCd: 1,
-          menuNm: '모니터링'
+          menuNm: '사업자관리',
+          path: '/system/commonCode'
+        },
+        {
+          menuCd: 2,
+          menuNm: '사용자관리'
+        },
+        {
+          menuCd: 3,
+          menuNm: '메뉴관리'
+        },
+        {
+          menuCd: 4,
+          menuNm: '권한관리'
         }
       ]
     },
     {
       menuCd: 2,
-      menuNm: '주문 관리',
+      menuNm: '기초 관리',
       childList: [
         {
           menuCd: 1,
-          menuNm: '수주서'
-        }
-      ]
-    },
-    {
-      menuCd: 3,
-      menuNm: '생산 관리',
-      childList: [
-        {
-          menuCd: 1,
-          menuNm: '생산 실적 현황'
+          menuNm: '거래처 등록',
+          path: '/info/client'
         },
         {
           menuCd: 2,
-          menuNm: '생산 불량 현황'
+          menuNm: '제품 등록',
+          path: '/info/product'
         }
       ]
     }

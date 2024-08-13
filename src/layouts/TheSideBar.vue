@@ -7,6 +7,7 @@
         :value="item"
         color="primary"
         class="px-4 py-3"
+        @click="moveRoute(item)"
       >
         <v-list-item-title>
           <span class="text-subtitle-2">
@@ -19,6 +20,7 @@
 </template>
 
 <script setup>
+import router from '@/router';
 import { useLayout } from '@/stores/useLayout';
 import { useMenu } from '@/stores/useMenu';
 import { storeToRefs } from 'pinia';
@@ -34,4 +36,8 @@ const childMenus = computed(
   () =>
     menus.value.find((menu) => menu.menuCd === mainMenu.value.menuCd)?.childList
 );
+
+const moveRoute = (menu) => {
+  router.push({ path: menu.path });
+};
 </script>
