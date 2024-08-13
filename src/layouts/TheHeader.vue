@@ -3,9 +3,9 @@
     <VContainer class="d-flex flex-nowrap align-center" fluid>
       <VAppBarNavIcon @click="toggleSideBar"></VAppBarNavIcon>
 
-      <h2 class="ml-2">SM2S</h2>
+      <h5 class="ml-2">SM2S</h5>
 
-      <VSlideGroup show-arrows class="px-10">
+      <VSlideGroup show-arrows class="w-100 px-10">
         <VSlideGroupItem
           v-for="menu in menus"
           :key="menu"
@@ -36,6 +36,8 @@
 import { useLayout } from '@/stores/useLayout';
 import { useMenu } from '@/stores/useMenu';
 import { storeToRefs } from 'pinia';
+import { watch } from 'vue';
+import { useRoute } from 'vue-router';
 
 const layoutStore = useLayout();
 const menuStore = useMenu();
@@ -52,6 +54,15 @@ const handleMenu = (menu) => {
 
   mainMenu.value = menu;
 };
+
+const route = useRoute();
+watch(
+  () => route.path,
+  (newPath) => {
+    if (newPath === '/login') header.value = false;
+    else header.value = true;
+  }
+);
 </script>
 
 <style scoped></style>
