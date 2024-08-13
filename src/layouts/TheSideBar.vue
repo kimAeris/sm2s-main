@@ -1,7 +1,7 @@
 <template>
   <VNavigationDrawer v-model="sideBar" temporary>
-    <v-list class="py-2">
-      <v-list-item
+    <VList class="py-2">
+      <VListItem
         v-for="(item, i) in childMenus"
         :key="i"
         :value="item"
@@ -9,13 +9,13 @@
         class="px-4 py-3"
         @click="moveRoute(item)"
       >
-        <v-list-item-title>
+        <VListItemTitle>
           <span class="text-subtitle-2">
             {{ item.menuNm }}
           </span>
-        </v-list-item-title>
-      </v-list-item>
-    </v-list>
+        </VListItemTitle>
+      </VListItem>
+    </VList>
   </VNavigationDrawer>
 </template>
 
