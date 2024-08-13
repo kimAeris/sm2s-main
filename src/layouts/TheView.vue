@@ -1,6 +1,8 @@
 <template>
   <VMain>
-    <RouterView />
+    <VContainer class="fill-height pa-0" fluid>
+      <RouterView />
+    </VContainer>
   </VMain>
 </template>
 

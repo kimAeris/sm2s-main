@@ -1,6 +1,6 @@
 <template>
-  <VAppBar v-if="header" :elevation="2" full-height color="primary">
-    <VContainer class="d-flex flex-nowrap align-center" fluid>
+  <VAppBar v-if="header" :elevation="2" color="primary" height="46">
+    <VContainer class="fill-height d-flex flex-nowrap align-center" fluid>
       <VAppBarNavIcon @click="toggleSideBar"></VAppBarNavIcon>
 
       <h5 class="ml-2">SM2S</h5>
@@ -12,6 +12,7 @@
           v-slot="{ isSelected }"
         >
           <VBtn
+            class="text-body-1"
             :color="isSelected ? 'primary' : undefined"
             rounded
             @click="handleMenu(menu)"
@@ -22,10 +23,10 @@
       </VSlideGroup>
 
       <div class="d-flex align-center ml-auto ga-3">
-        <div style="white-space: nowrap">사용자</div>
+        <span style="white-space: nowrap" class="text-body-2">사용자</span>
 
         <VBtn icon>
-          <VIcon icon="mdi-logout"></VIcon>
+          <VIcon icon="mdi-logout" size="small"></VIcon>
         </VBtn>
       </div>
     </VContainer>
