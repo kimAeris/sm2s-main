@@ -3,8 +3,14 @@
     <VContainer class="fill-height d-flex flex-nowrap align-center" fluid>
       <VAppBarNavIcon @click="toggleSideBar"></VAppBarNavIcon>
 
-      <VBtn class="ml-2" height="46" rounded="xl">
-        <span class="text-h6" :key="project.name">{{ project.name }}</span>
+      <span
+        class="ml-2 text-h6 cursor-pointer"
+        :key="project.name"
+        @click="moveHome"
+      >
+        {{ project.name }}
+      </span>
+      <!-- <VBtn class="ml-2" height="46" rounded="xl">
 
         <VMenu activator="parent">
           <VList>
@@ -20,7 +26,7 @@
             </VListItem>
           </VList>
         </VMenu>
-      </VBtn>
+      </VBtn> -->
 
       <VSlideGroup show-arrows class="w-100 px-10">
         <VSlideGroupItem v-for="menu in menus" :key="menu">
@@ -35,8 +41,12 @@
         </VSlideGroupItem>
       </VSlideGroup>
 
-      <div class="d-flex align-center ml-auto ga-3">
-        <span style="white-space: nowrap" class="text-body-2">사용자</span>
+      <div class="d-flex align-center ml-auto">
+        <span class="mr-4 text-body-2" style="white-space: nowrap">사용자</span>
+
+        <VBtn icon @click="openProjectModal">
+          <VIcon icon="mdi-folder-marker-outline" size="small"></VIcon>
+        </VBtn>
 
         <VBtn icon @click="handleLogout">
           <VIcon icon="mdi-logout" size="small"></VIcon>
@@ -44,6 +54,13 @@
       </div>
     </VContainer>
   </VAppBar>
+
+  <ProjectSelector
+    :visible="projectModal"
+    :list="projectList"
+    @selectProject="selectProject"
+    @close="closeProjectModal"
+  />
 </template>
 
 <script setup>
@@ -52,8 +69,9 @@ import { useLayout } from '@/stores/useLayout';
 import { useMenu } from '@/stores/useMenu';
 import { useUser } from '@/stores/useUser';
 import { storeToRefs } from 'pinia';
-import { watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import ProjectSelector from '@/components/ProjectSelector.vue';
 
 const layoutStore = useLayout();
 const menuStore = useMenu();
@@ -99,6 +117,16 @@ watch(
   }
 );
 
+const projectModal = ref(false);
+
+const openProjectModal = () => {
+  projectModal.value = true;
+};
+
+const closeProjectModal = () => {
+  projectModal.value = false;
+};
+
 const selectProject = (selectItem) => {
   project.value = selectItem;
 
@@ -112,6 +140,12 @@ const selectProject = (selectItem) => {
   }
 
   mainMenu.value = menus.value[0];
+  projectModal.value = false;
+
+  moveHome();
+};
+
+const moveHome = () => {
   router.push({ path: menus.value[0].childList[0].path });
 };
 

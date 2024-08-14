@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 const LoginView = () => import('@/views/user/LoginView.vue');
 const CommonCodeView = () => import('@/views/system/CommonCodeView.vue');
-import IframeView from '@/views/common/IframeView.vue';
+const IframeView = () => import('@/views/common/IframeView.vue');
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
