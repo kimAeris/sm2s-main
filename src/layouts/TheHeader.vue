@@ -1,6 +1,6 @@
 <template>
-  <VAppBar v-if="header" :elevation="2" color="primary" height="46">
-    <VContainer class="fill-height d-flex flex-nowrap align-center" fluid>
+  <VAppBar v-if="header" :elevation="2" color="primary" height="52">
+    <VContainer class="d-flex flex-nowrap align-center" fluid>
       <VAppBarNavIcon @click="toggleSideBar"></VAppBarNavIcon>
 
       <span
@@ -158,7 +158,7 @@ const systemMenu = [
       {
         menuCd: 1,
         menuNm: '사업자관리',
-        path: '/system/commonCode'
+        path: '/system/business'
       },
       {
         menuCd: 2,

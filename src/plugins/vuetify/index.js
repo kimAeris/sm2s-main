@@ -3,7 +3,12 @@ import 'vuetify/styles';
 import '@/styles/main.scss';
 import theme from '@/plugins/vuetify/config/theme';
 import { createVuetify } from 'vuetify';
+import { ko } from 'vuetify/locale';
 
 export default createVuetify({
-  theme
+  theme,
+  locale: {
+    locale: 'ko',
+    messages: { ko }
+  }
 });

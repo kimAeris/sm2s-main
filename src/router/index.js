@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 const LoginView = () => import('@/views/user/LoginView.vue');
 const CommonCodeView = () => import('@/views/system/CommonCodeView.vue');
+const BusinessMgmtView = () => import('@/views/system/BusinessMgmtView.vue');
 const IframeView = () => import('@/views/common/IframeView.vue');
 
 const router = createRouter({
@@ -11,6 +12,11 @@ const router = createRouter({
       alias: '/login',
       name: 'Login',
       component: LoginView
+    },
+    {
+      path: '/system/business',
+      name: 'BusinessMgmt',
+      component: BusinessMgmtView
     },
     {
       path: '/system/commonCode',

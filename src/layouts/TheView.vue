@@ -1,6 +1,6 @@
 <template>
   <VMain>
-    <VContainer class="fill-height pa-0" fluid>
+    <VContainer class="px-4 py-2 body-height" fluid>
       <RouterView />
     </VContainer>
   </VMain>
@@ -9,5 +9,3 @@
 <script setup>
 import { RouterView } from 'vue-router';
 </script>
-
-<style scoped></style>

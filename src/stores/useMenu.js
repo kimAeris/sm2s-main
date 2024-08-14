@@ -11,7 +11,7 @@ export const useMenu = defineStore('menu', () => {
         {
           menuCd: 1,
           menuNm: '사업자관리',
-          path: '/system/commonCode'
+          path: '/system/business'
         },
         {
           menuCd: 2,
