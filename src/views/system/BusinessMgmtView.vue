@@ -5,7 +5,19 @@
       color="background"
     >
       <span> 시스템 > 사업자 관리 </span>
+
       <div class="d-flex ga-3">
+        <VBtn prepend-icon="mdi-plus-box-outline" variant="outlined">추가</VBtn>
+        <VBtn prepend-icon="mdi-content-save-outline" variant="outlined">
+          저장
+        </VBtn>
+        <VBtn
+          prepend-icon="mdi-trash-can-outline"
+          variant="outlined"
+          color="error"
+        >
+          삭제
+        </VBtn>
         <VBtn
           prepend-icon="mdi-microsoft-excel"
           variant="outlined"
@@ -13,13 +25,6 @@
         >
           엑셀
         </VBtn>
-        <VBtn prepend-icon="mdi-plus-box-outline" variant="outlined">추가</VBtn>
-        <VBtn
-          prepend-icon="mdi-trash-can-outline"
-          variant="outlined"
-          color="error"
-          >삭제</VBtn
-        >
       </div>
     </VSheet>
     <VDivider class="border-opacity-50 my-2" />
@@ -112,62 +117,6 @@ const plants = [
     height: '30cm',
     petFriendly: 'Yes',
     price: 15
-  },
-  {
-    name: 'Air Plant',
-    light: 'Bright, indirect',
-    height: '15cm',
-    petFriendly: 'Yes',
-    price: 10
-  },
-  {
-    name: 'Peperomia',
-    light: 'Bright, indirect',
-    height: '25cm',
-    petFriendly: 'Yes',
-    price: 20
-  },
-  {
-    name: 'Aloe Vera',
-    light: 'Bright, direct',
-    height: '30cm',
-    petFriendly: 'Yes',
-    price: 15
-  },
-  {
-    name: 'Jade Plant',
-    light: 'Bright, direct',
-    height: '40cm',
-    petFriendly: 'Yes',
-    price: 25
-  },
-  {
-    name: 'Aloe Vera',
-    light: 'Bright, direct',
-    height: '30cm',
-    petFriendly: 'Yes',
-    price: 15
-  },
-  {
-    name: 'Jade Plant',
-    light: 'Bright, direct',
-    height: '40cm',
-    petFriendly: 'Yes',
-    price: 25
-  },
-  {
-    name: 'Aloe Vera',
-    light: 'Bright, direct',
-    height: '30cm',
-    petFriendly: 'Yes',
-    price: 15
-  },
-  {
-    name: 'Jade Plant',
-    light: 'Bright, direct',
-    height: '40cm',
-    petFriendly: 'Yes',
-    price: 25
   }
 ];
 </script>
