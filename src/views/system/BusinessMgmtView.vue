@@ -1,5 +1,5 @@
 <template>
-  <ContentHeader />
+  <ContentHeader :buttons="headerButtons" />
 
   <SearchBar />
 
@@ -8,7 +8,6 @@
       :headers="headers"
       :items="plants"
       :loading="loading"
-      fixed-header
       class="h-100 overflow-auto"
     >
       <template #loading>
@@ -22,6 +21,27 @@
 import ContentHeader from '@/components/ContentHeader.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import ContentBody from '@/components/ContentBody.vue';
+
+const headerButtons = [
+  {
+    title: '추가',
+    icon: 'mdi-plus-box-outline'
+  },
+  {
+    title: '저장',
+    icon: 'mdi-content-save-outline'
+  },
+  {
+    title: '삭제',
+    icon: 'mdi-trash-can-outline',
+    color: 'error'
+  },
+  {
+    title: '엑셀',
+    icon: 'mdi-microsoft-excel',
+    color: 'green-darken-2'
+  }
+];
 
 const headers = [
   { title: 'Plant', key: 'name' },
