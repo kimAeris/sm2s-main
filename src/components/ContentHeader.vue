@@ -13,6 +13,7 @@
         :prepend-icon="button.icon"
         :variant="button.variant || 'outlined'"
         :color="button.color"
+        @click="button.event"
       >
         {{ button.title }}
       </VBtn>

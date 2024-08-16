@@ -5,11 +5,70 @@
 
   <ContentBody>
     <VDataTable
-      :headers="headers"
-      :items="plants"
-      :loading="loading"
       class="h-100 overflow-auto"
+      v-model="selectedItems"
+      :headers="headers"
+      :items="items"
+      :loading="loading"
+      item-value="code"
+      return-object
+      show-select
     >
+      <template #item.name="{ item, value }">
+        <VTextField
+          v-if="selectedItems.includes(item)"
+          v-model="item.name"
+          variant="outlined"
+          density="compact"
+          hide-details
+        />
+        <span v-else>
+          {{ value }}
+        </span>
+      </template>
+
+      <template #item.division="{ item, value }">
+        <VSelect
+          v-if="selectedItems.includes(item)"
+          v-model="item.division"
+          :items="headers.find((header) => header.key === 'division').items"
+          item-title="title"
+          item-value="value"
+          variant="outlined"
+          density="compact"
+          hide-details
+        />
+        <span v-else>
+          {{ value }}
+        </span>
+      </template>
+
+      <template #item.ownerName="{ item, value }">
+        <VTextField
+          v-if="selectedItems.includes(item)"
+          v-model="item.ownerName"
+          variant="outlined"
+          density="compact"
+          hide-details
+        />
+        <span v-else>
+          {{ value }}
+        </span>
+      </template>
+
+      <template #item.businessNumber="{ item, value }">
+        <VTextField
+          v-if="selectedItems.includes(item)"
+          v-model="item.businessNumber"
+          variant="outlined"
+          density="compact"
+          hide-details
+        />
+        <span v-else>
+          {{ value }}
+        </span>
+      </template>
+
       <template #loading>
         <VSkeletonLoader type="table-row@10" />
       </template>
@@ -22,27 +81,9 @@ import ContentHeader from '@/components/ContentHeader.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import ContentBody from '@/components/ContentBody.vue';
 import { ref } from 'vue';
+import { v4 as uuidv4 } from 'uuid';
 
-const headerButtons = [
-  {
-    title: '추가',
-    icon: 'mdi-plus-box-outline'
-  },
-  {
-    title: '저장',
-    icon: 'mdi-content-save-outline'
-  },
-  {
-    title: '삭제',
-    icon: 'mdi-trash-can-outline',
-    color: 'error'
-  },
-  {
-    title: '엑셀',
-    icon: 'mdi-microsoft-excel',
-    color: 'green-darken-2'
-  }
-];
+const loading = ref(false);
 
 const searchFilters = ref([
   {
@@ -68,54 +109,100 @@ const searchFilters = ref([
 ]);
 
 const headers = [
-  { title: 'Plant', key: 'name' },
-  { title: 'Light', key: 'light' },
-  { title: 'Height', key: 'height' },
-  { title: 'Pet Friendly', key: 'petFriendly' },
-  { title: 'Price ($)', key: 'price' }
+  { title: '거래처코드', key: 'code' },
+  { title: '거래처명', key: 'name' },
+  {
+    title: '거래처구분',
+    key: 'division',
+    items: [
+      { title: '1-1', value: '1' },
+      { title: '1-2', value: '2' }
+    ]
+  },
+  { title: '대표자명', key: 'ownerName' },
+  { title: '사업자번호', key: 'businessNumber' }
 ];
-const plants = [
+
+const defaultItem = () => ({
+  code: uuidv4(),
+  name: '',
+  division: '',
+  ownerName: '',
+  businessNumber: ''
+});
+
+const selectedItems = ref([]);
+const items = ref([
   {
+    code: '1',
     name: 'Fern',
-    light: 'Low',
-    height: '20cm',
-    petFriendly: 'Yes',
-    price: 20
+    division: 'Yes',
+    ownerName: 'test',
+    businessNumber: 20
   },
   {
+    code: '2',
     name: 'Snake Plant',
-    light: 'Low',
-    height: '50cm',
-    petFriendly: 'No',
-    price: 35
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
   },
   {
-    name: 'Monstera',
-    light: 'Medium',
-    height: '60cm',
-    petFriendly: 'No',
-    price: 50
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
   },
   {
-    name: 'Pothos',
-    light: 'Low to medium',
-    height: '40cm',
-    petFriendly: 'Yes',
-    price: 25
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  }
+]);
+
+const addHandler = () => {
+  const newItem = defaultItem();
+  selectedItems.value.push(newItem);
+  items.value = [newItem, ...items.value];
+};
+
+const deleteHandler = () => {
+  loading.value = true;
+  try {
+    items.value = items.value.filter(
+      (item) => !selectedItems.value.includes(item)
+    );
+    selectedItems.value = [];
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setTimeout(() => (loading.value = false), 1000);
+  }
+};
+
+const headerButtons = [
+  {
+    title: '추가',
+    icon: 'mdi-plus-box-outline',
+    event: addHandler
   },
   {
-    name: 'ZZ Plant',
-    light: 'Low to medium',
-    height: '90cm',
-    petFriendly: 'Yes',
-    price: 30
+    title: '저장',
+    icon: 'mdi-content-save-outline'
   },
   {
-    name: 'Spider Plant',
-    light: 'Bright, indirect',
-    height: '30cm',
-    petFriendly: 'Yes',
-    price: 15
+    title: '삭제',
+    icon: 'mdi-trash-can-outline',
+    color: 'error',
+    event: deleteHandler
+  },
+  {
+    title: '엑셀',
+    icon: 'mdi-microsoft-excel',
+    color: 'green-darken-2'
   }
 ];
 </script>
