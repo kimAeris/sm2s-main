@@ -1,7 +1,7 @@
 <template>
   <ContentHeader :buttons="headerButtons" />
 
-  <SearchBar />
+  <SearchBar v-model:filters="searchFilters" />
 
   <ContentBody>
     <VDataTable
@@ -21,6 +21,7 @@
 import ContentHeader from '@/components/ContentHeader.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import ContentBody from '@/components/ContentBody.vue';
+import { ref } from 'vue';
 
 const headerButtons = [
   {
@@ -42,6 +43,29 @@ const headerButtons = [
     color: 'green-darken-2'
   }
 ];
+
+const searchFilters = ref([
+  {
+    label: '사업자 번호',
+    type: 'text',
+    value: '22'
+  },
+  {
+    label: '조건1',
+    type: 'select',
+    value: 'value',
+    options: [
+      {
+        key: '1',
+        value: '1-1'
+      },
+      {
+        key: '2',
+        value: '1-2'
+      }
+    ]
+  }
+]);
 
 const headers = [
   { title: 'Plant', key: 'name' },
