@@ -123,14 +123,6 @@ const headers = [
   { title: '사업자번호', key: 'businessNumber' }
 ];
 
-const defaultItem = () => ({
-  code: uuidv4(),
-  name: '',
-  division: '',
-  ownerName: '',
-  businessNumber: ''
-});
-
 const selectedItems = ref([]);
 const items = ref([
   {
@@ -163,8 +155,15 @@ const items = ref([
   }
 ]);
 
+const defaultItems = headers.reduce((acc, header) => {
+  acc[header.key] = '';
+  return acc;
+}, {});
+
 const addHandler = () => {
-  const newItem = defaultItem();
+  const newItem = JSON.parse(JSON.stringify(defaultItems));
+  newItem.code = uuidv4();
+
   selectedItems.value.push(newItem);
   items.value = [newItem, ...items.value];
 };
