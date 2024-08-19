@@ -55,9 +55,8 @@
           rounded="lg"
           block
           :loading="loading"
-          @click="passwordModal = true"
+          @click="handleLogin"
         >
-          <!-- @click="handleLogin" -->
           로그인
         </VBtn>
       </VForm>
@@ -134,12 +133,15 @@ const handleLogin = async () => {
         localStorage.removeItem('info');
       }
 
-      router.replace({ name: 'CommonCode' });
+      if (user.value.initYn === 'Y') {
+        passwordModal.value = true;
+      } else {
+        router.replace({ name: 'CommonCode' });
+      }
     } else {
       throw res;
     }
   } catch (error) {
-    console.error(error);
     newToast(error.header.message, 'error');
   } finally {
     loading.value = false;
