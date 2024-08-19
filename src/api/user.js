@@ -1,8 +1,8 @@
 import { adminUser } from '.';
 
-export const passwordChange = async (params) => {
+export const passwordChanged = async (params) => {
   try {
-    const res = await adminUser.post(`/login`, params);
+    const res = await adminUser.post(`/password/status/1`, params);
 
     return res.data;
   } catch (error) {
