@@ -71,7 +71,7 @@ import { useUser } from '@/stores/useUser';
 import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import ProjectSelector from '@/components/ProjectSelector.vue';
+import ProjectSelector from '@/components/modals/ProjectSelectorModal.vue';
 
 const layoutStore = useLayout();
 const menuStore = useMenu();

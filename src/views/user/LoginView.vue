@@ -19,23 +19,23 @@
           />
           <VTextField
             v-model="id"
-            label="ID"
+            label="아이디"
             variant="outlined"
             prepend-inner-icon="mdi-account-outline"
             clearable
             required
-            :rules="[(v) => !!v || 'ID를 입력하세요']"
+            :rules="[(v) => !!v || '아이디를 입력하세요']"
           />
           <VTextField
             v-model="pw"
-            label="PW"
+            label="비밀번호"
             variant="outlined"
             prepend-inner-icon="mdi-lock-outline"
             :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
             :type="visible ? 'text' : 'password'"
             clearable
             required
-            :rules="[(v) => !!v || 'PW를 입력하세요']"
+            :rules="[(v) => !!v || '비밀번호를 입력하세요']"
             @click:append-inner="visible = !visible"
           />
         </div>
@@ -55,13 +55,16 @@
           rounded="lg"
           block
           :loading="loading"
-          @click="handleLogin"
+          @click="passwordModal = true"
         >
+          <!-- @click="handleLogin" -->
           로그인
         </VBtn>
       </VForm>
     </VCard>
   </VSheet>
+
+  <PasswordModal :visible="passwordModal" @close="closePasswordModal" />
 </template>
 
 <script setup>
@@ -71,6 +74,7 @@ import { login } from '@/api/common';
 import { useUser } from '@/stores/useUser';
 import { storeToRefs } from 'pinia';
 import { useToast } from '@/stores/useToast';
+import PasswordModal from '@/components/modals/PasswordModal.vue';
 
 const { accessToken, user } = storeToRefs(useUser());
 const { newToast } = useToast();
@@ -154,6 +158,10 @@ const setLoginInfo = () => {
 
   return;
 };
+
+const passwordModal = ref(false);
+
+const closePasswordModal = () => (passwordModal.value = false);
 
 onMounted(() => {
   setLoginInfo();
