@@ -1,22 +1,16 @@
 <template>
-  <VSheet
-    class="d-flex align-center ga-4 py-2 mb-3 px-4 bg-primary"
-    elevation="4"
-    rounded
-  >
+  <VSheet class="d-flex align-center ga-4 py-2 mb-3 px-4 p" rounded border>
     <VRow>
       <VCol v-for="(filter, i) in filters" :cols="filter.cols || 3" :key="i">
         <template v-if="filter.type === 'text'">
           <VTextField
+            :label="filter.label"
             @input="updateValue(i, $event.target.value)"
             bg-color="surface"
             variant="outlined"
             density="compact"
             hide-details
           >
-            <template #prepend>
-              <span class="text-body-2"> {{ filter.label }} </span>
-            </template>
           </VTextField>
         </template>
 

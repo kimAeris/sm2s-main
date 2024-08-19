@@ -1,11 +1,4 @@
-@forward 'custom.scss';
-
-// vuetify 기본 설정
-@use 'vuetify' with (
-  // 전역 폰트 설정
-  $font-size-root: 16px,
-  $body-font-family: ('Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif)
-);
+@forward './custom.scss';
 
 // 태그 전역설정
 html,
@@ -20,7 +13,7 @@ body::-webkit-scrollbar {
   display: none !important;
 }
 
-// 화면 사이즈
+// header제외, content 사이즈
 .body-height {
   height: calc(100vh - 52px);
 }

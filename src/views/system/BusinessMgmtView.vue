@@ -3,7 +3,7 @@
 
   <SearchBar v-model:filters="searchFilters" />
 
-  <ContentBody>
+  <ContentBody class="h-100">
     <VDataTable
       class="h-100 overflow-auto"
       v-model="selectedItems"
@@ -131,6 +131,258 @@ const items = ref([
     division: 'Yes',
     ownerName: 'test',
     businessNumber: 20
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
   },
   {
     code: '2',

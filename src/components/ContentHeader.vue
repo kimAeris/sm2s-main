@@ -4,7 +4,12 @@
     color="background"
     height="36"
   >
-    <span> {{ mainMenu.menuNm }} > {{ currentPage.menuNm }} </span>
+    <div>
+      <span class="text-body-1 mr-1"> {{ mainMenu.menuNm }} > </span>
+      <span class="text-h6 font-weight-bold text-primary">
+        {{ currentPage.menuNm }}
+      </span>
+    </div>
 
     <div class="d-flex ga-3">
       <VBtn

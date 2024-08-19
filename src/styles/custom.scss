@@ -1,7 +1,47 @@
-.v-field__field {
-  // height: 36px;
-}
+// vuetify 기본 설정
+@use 'vuetify' with (
+  // 전역 폰트 설정
+  $font-size-root: 14px,
+  $body-font-family: ('Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif)
+);
 
 .v-snackbar__wrapper {
   margin-bottom: 20px;
+}
+
+.v-table {
+  font-size: 1rem !important;
+  &.v-table--fixed-header {
+    > .v-table__wrapper {
+      > table {
+        > thead {
+          > tr {
+            > th {
+              background: rgb(var(--v-theme-primary)) !important;
+              color: rgb(var(--v-theme-on-primary)) !important;
+
+              &:not(:last-child) {
+                box-shadow: inset -1px 0 rgba(var(--v-theme-on-primary), var(--v-border-opacity)) !important;
+              }
+            }
+          }
+        }
+
+        > tbody {
+          > tr {
+            > td {
+              &:not(:last-child) {
+                box-shadow: inset -1px 0 rgba(var(--v-border-color), var(--v-border-opacity)) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.v-table--density-default {
+  --v-table-header-height: 48px !important;
+  --v-table-row-height: 44px !important;
 }
