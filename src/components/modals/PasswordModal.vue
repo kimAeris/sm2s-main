@@ -52,6 +52,7 @@
         type="submit"
         size="large"
         rounded
+        :loading="loading"
         @click="changePassword"
       >
         비밀번호 변경
@@ -65,6 +66,7 @@ import AppModal from '@/components/app/AppModal.vue';
 import { passwordChange } from '@/api/user';
 import { ref } from 'vue';
 import { useUser } from '@/stores/useUser';
+import { useFeedback } from '@/stores/useFeedback';
 
 defineProps({
   visible: {
@@ -74,6 +76,8 @@ defineProps({
 });
 
 const emit = defineEmits(['close']);
+
+const loading = ref(false);
 
 const form = ref(null);
 
@@ -127,11 +131,14 @@ const passwordAttrs = (isShow) => {
 };
 
 const userStore = useUser();
+const { openFeedback } = useFeedback();
+
 const changePassword = async () => {
   const { valid } = await form.value.validate();
   if (!valid) return;
 
   try {
+    loading.value = true;
     const res = await passwordChange({
       userCode: userStore.user.userCode,
       userPwd: currentPassword.value,
@@ -147,8 +154,15 @@ const changePassword = async () => {
     }
 
     emit('close');
+
+    await openFeedback(
+      'success',
+      '비밀번호가 변경되었습니다. <br /> 다시 로그인해주세요.'
+    );
   } catch (error) {
     console.error(error);
+  } finally {
+    loading.value = false;
   }
 };
 </script>
