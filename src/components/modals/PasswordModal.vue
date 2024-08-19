@@ -45,18 +45,19 @@
           clearable
           required
         />
+        <VBtn
+          class="mt-4"
+          color="primary"
+          type="submit"
+          size="large"
+          block
+          rounded
+          :loading="loading"
+          @click="changePassword"
+        >
+          비밀번호 변경
+        </VBtn>
       </VForm>
-      <VBtn
-        class="w-100 mt-4"
-        color="primary"
-        type="submit"
-        size="large"
-        rounded
-        :loading="loading"
-        @click="changePassword"
-      >
-        비밀번호 변경
-      </VBtn>
     </div>
   </AppModal>
 </template>

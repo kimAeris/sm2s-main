@@ -1,5 +1,5 @@
 <template>
-  <VSheet class="w-100 h-100 bg-background pa-12 d-flex" rounded>
+  <div class="w-100 h-100 bg-background pa-12 d-flex">
     <VCard class="ma-auto px-12 py-8" min-width="600" elevation="12">
       <VForm ref="loginForm" @submit.prevent>
         <h4 class="mb-6 text-primary text-center font-weight-bold">SM2S</h4>
@@ -61,7 +61,7 @@
         </VBtn>
       </VForm>
     </VCard>
-  </VSheet>
+  </div>
 
   <PasswordModal :visible="passwordModal" @close="closePasswordModal" />
 </template>
