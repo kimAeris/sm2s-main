@@ -7,10 +7,8 @@ export default {
         background: '#F8F9FE',
         // surface: '#FFFFFF',
         primary: '#002b5c',
-        // 'primary-darken-1': '#3700B3',
-        secondary: '#93c1f5'
-        // 'secondary-darken-1': '#018786',
-        // error: '#B00020',
+        secondary: '#93c1f5',
+        error: '#B00020'
         // info: '#2196F3',
         // success: '#4CAF50',
         // warning: '#FB8C00'

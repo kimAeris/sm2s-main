@@ -1,4 +1,3 @@
-div
 <template>
   <VSheet class="w-100 h-100 bg-background pa-12 d-flex" rounded>
     <VCard class="ma-auto px-12 py-8" min-width="600" elevation="12">
@@ -71,8 +70,10 @@ import { onMounted, ref } from 'vue';
 import { login } from '@/api/common';
 import { useUser } from '@/stores/useUser';
 import { storeToRefs } from 'pinia';
+import { useToast } from '@/stores/useToast';
 
 const { accessToken, user } = storeToRefs(useUser());
+const { newToast } = useToast();
 
 const loading = ref(false);
 const visible = ref(false);
@@ -130,11 +131,12 @@ const handleLogin = async () => {
       }
 
       router.replace({ name: 'CommonCode' });
-    } else if (res.header.code === 404) {
+    } else {
       throw res;
     }
   } catch (error) {
     console.error(error);
+    newToast(error.header.message, 'error');
   } finally {
     loading.value = false;
   }
