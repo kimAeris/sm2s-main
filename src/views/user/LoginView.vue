@@ -9,7 +9,9 @@ div
           <VTextField
             v-model="businessNumber"
             label="사업자 번호"
+            variant="outlined"
             clearable
+            prepend-inner-icon="mdi-domain"
             placeholder="000-00-00000"
             maxlength="12"
             @input="formatBusinessNumber"
@@ -18,20 +20,20 @@ div
           />
           <VTextField
             v-model="id"
+            label="ID"
             variant="outlined"
             prepend-inner-icon="mdi-account-outline"
-            label="ID"
             clearable
             required
             :rules="[(v) => !!v || 'ID를 입력하세요']"
           />
           <VTextField
             v-model="pw"
+            label="PW"
             variant="outlined"
             prepend-inner-icon="mdi-lock-outline"
             :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
             :type="visible ? 'text' : 'password'"
-            label="PW"
             clearable
             required
             :rules="[(v) => !!v || 'PW를 입력하세요']"
@@ -66,6 +68,11 @@ div
 <script setup>
 import router from '@/router';
 import { onMounted, ref } from 'vue';
+import { login } from '@/api/common';
+import { useUser } from '@/stores/useUser';
+import { storeToRefs } from 'pinia';
+
+const { accessToken, user } = storeToRefs(useUser());
 
 const loading = ref(false);
 const visible = ref(false);
@@ -90,7 +97,7 @@ const businessRules = (v) => {
   if (!v) {
     return '사업자 번호를 입력하세요.';
   } else if (businessNumber.value.length < 12) {
-    return '사업자 번호는 12자리 입니다.';
+    return '사업자 번호는 10자리 입니다.';
   }
   return true;
 };
@@ -104,18 +111,28 @@ const handleLogin = async () => {
   loading.value = true;
 
   try {
-    if (isInfoSave.value) {
-      localStorage.setItem(
-        'info',
-        JSON.stringify({
-          businessNumber: businessNumber.value,
-          id: id.value
-        })
-      );
-    } else {
-      localStorage.removeItem('info');
+    const res = await login(businessNumber.value, id.value, pw.value);
+    if (res.header.code === 200) {
+      accessToken.value = res.body.Authorization;
+      user.value = res.body.userInfo;
+
+      // 로그인 정보 기억
+      if (isInfoSave.value) {
+        localStorage.setItem(
+          'info',
+          JSON.stringify({
+            businessNumber: businessNumber.value,
+            id: id.value
+          })
+        );
+      } else {
+        localStorage.removeItem('info');
+      }
+
+      router.replace({ name: 'CommonCode' });
+    } else if (res.header.code === 404) {
+      throw res;
     }
-    router.replace({ name: 'CommonCode' });
   } catch (error) {
     console.error(error);
   } finally {
