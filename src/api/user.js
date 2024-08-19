@@ -1,6 +1,6 @@
 import { adminUser } from '.';
 
-export const passwordChanged = async (params) => {
+export const passwordChange = async (params) => {
   try {
     const res = await adminUser.post(`/password/status/1`, params);
 
