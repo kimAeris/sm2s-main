@@ -4,8 +4,8 @@
       <RouterView />
     </VContainer>
 
-    <VContainer v-else class="px-4 py-2 body-height" fluid>
-      <div class="h-100 d-flex flex-column overflow-hidden">
+    <VContainer v-else class="pa-2 body-height" fluid>
+      <div class="h-100 d-flex flex-column overflow-hidden pa-2">
         <RouterView />
       </div>
     </VContainer>

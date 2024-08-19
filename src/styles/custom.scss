@@ -5,12 +5,31 @@
   $body-font-family: ('Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif)
 );
 
+.v-btn--size-default {
+  --v-btn-size: 1rem !important;
+}
+
+.v-btn--variant-outlined {
+  border-color: rgba(var(--v-border-color), 0.5) !important;
+}
+
 .v-snackbar__wrapper {
   margin-bottom: 20px;
 }
 
 .v-table {
   font-size: 1rem !important;
+
+  @extend .border;
+
+  &.v-table--density-default {
+    --v-table-header-height: 44px !important;
+    --v-table-row-height: 40px !important;
+  }
+  .v-data-table-footer {
+    padding: 4px !important;
+  }
+
   &.v-table--fixed-header {
     > .v-table__wrapper {
       > table {
@@ -34,14 +53,20 @@
                 box-shadow: inset -1px 0 rgba(var(--v-border-color), var(--v-border-opacity)) !important;
               }
             }
+            &:last-child {
+              > td {
+                border-bottom: 1px solid
+                  rgba(var(--v-border-color), var(--v-border-opacity)) !important;
+              }
+            }
           }
         }
       }
     }
   }
-}
 
-.v-table--density-default {
-  --v-table-header-height: 48px !important;
-  --v-table-row-height: 44px !important;
+  .v-data-table-footer {
+    padding: 4px !important;
+    border-top: 0px;
+  }
 }

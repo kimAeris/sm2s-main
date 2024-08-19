@@ -1,16 +1,13 @@
 <template>
-  <ContentHeader :buttons="headerButtons" />
+  <ContentHeader v-model:filters="searchFilters" />
 
-  <SearchBar v-model:filters="searchFilters" />
-
-  <ContentBody class="h-100">
+  <ContentBody :buttons="headerButtons">
     <VDataTable
       class="h-100 overflow-auto"
       v-model="selectedItems"
       :headers="headers"
       :items="items"
       :loading="loading"
-      item-value="code"
       return-object
       show-select
     >
@@ -77,11 +74,9 @@
 </template>
 
 <script setup>
-import ContentHeader from '@/components/ContentHeader.vue';
-import SearchBar from '@/components/SearchBar.vue';
-import ContentBody from '@/components/ContentBody.vue';
 import { ref } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
+import { getIcon } from '@/utils/common';
 
 const loading = ref(false);
 
@@ -404,6 +399,48 @@ const items = ref([
     division: 'No',
     ownerName: 'test',
     businessNumber: 35
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '2',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '3',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
+  },
+  {
+    code: '4',
+    name: 'Snake Plant',
+    division: 'No',
+    ownerName: 'test',
+    businessNumber: 35
   }
 ]);
 
@@ -437,23 +474,18 @@ const deleteHandler = () => {
 const headerButtons = [
   {
     title: '추가',
-    icon: 'mdi-plus-box-outline',
+    icon: getIcon('add'),
     event: addHandler
   },
   {
     title: '저장',
-    icon: 'mdi-content-save-outline'
+    icon: getIcon('save')
   },
   {
     title: '삭제',
-    icon: 'mdi-trash-can-outline',
+    icon: getIcon('delete'),
     color: 'error',
     event: deleteHandler
-  },
-  {
-    title: '엑셀',
-    icon: 'mdi-microsoft-excel',
-    color: 'green-darken-2'
   }
 ];
 </script>
