@@ -156,6 +156,10 @@ const changePassword = async () => {
 
     emit('close');
 
+    currentPassword.value = null;
+    newPassword.value = null;
+    newCheckPassword.value = null;
+
     await openFeedback(
       'success',
       '비밀번호가 변경되었습니다. <br /> 다시 로그인해주세요.'
