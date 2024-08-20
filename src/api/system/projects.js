@@ -19,3 +19,13 @@ export const saveProjects = async (params) => {
     throw error;
   }
 };
+
+export const deleteProjects = async (params) => {
+  try {
+    const res = await projects.post(`/status/3`, params);
+
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};

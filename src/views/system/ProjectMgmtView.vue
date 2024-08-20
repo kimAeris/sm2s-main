@@ -4,10 +4,12 @@
   <ContentBody
     :headers="headers"
     v-model:items="items"
+    v-model:addItems="addItems"
     v-model:selectedItems="selectedItems"
     canAdd
     canDelete
     canSave
+    item-key="rowId"
     @deleteHandler="deleteHandler"
     @saveHandler="saveHandler"
   >
@@ -95,7 +97,11 @@
 </template>
 
 <script setup>
-import { getProjects, saveProjects } from '@/api/system/projects';
+import {
+  deleteProjects,
+  getProjects,
+  saveProjects
+} from '@/api/system/projects';
 import { useToast } from '@/stores/useToast';
 import { computed, ref } from 'vue';
 
@@ -164,30 +170,56 @@ const headers = [
 
 const selectedItems = ref([]);
 const items = ref([]);
+const addItems = ref([]);
 
 const saveHandler = async () => {
   loading.value = true;
   try {
-    const res = await saveProjects({ list: selectedItems.value });
+    const params = selectedItems.value.map((item) => {
+      if (item.rowId) {
+        delete item.rowId;
+        delete item.projectCode;
+        delete item.regDt;
+        delete item.regNm;
+        delete item.chgNm;
+        delete item.chgDt;
+      }
+      return item;
+    });
+    const res = await saveProjects({ list: params });
 
     if (res.header.code === 200) {
       newToast('저장되었습니다', 'success');
       selectedItems.value = [];
-    }
+    } else throw res;
   } catch (error) {
-    newToast('저장에 실패했습니다.', 'error');
+    newToast('저장을 실패했습니다.', 'error');
   } finally {
+    fetchData();
     loading.value = false;
   }
 };
 
-const deleteHandler = () => {
+const deleteHandler = async () => {
   loading.value = true;
   try {
+    const params = selectedItems.value.map((item) => ({
+      projectCode: item.projectCode
+    }));
+    const res = await deleteProjects({ list: params });
+
+    if (res.header.code === 200) {
+      newToast('삭제되었습니다', 'success');
+
+      items.value = items.value.filter(
+        (item) => !selectedItems.value.includes(item)
+      );
+      selectedItems.value = [];
+    } else throw res;
   } catch (error) {
-    console.error(error);
+    newToast('삭제를 실패했습니다.', 'error');
   } finally {
-    setTimeout(() => (loading.value = false), 1000);
+    loading.value = false;
   }
 };
 </script>

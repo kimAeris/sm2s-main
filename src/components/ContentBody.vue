@@ -86,11 +86,20 @@ const props = defineProps({
   items: {
     type: Array,
     default: () => []
+  },
+  addItems: {
+    type: Array,
+    default: () => []
+  },
+  itemKey: {
+    type: String,
+    required: true
   }
 });
 
 const emits = defineEmits([
   'update:items',
+  'update:addItems',
   'update:selectedItems',
   'deleteHandler',
   'saveHandler'
@@ -103,14 +112,16 @@ const defaultItems = props.headers.reduce((acc, header) => {
 
 const addHandler = () => {
   const newItem = JSON.parse(JSON.stringify(defaultItems));
-  newItem.code = uuidv4();
+  newItem[props.itemKey] = uuidv4();
 
   emits('update:items', [newItem, ...props.items]);
+  emits('update:addItems', [newItem, ...props.addItems]);
   emits('update:selectedItems', [newItem, ...props.selectedItems]);
 };
 
 const { openFeedback } = useFeedback();
 const { newToast } = useToast();
+
 const saveHandler = async () => {
   if (props.selectedItems.length < 1) {
     newToast('데이터를 선택해주세요.', 'error');
@@ -131,12 +142,6 @@ const deleteHandler = async () => {
 
   if (!feedback) return;
 
-  await emits('deleteHandler');
-
-  emits(
-    'update:items',
-    props.items.filter((item) => !props.selectedItems.includes(item))
-  );
-  emits('update:selectedItems', []);
+  emits('deleteHandler');
 };
 </script>
