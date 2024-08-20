@@ -15,6 +15,7 @@ module.exports = {
     'prettier/prettier': 'error',
     'vue/valid-v-slot': 'off',
     'linebreak-style': 'off', // 줄 바꿈 스타일 규칙 비활성화
+    'no-useless-catch': 'off',
     'no-console': ['error', { allow: ['info', 'warn', 'error'] }]
   }
 };

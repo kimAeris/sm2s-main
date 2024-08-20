@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { registerPlugins } from '@/plugins';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
 import ContentHeader from './components/ContentHeader.vue';
 import ContentBody from './components/ContentBody.vue';
@@ -13,6 +14,9 @@ registerPlugins(app);
 app.component('ContentHeader', ContentHeader);
 app.component('ContentBody', ContentBody);
 
-app.use(createPinia());
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
+
+app.use(pinia);
 app.use(router);
 app.mount('#app');
