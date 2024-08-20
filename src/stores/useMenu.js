@@ -10,6 +10,11 @@ export const useMenu = defineStore('menu', () => {
       childList: [
         {
           menuCd: 1,
+          menuNm: '프로젝트관리',
+          path: '/system/projects'
+        },
+        {
+          menuCd: 2,
           menuNm: '사업자관리',
           path: '/system/business'
         },
@@ -36,8 +41,13 @@ export const useMenu = defineStore('menu', () => {
     childList: [
       {
         menuCd: 1,
+        menuNm: '프로젝트관리',
+        path: '/system/projects'
+      },
+      {
+        menuCd: 2,
         menuNm: '사업자관리',
-        path: '/system/commonCode'
+        path: '/system/business'
       },
       {
         menuCd: 2,
@@ -56,8 +66,8 @@ export const useMenu = defineStore('menu', () => {
 
   const currentPage = ref({
     menuCd: 1,
-    menuNm: '사업자관리',
-    path: '/system/commonCode'
+    menuNm: '프로젝트관리',
+    path: '/system/projects'
   });
 
   return {
