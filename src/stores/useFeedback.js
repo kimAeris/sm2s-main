@@ -6,12 +6,24 @@ export const useFeedback = defineStore('feedback', () => {
 
   const feedback = ref(false);
   const message = ref(null);
+  const title = ref(null);
   const type = ref(null);
+  const cancelText = ref(null);
+  const confirmText = ref(null);
 
-  const openFeedback = (openType, openMessage) => {
+  const openFeedback = (
+    openType,
+    openTitle,
+    openMessage,
+    openCancelText,
+    openConfirmText
+  ) => {
     feedback.value = true;
     type.value = openType;
+    title.value = openTitle;
     message.value = openMessage;
+    cancelText.value = openCancelText;
+    confirmText.value = openConfirmText;
 
     return new Promise((resolve) => {
       resolveParams.value = resolve;
@@ -30,8 +42,11 @@ export const useFeedback = defineStore('feedback', () => {
 
   return {
     feedback,
-    message,
     type,
+    title,
+    message,
+    cancelText,
+    confirmText,
     openFeedback,
     confirm,
     cancel

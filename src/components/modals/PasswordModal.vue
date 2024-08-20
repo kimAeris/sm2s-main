@@ -162,7 +162,10 @@ const changePassword = async () => {
 
     await openFeedback(
       'success',
-      '비밀번호가 변경되었습니다. <br /> 다시 로그인해주세요.'
+      'SUCCESS',
+      '비밀번호가 변경되었습니다. <br /> 다시 로그인해주세요.',
+      '',
+      '확인'
     );
   } catch (error) {
     console.error(error);
