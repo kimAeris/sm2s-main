@@ -7,13 +7,32 @@
           <VBtn
             v-for="(button, i) in buttons"
             :key="i"
-            :prepend-icon="button.icon"
+            :prepend-icon="getIcon(button.icon)"
             :variant="button.variant || 'outlined'"
             :color="button.color"
             rounded="xl"
             @click="button.event"
           >
             {{ button.title }}
+          </VBtn>
+          <VBtn
+            v-if="canAdd"
+            :prepend-icon="getIcon('add')"
+            variant="outlined"
+            rounded="xl"
+            @click="addHandler"
+          >
+            추가
+          </VBtn>
+          <VBtn
+            v-if="canDelete"
+            :prepend-icon="getIcon('delete')"
+            color="error"
+            variant="outlined"
+            rounded="xl"
+            @click="deleteHandler"
+          >
+            삭제
           </VBtn>
         </div>
       </div>
@@ -25,10 +44,74 @@
 </template>
 
 <script setup>
-defineProps({
+import { useFeedback } from '@/stores/useFeedback';
+import { getIcon } from '@/utils/common';
+import { v4 as uuidv4 } from 'uuid';
+
+const props = defineProps({
   buttons: {
+    type: Array,
+    default: () => []
+  },
+  canAdd: {
+    type: Boolean,
+    default: false
+  },
+  canDelete: {
+    type: Boolean,
+    default: false
+  },
+  headers: {
+    type: Array,
+    default: () => []
+  },
+  selectedItems: {
+    type: Array,
+    default: () => []
+  },
+  items: {
     type: Array,
     default: () => []
   }
 });
+
+const emits = defineEmits([
+  'update:items',
+  'update:selectedItems',
+  'deleteHandler'
+]);
+
+const defaultItems = props.headers.reduce((acc, header) => {
+  acc[header.key] = '';
+  return acc;
+}, {});
+
+const addHandler = () => {
+  const newItem = JSON.parse(JSON.stringify(defaultItems));
+  newItem.code = uuidv4();
+
+  emits('update:items', [newItem, ...props.items]);
+  emits('update:selectedItems', [newItem, ...props.selectedItems]);
+};
+
+const { openFeedback } = useFeedback();
+const deleteHandler = async () => {
+  const feedback = await openFeedback(
+    'error',
+    'DELETE',
+    '삭제하시겠습니까?',
+    '취소',
+    '삭제'
+  );
+
+  if (!feedback) return;
+
+  await emits('deleteHandler');
+
+  emits(
+    'update:items',
+    props.items.filter((item) => !props.selectedItems.includes(item))
+  );
+  emits('update:selectedItems', []);
+};
 </script>
