@@ -37,12 +37,35 @@
             >
             </VSelect>
           </template>
+
+          <template v-if="filter.type === 'selectUse'">
+            <VSelect
+              :label="filter.label"
+              :items="useOptions"
+              @update:modelValue="updateValue(i, $event)"
+              item-title="title"
+              item-value="value"
+              bg-color="surface"
+              variant="outlined"
+              density="compact"
+              hide-details
+            >
+              <template #item="{ props, item }">
+                <VListItem v-bind="props" :title="undefined">
+                  <div class="d-flex align-center ga-2">
+                    <VBadge :color="item.raw?.status" inline dot></VBadge>
+                    <span> {{ item.raw.title }}</span>
+                  </div>
+                </VListItem>
+              </template>
+            </VSelect>
+          </template>
         </VCol>
       </VRow>
+
       <VBtn prepend-icon="mdi-magnify" variant="outlined" rounded="xl"
         >조회</VBtn
       >
-      <!-- </div> -->
     </div>
   </VSheet>
 </template>
@@ -68,4 +91,9 @@ const updateValue = (index, value) => {
 
   emit('update:filters', updatedFilters);
 };
+
+const useOptions = [
+  { title: '사용', value: 'Y', status: 'success' },
+  { title: '미사용', value: 'N' }
+];
 </script>
