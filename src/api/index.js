@@ -27,3 +27,4 @@ const create = (baseURL) => {
 
 export const common = create('/');
 export const adminUser = create('/admin/users');
+export const projects = create('/admin/projects');

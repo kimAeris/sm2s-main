@@ -63,9 +63,14 @@
         </VCol>
       </VRow>
 
-      <VBtn prepend-icon="mdi-magnify" variant="outlined" rounded="xl"
-        >조회</VBtn
+      <VBtn
+        prepend-icon="mdi-magnify"
+        variant="outlined"
+        rounded="xl"
+        @click="emits('fetchData')"
       >
+        조회
+      </VBtn>
     </div>
   </VSheet>
 </template>
@@ -73,6 +78,7 @@
 <script setup>
 import { useMenu } from '@/stores/useMenu';
 import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
 
 const { mainMenu, currentPage } = storeToRefs(useMenu());
 
@@ -83,17 +89,21 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['update:filters']);
+const emits = defineEmits(['update:filters', 'fetchData']);
 
 const updateValue = (index, value) => {
   const updatedFilters = [...props.filters];
   updatedFilters[index].value = value;
 
-  emit('update:filters', updatedFilters);
+  emits('update:filters', updatedFilters);
 };
 
 const useOptions = [
   { title: '사용', value: 'Y', status: 'success' },
   { title: '미사용', value: 'N' }
 ];
+
+onMounted(() => {
+  emits('fetchData');
+});
 </script>

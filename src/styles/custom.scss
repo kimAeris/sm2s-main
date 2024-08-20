@@ -32,6 +32,10 @@
       display: flex !important;
       align-items: center !important;
     }
+
+    .v-switch .v-selection-control {
+      min-height: 32px !important;
+    }
   }
 
   &.v-table--fixed-header {
