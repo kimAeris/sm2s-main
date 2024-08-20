@@ -7,7 +7,9 @@
     v-model:selectedItems="selectedItems"
     canAdd
     canDelete
+    canSave
     @deleteHandler="deleteHandler"
+    @saveHandler="saveHandler"
   >
     <VDataTable
       class="h-100 overflow-auto"
@@ -93,7 +95,7 @@
 </template>
 
 <script setup>
-import { getProjects } from '@/api/system/projects';
+import { getProjects, saveProjects } from '@/api/system/projects';
 import { useToast } from '@/stores/useToast';
 import { computed, ref } from 'vue';
 
@@ -162,6 +164,22 @@ const headers = [
 
 const selectedItems = ref([]);
 const items = ref([]);
+
+const saveHandler = async () => {
+  loading.value = true;
+  try {
+    const res = await saveProjects({ list: selectedItems.value });
+
+    if (res.header.code === 200) {
+      newToast('저장되었습니다', 'success');
+      selectedItems.value = [];
+    }
+  } catch (error) {
+    newToast('저장에 실패했습니다.', 'error');
+  } finally {
+    loading.value = false;
+  }
+};
 
 const deleteHandler = () => {
   loading.value = true;

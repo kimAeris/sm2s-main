@@ -25,6 +25,15 @@
             추가
           </VBtn>
           <VBtn
+            v-if="canSave"
+            :prepend-icon="getIcon('save')"
+            variant="outlined"
+            rounded="xl"
+            @click="saveHandler"
+          >
+            저장
+          </VBtn>
+          <VBtn
             v-if="canDelete"
             :prepend-icon="getIcon('delete')"
             color="error"
@@ -45,6 +54,7 @@
 
 <script setup>
 import { useFeedback } from '@/stores/useFeedback';
+import { useToast } from '@/stores/useToast';
 import { getIcon } from '@/utils/common';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -58,6 +68,10 @@ const props = defineProps({
     default: false
   },
   canDelete: {
+    type: Boolean,
+    default: false
+  },
+  canSave: {
     type: Boolean,
     default: false
   },
@@ -78,7 +92,8 @@ const props = defineProps({
 const emits = defineEmits([
   'update:items',
   'update:selectedItems',
-  'deleteHandler'
+  'deleteHandler',
+  'saveHandler'
 ]);
 
 const defaultItems = props.headers.reduce((acc, header) => {
@@ -95,6 +110,16 @@ const addHandler = () => {
 };
 
 const { openFeedback } = useFeedback();
+const { newToast } = useToast();
+const saveHandler = async () => {
+  if (props.selectedItems.length < 1) {
+    newToast('데이터를 선택해주세요.', 'error');
+    return;
+  }
+
+  emits('saveHandler');
+};
+
 const deleteHandler = async () => {
   const feedback = await openFeedback(
     'error',

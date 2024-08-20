@@ -9,3 +9,13 @@ export const getProjects = async (params) => {
     throw error;
   }
 };
+
+export const saveProjects = async (params) => {
+  try {
+    const res = await projects.post(`/status/1`, params);
+
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};

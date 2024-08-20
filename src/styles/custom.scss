@@ -14,7 +14,7 @@
 }
 
 .v-snackbar__wrapper {
-  margin-bottom: 20px;
+  margin-bottom: 52px;
 }
 
 .v-table {
@@ -46,6 +46,7 @@
             > th {
               background: rgb(var(--v-theme-primary)) !important;
               color: rgb(var(--v-theme-on-primary)) !important;
+              white-space: nowrap;
 
               &:not(:last-child) {
                 box-shadow: inset -1px 0 rgba(var(--v-theme-on-primary), var(--v-border-opacity)) !important;
