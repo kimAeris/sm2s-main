@@ -1,7 +1,9 @@
 <template>
   <VSnackbar v-model="visible" :color="type" variant="tonal" timeout="3000">
-    <VIcon :icon="getIcon(type)" class="mr-1" />
-    {{ message }}
+    <div class="d-flex align-center">
+      <VIcon :icon="getIcon(type)" class="mr-2" />
+      <span class="text-body-1">{{ message }}</span>
+    </div>
   </VSnackbar>
 </template>
 
