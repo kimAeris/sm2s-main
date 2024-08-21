@@ -12,7 +12,7 @@ export const getUserList = async (params) => {
 
 export const saveUser = async (params) => {
   try {
-    const res = await adminUser.get('/status/1', params);
+    const res = await adminUser.post('/status/1', params);
 
     return res.data;
   } catch (error) {
@@ -22,7 +22,7 @@ export const saveUser = async (params) => {
 
 export const deleteUser = async (params) => {
   try {
-    const res = await adminUser.get('/status/3', params);
+    const res = await adminUser.post('/status/3', params);
 
     return res.data;
   } catch (error) {
