@@ -39,12 +39,12 @@ export const useMenu = defineStore(
         homeUrl: '/info/client',
         childList: [
           {
-            menuCd: 1,
+            menuCd: 5,
             menuNm: '거래처 등록',
             path: '/info/client'
           },
           {
-            menuCd: 2,
+            menuCd: 6,
             menuNm: '제품 등록',
             path: '/info/product'
           }
@@ -57,12 +57,12 @@ export const useMenu = defineStore(
         homeUrl: '/info/client',
         childList: [
           {
-            menuCd: 1,
+            menuCd: 7,
             menuNm: '거래처 등록',
             path: '/info/client'
           },
           {
-            menuCd: 2,
+            menuCd: 8,
             menuNm: '제품 등록',
             path: '/info/product'
           }
@@ -102,10 +102,16 @@ export const useMenu = defineStore(
       // path: '/system/users'
     });
 
+    const resetMenu = () => {
+      mainMenu.value = {};
+      currentPage.value = {};
+    };
+
     return {
       menus,
       mainMenu,
-      currentPage
+      currentPage,
+      resetMenu
     };
   },
   {

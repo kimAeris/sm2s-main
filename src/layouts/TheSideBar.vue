@@ -5,6 +5,7 @@
         v-for="(item, i) in childMenus"
         :key="i"
         :value="item"
+        :active="item.menuCd === currentPage.menuCd"
         color="primary"
         class="px-4 py-3"
         @click="moveRoute(item)"

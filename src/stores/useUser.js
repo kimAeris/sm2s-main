@@ -8,16 +8,21 @@ export const useUser = defineStore(
     const user = ref([]);
     const projectList = ref([]);
 
-    const project = ref({
-      code: 1,
-      name: 'ADMIN'
-    });
+    const project = ref({});
+
+    const resetUser = () => {
+      accessToken.value = null;
+      user.value = [];
+      projectList.value = [];
+      project.value = {};
+    };
 
     return {
       accessToken,
       user,
       projectList,
-      project
+      project,
+      resetUser
     };
   },
   {

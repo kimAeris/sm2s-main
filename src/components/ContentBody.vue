@@ -141,6 +141,11 @@ const saveHandler = async () => {
 };
 
 const deleteHandler = async () => {
+  if (props.selectedItems.length < 1) {
+    newToast('데이터를 선택해주세요.', 'error');
+    return;
+  }
+
   const feedback = await openFeedback(
     'error',
     'DELETE',

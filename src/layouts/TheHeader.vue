@@ -107,6 +107,8 @@ const closeProjectModal = () => {
 };
 
 const handleLogout = () => {
+  userStore.resetUser();
+  menuStore.resetMenu();
   router.push({ name: 'Login' });
 };
 </script>
