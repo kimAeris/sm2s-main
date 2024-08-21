@@ -117,7 +117,7 @@ const addHandler = () => {
   const newItem = JSON.parse(JSON.stringify(defaultItems));
   newItem[props.itemKey] = uuidv4();
 
-  if (props.defaultItemValue.length > 0) {
+  if (props.defaultItemValue?.length > 0) {
     props.defaultItemValue.forEach((item) => {
       newItem[item.key] = item.value;
     });

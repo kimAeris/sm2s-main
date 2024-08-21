@@ -103,7 +103,7 @@ import {
   saveProjects
 } from '@/api/system/projects';
 import { useToast } from '@/stores/useToast';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const loading = ref(false);
 
@@ -222,4 +222,8 @@ const deleteHandler = async () => {
     loading.value = false;
   }
 };
+
+onMounted(() => {
+  fetchData();
+});
 </script>
