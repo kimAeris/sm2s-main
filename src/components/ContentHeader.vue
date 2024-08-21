@@ -7,10 +7,15 @@
       </span>
     </div>
 
-    <div class="d-flex align-center justify-space-between">
+    <div class="d-flex align-end justify-space-between">
       <!-- <div class="d-flex w-100 align-center ga-4 py-2 mb-3 px-4"> -->
-      <VRow class="d-flex">
-        <VCol v-for="(filter, i) in filters" :cols="filter.cols || 2" :key="i">
+      <VRow>
+        <VCol
+          v-for="(filter, i) in filters"
+          :cols="filter.cols || 2"
+          :key="i"
+          style="min-width: 160px"
+        >
           <template v-if="filter.type === 'text'">
             <VTextField
               :label="filter.label"
@@ -78,7 +83,6 @@
 <script setup>
 import { useMenu } from '@/stores/useMenu';
 import { storeToRefs } from 'pinia';
-import { onMounted } from 'vue';
 
 const { mainMenu, currentPage } = storeToRefs(useMenu());
 
@@ -102,8 +106,4 @@ const useOptions = [
   { title: '사용', value: 'Y', status: 'success' },
   { title: '미사용', value: 'N' }
 ];
-
-onMounted(() => {
-  emits('fetchData');
-});
 </script>
