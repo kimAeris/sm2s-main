@@ -6,6 +6,7 @@ export const useUser = defineStore(
   () => {
     const accessToken = ref(null);
     const user = ref([]);
+    const projectList = ref([]);
 
     const project = ref({
       code: 1,
@@ -15,6 +16,7 @@ export const useUser = defineStore(
     return {
       accessToken,
       user,
+      projectList,
       project
     };
   },

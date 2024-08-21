@@ -30,7 +30,7 @@ const layoutStore = useLayout();
 const { sideBar } = storeToRefs(layoutStore);
 
 const menuStore = useMenu();
-const { menus, mainMenu } = storeToRefs(menuStore);
+const { menus, mainMenu, currentPage } = storeToRefs(menuStore);
 
 const childMenus = computed(
   () =>
@@ -38,6 +38,9 @@ const childMenus = computed(
 );
 
 const moveRoute = (menu) => {
+  currentPage.value = menu;
+
+  sideBar.value = false;
   router.push({ path: menu.path });
 };
 </script>

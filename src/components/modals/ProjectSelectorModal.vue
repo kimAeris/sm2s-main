@@ -1,5 +1,9 @@
 <template>
-  <VDialog :model-value="visible" @update:model-value="close" max-width="600">
+  <VDialog
+    :model-value="visible"
+    @update:model-value="emit('close')"
+    max-width="600"
+  >
     <VCard rounded="lg">
       <VCardTitle class="d-flex justify-space-between align-center">
         <div class="d-flex align-center">
@@ -15,16 +19,27 @@
       <VCardText>
         <VContainer>
           <VRow align="center">
-            <VCol cols="6" class="pa-5" v-for="menu in list" :key="menu.code">
+            <VCol
+              cols="6"
+              class="pa-5"
+              v-for="item in projectList"
+              :key="item.projectCode"
+            >
               <VBtn
                 class="w-100"
                 elevation="4"
                 size="x-large"
-                :variant="project.name === menu.name ? 'tonal' : undefined"
-                :color="project.name === menu.name ? 'primary' : undefined"
-                @click="emit('selectProject', menu)"
+                :variant="
+                  project.projectName === item.projectName ? 'tonal' : undefined
+                "
+                :color="
+                  project.projectName === item.projectName
+                    ? 'primary'
+                    : undefined
+                "
+                @click="selectProject(item)"
               >
-                {{ menu.name }}
+                {{ item.projectName }}
               </VBtn>
             </VCol>
           </VRow>
@@ -35,23 +50,33 @@
 </template>
 
 <script setup>
+import router from '@/router';
+import { useMenu } from '@/stores/useMenu';
 import { useUser } from '@/stores/useUser';
 import { storeToRefs } from 'pinia';
+
+const { projectList, project } = storeToRefs(useUser());
+const { menus, mainMenu } = storeToRefs(useMenu());
 
 defineProps({
   visible: {
     type: Boolean,
     required: true
-  },
-  list: {
-    type: Array,
-    required: true
   }
 });
 
-const emit = defineEmits(['close', 'selectProject']);
+const emit = defineEmits(['close']);
 
-const { project } = storeToRefs(useUser());
+const selectProject = (selected) => {
+  const menuList = menus.value.find(
+    (menu) => String(menu.projectCode) === selected.projectCode
+  );
+
+  project.value = selected;
+  mainMenu.value = menuList;
+
+  router.push({ path: menuList.homeUrl });
+};
 
 const close = () => {
   emit('close');

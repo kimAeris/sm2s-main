@@ -64,6 +64,7 @@
   </div>
 
   <PasswordModal :visible="passwordModal" @close="closePasswordModal" />
+  <ProjectSelector :visible="projectModal" @close="closeProjectModal" />
 </template>
 
 <script setup>
@@ -74,8 +75,9 @@ import { useUser } from '@/stores/useUser';
 import { storeToRefs } from 'pinia';
 import { useToast } from '@/stores/useToast';
 import PasswordModal from '@/components/modals/PasswordModal.vue';
+import ProjectSelector from '@/components/modals/ProjectSelectorModal.vue';
 
-const { accessToken, user } = storeToRefs(useUser());
+const { accessToken, user, projectList } = storeToRefs(useUser());
 const { newToast } = useToast();
 
 const loading = ref(false);
@@ -86,6 +88,16 @@ const loginForm = ref(null);
 const businessNumber = ref(null);
 const id = ref(null);
 const pw = ref(null);
+
+const projectModal = ref(false);
+
+const openProjectModal = () => {
+  projectModal.value = true;
+};
+
+const closeProjectModal = () => {
+  projectModal.value = false;
+};
 
 const formatBusinessNumber = () => {
   let rawValue = businessNumber.value.replace(/[^0-9-]/g, '');
@@ -119,6 +131,7 @@ const handleLogin = async () => {
     if (res.header.code === 200) {
       accessToken.value = res.body.Authorization;
       user.value = res.body.userInfo;
+      projectList.value = res.body.projectList;
 
       // 로그인 정보 기억
       if (isInfoSave.value) {
@@ -136,7 +149,11 @@ const handleLogin = async () => {
       if (user.value.initYn === 'Y') {
         passwordModal.value = true;
       } else {
-        router.replace({ name: 'CommonCode' });
+        if (projectList.value.length > 1) {
+          openProjectModal();
+        } else {
+          router.replace({ name: 'CommonCode' });
+        }
       }
     } else {
       throw res;
