@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 const LoginView = () => import('@/views/user/LoginView.vue');
 const ProjectMgmtView = () => import('@/views/system/ProjectMgmtView.vue');
 const CommonCodeView = () => import('@/views/system/CommonCodeView.vue');
-const BusinessMgmtView = () => import('@/views/system/BusinessMgmtView.vue');
+const UserMgmtView = () => import('@/views/system/UserMgmtView.vue');
 const IframeView = () => import('@/views/common/IframeView.vue');
 
 const router = createRouter({
@@ -20,9 +20,9 @@ const router = createRouter({
       component: ProjectMgmtView
     },
     {
-      path: '/system/business',
-      name: 'BusinessMgmt',
-      component: BusinessMgmtView
+      path: '/system/users',
+      name: 'UserMgmt',
+      component: UserMgmtView
     },
     {
       path: '/system/commonCode',

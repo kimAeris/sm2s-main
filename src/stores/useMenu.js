@@ -17,12 +17,8 @@ export const useMenu = defineStore(
           },
           {
             menuCd: 2,
-            menuNm: '사업자관리',
-            path: '/system/business'
-          },
-          {
-            menuCd: 2,
-            menuNm: '사용자관리'
+            menuNm: '사용자관리',
+            path: '/system/users'
           },
           {
             menuCd: 3,
@@ -48,12 +44,8 @@ export const useMenu = defineStore(
         },
         {
           menuCd: 2,
-          menuNm: '사업자관리',
-          path: '/system/business'
-        },
-        {
-          menuCd: 2,
-          menuNm: '사용자관리'
+          menuNm: '사용자관리',
+          path: '/system/users'
         },
         {
           menuCd: 3,
@@ -67,9 +59,9 @@ export const useMenu = defineStore(
     });
 
     const currentPage = ref({
-      menuCd: 1,
-      menuNm: '프로젝트관리',
-      path: '/system/projects'
+      menuCd: 2,
+      menuNm: '사용자관리',
+      path: '/system/users'
     });
 
     return {
