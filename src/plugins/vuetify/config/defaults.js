@@ -6,5 +6,8 @@ export default {
     rounded: 'lg',
     elevation: '1',
     class: 'pa-3'
+  },
+  VSwitch: {
+    color: 'secondary-variant'
   }
 };

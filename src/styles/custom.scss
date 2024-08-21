@@ -31,6 +31,7 @@
       height: 32px !important;
       display: flex !important;
       align-items: center !important;
+      font-size: vuetify.$font-size-root !important;
     }
 
     .v-switch .v-selection-control {
@@ -58,8 +59,14 @@
         > tbody {
           > tr {
             > td {
+              white-space: nowrap !important;
+
               &:not(:last-child) {
                 box-shadow: inset -1px 0 rgba(var(--v-border-color), var(--v-border-opacity)) !important;
+              }
+
+              .v-input {
+                min-width: 120px !important;
               }
             }
             &:last-child {
