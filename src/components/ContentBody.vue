@@ -91,6 +91,9 @@ const props = defineProps({
     type: Array,
     default: () => []
   },
+  defaultItemValue: {
+    type: Object
+  },
   itemKey: {
     type: String,
     required: true
@@ -113,6 +116,12 @@ const defaultItems = props.headers.reduce((acc, header) => {
 const addHandler = () => {
   const newItem = JSON.parse(JSON.stringify(defaultItems));
   newItem[props.itemKey] = uuidv4();
+
+  if (props.defaultItemValue.length > 0) {
+    props.defaultItemValue.forEach((item) => {
+      newItem[item.key] = item.value;
+    });
+  }
 
   emits('update:items', [newItem, ...props.items]);
   emits('update:addItems', [newItem, ...props.addItems]);
