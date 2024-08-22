@@ -1,5 +1,9 @@
 <template>
-  <ContentHeader v-model:filters="searchFilters" @fetchData="fetchData" />
+  <ContentHeader
+    v-model:filters="searchFilters"
+    @fetchData="fetchData"
+    @refresh="refresh"
+  />
 
   <ContentBody
     :headers="headers"
@@ -139,11 +143,19 @@ const searchParams = computed(() => {
   return params;
 });
 
+const originFilters = JSON.parse(JSON.stringify(searchFilters.value));
+
+const refresh = () => {
+  // 깊은 복사로 강제로 반응성 트리거
+  searchFilters.value = JSON.parse(JSON.stringify(originFilters));
+  fetchData();
+};
+
 const { newToast } = useToast();
 const fetchData = async () => {
   loading.value = true;
   try {
-    const res = await getProjects(searchParams);
+    const res = await getProjects(searchParams.value);
     items.value = res.body.list;
   } catch (error) {
     newToast('조회에 실패했습니다.', 'error');
