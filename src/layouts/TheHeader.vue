@@ -3,13 +3,13 @@
     <VContainer class="d-flex flex-nowrap align-center" fluid>
       <VAppBarNavIcon @click="toggleSideBar"></VAppBarNavIcon>
 
-      <span
-        class="ml-2 text-h6 cursor-pointer"
-        :key="project.name"
-        @click="moveHome"
-      >
-        {{ project.name }}
-      </span>
+      <VImg :width="80" height="52" src="/src/assets/logo.png" class="pa-3" />
+
+      <VBtn class="nowrap" rounded @click="openProjectModal">
+        <a :key="project.name">
+          {{ project.projectName }}
+        </a>
+      </VBtn>
       <!-- <VBtn class="ml-2" height="46" rounded="xl">
 
         <VMenu activator="parent">
@@ -42,11 +42,11 @@
       </VSlideGroup>
 
       <div class="d-flex align-center ml-auto">
-        <span class="mr-4 text-body-2" style="white-space: nowrap">사용자</span>
+        <span class="mr-4 text-body-2 nowrap">사용자</span>
 
-        <VBtn icon @click="openProjectModal">
+        <!-- <VBtn icon @click="openProjectModal">
           <VIcon icon="mdi-folder-marker-outline" size="small"></VIcon>
-        </VBtn>
+        </VBtn> -->
 
         <VBtn icon @click="handleLogout">
           <VIcon icon="mdi-logout" size="small"></VIcon>
