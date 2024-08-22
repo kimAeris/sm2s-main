@@ -2,7 +2,7 @@ import { adminUser } from '.';
 
 export const getUserList = async (params) => {
   try {
-    const res = await adminUser.get('', params);
+    const res = await adminUser.get('', { params });
 
     return res.data;
   } catch (error) {

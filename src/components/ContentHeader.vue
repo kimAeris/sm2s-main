@@ -18,8 +18,10 @@
         >
           <template v-if="filter.type === 'text'">
             <VTextField
+              v-model="filter.value"
               :label="filter.label"
               @input="updateValue(i, $event.target.value)"
+              @keyup.enter="emits('fetchData')"
               bg-color="surface"
               variant="outlined"
               density="compact"
@@ -30,11 +32,12 @@
 
           <template v-if="filter.type === 'select'">
             <VSelect
+              v-model="filter.value"
               :label="filter.label"
               :items="filter.options"
               @update:modelValue="updateValue(i, $event)"
-              item-title="value"
-              item-value="key"
+              item-title="title"
+              item-value="value"
               bg-color="surface"
               variant="outlined"
               density="compact"
@@ -45,6 +48,7 @@
 
           <template v-if="filter.type === 'selectUse'">
             <VSelect
+              v-model="filter.value"
               :label="filter.label"
               :items="useOptions"
               @update:modelValue="updateValue(i, $event)"
@@ -68,14 +72,19 @@
         </VCol>
       </VRow>
 
-      <VBtn
-        prepend-icon="mdi-magnify"
-        variant="outlined"
-        rounded="xl"
-        @click="emits('fetchData')"
-      >
-        조회
-      </VBtn>
+      <div class="d-flex ga-3">
+        <VBtn variant="outlined" rounded="xl" @click="emits('refresh')">
+          초기화
+        </VBtn>
+        <VBtn
+          prepend-icon="mdi-magnify"
+          variant="outlined"
+          rounded="xl"
+          @click="emits('fetchData')"
+        >
+          조회
+        </VBtn>
+      </div>
     </div>
   </VSheet>
 </template>
@@ -93,7 +102,7 @@ const props = defineProps({
   }
 });
 
-const emits = defineEmits(['update:filters', 'fetchData']);
+const emits = defineEmits(['update:filters', 'refresh', 'fetchData']);
 
 const updateValue = (index, value) => {
   const updatedFilters = [...props.filters];

@@ -1,5 +1,9 @@
 <template>
-  <ContentHeader v-model:filters="searchFilters" @fetchData="fetchData" />
+  <ContentHeader
+    v-model:filters="searchFilters"
+    @fetchData="fetchData"
+    @refresh="refresh"
+  />
 
   <ContentBody
     :headers="headers"
@@ -203,8 +207,7 @@ const searchFilters = ref([
     label: '사업자번호',
     key: 'businessNumber',
     type: 'text',
-    value: '',
-    cols: 4
+    value: ''
   },
   {
     label: '아이디',
@@ -225,24 +228,35 @@ const searchFilters = ref([
     value: ''
   },
   {
-    label: '직위코드',
-    key: 'positionCode',
-    type: 'text',
-    value: ''
-  },
-  {
-    label: '퇴사여부',
-    key: 'resignYn',
-    type: 'text',
-    value: ''
-  },
-  {
     label: '관리자여부',
     key: 'adminYn',
-    type: 'text',
-    value: ''
+    type: 'select',
+    value: '',
+    options: [
+      {
+        title: '전체',
+        value: ''
+      },
+      {
+        title: 'Y',
+        value: 'Y'
+      },
+      {
+        title: 'N',
+        value: 'N'
+      }
+    ],
+    cols: 1
   }
 ]);
+
+const originFilters = JSON.parse(JSON.stringify(searchFilters.value));
+
+const refresh = () => {
+  // 깊은 복사로 강제로 반응성 트리거
+  searchFilters.value = JSON.parse(JSON.stringify(originFilters));
+  fetchData();
+};
 
 const headers = [
   { title: '사업자번호 코드', key: 'businessNumber' },
@@ -288,7 +302,7 @@ const { newToast } = useToast();
 const fetchData = async () => {
   loading.value = true;
   try {
-    const res = await getUserList(searchParams);
+    const res = await getUserList(searchParams.value);
     items.value = res.body.list;
   } catch (error) {
     newToast('조회에 실패했습니다.', 'error');
