@@ -59,6 +59,16 @@
               density="compact"
               hide-details
             >
+              <template #prepend-inner>
+                <VBadge
+                  :color="
+                    useOptions.find((option) => option.value === filter.value)
+                      .status
+                  "
+                  inline
+                  dot
+                ></VBadge>
+              </template>
               <template #item="{ props, item }">
                 <VListItem v-bind="props" :title="undefined">
                   <div class="d-flex align-center ga-2">
@@ -112,6 +122,7 @@ const updateValue = (index, value) => {
 };
 
 const useOptions = [
+  { title: '전체', value: '', status: 'info' },
   { title: '사용', value: 'Y', status: 'success' },
   { title: '미사용', value: 'N' }
 ];

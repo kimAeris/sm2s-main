@@ -10,7 +10,7 @@ export default {
         secondary: '#93c1f5',
         'secondary-variant': '#4A90E2',
         error: '#B00020',
-        // info: '#2196F3',
+        info: '#2196F3',
         success: '#4CAF50'
         // warning: '#FB8C00'
       }
