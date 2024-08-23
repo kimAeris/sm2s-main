@@ -34,7 +34,9 @@
             class="text-body-1"
             rounded
             :color="
-              menu.mainMenuCd === mainMenu.mainMenuCd ? 'secondary' : undefined
+              menu.mainMenuCd === mainMenu.mainMenuCd
+                ? 'secondary-variant'
+                : undefined
             "
             @click="handleMenu(menu)"
           >
