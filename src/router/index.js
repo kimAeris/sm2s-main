@@ -1,12 +1,13 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 const LoginView = () => import('@/views/user/LoginView.vue');
 const ProjectMgmtView = () => import('@/views/system/ProjectMgmtView.vue');
 const CommonCodeView = () => import('@/views/system/CommonCodeView.vue');
 const UserMgmtView = () => import('@/views/system/UserMgmtView.vue');
+const MenuMgmtView = () => import('@/views/system/MenuMgmtView.vue');
 const IframeView = () => import('@/views/common/IframeView.vue');
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -25,14 +26,22 @@ const router = createRouter({
       component: UserMgmtView
     },
     {
+      path: '/system/menus',
+      name: 'MenuMgmt',
+      component: MenuMgmtView
+    },
+    {
       path: '/system/commonCode',
       name: 'CommonCode',
       component: CommonCodeView
     },
     {
-      path: '/info/client',
+      path: '/info/:type',
       name: 'ClientMgmt',
       component: IframeView,
+      meta: {
+        admin: true
+      },
       props: {
         url: `http://221.151.122.208:11005/?Pro=%EA%B3%B5%EB%B0%A9#BI_001`
       }
