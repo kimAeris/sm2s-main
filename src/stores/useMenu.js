@@ -24,7 +24,8 @@ export const useMenu = defineStore(
           },
           {
             menuCd: 3,
-            menuNm: '메뉴관리'
+            menuNm: '메뉴관리',
+            path: '/system/menus'
           },
           {
             menuCd: 4,
