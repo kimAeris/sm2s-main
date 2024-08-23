@@ -62,13 +62,25 @@
           {{ value }}
         </span>
       </template>
+      <template #item.homeRoute="{ item, value }">
+        <VTextField
+          v-if="selectedItems.includes(item)"
+          v-model="item.homeRoute"
+          variant="outlined"
+          density="compact"
+          hide-details
+        />
+        <span v-else>
+          {{ value }}
+        </span>
+      </template>
       <template #item.smwpYn="{ item, value }">
         <VSwitch
           v-if="selectedItems.includes(item)"
           v-model="item.smwpYn"
           false-value="N"
           true-value="Y"
-          color="secondary-variant"
+          color="secondary"
           hide-details
         >
         </VSwitch>
@@ -85,7 +97,7 @@
           v-model="item.useYn"
           false-value="N"
           true-value="Y"
-          color="secondary-variant"
+          color="secondary"
           hide-details
         >
         </VSwitch>
@@ -94,6 +106,19 @@
           <VBadge :color="value === 'Y' ? 'success' : ''" inline dot />
 
           {{ value === 'Y' ? '사용' : '미사용' }}
+        </span>
+      </template>
+      <template #item.sortNo="{ item, value }">
+        <VTextField
+          v-if="selectedItems.includes(item)"
+          v-model="item.sortNo"
+          variant="outlined"
+          density="compact"
+          type="number"
+          hide-details
+        />
+        <span v-else>
+          {{ value }}
         </span>
       </template>
     </VDataTable>
@@ -169,11 +194,13 @@ const headers = [
   { title: '프로젝트명', key: 'projectName' },
   { title: '프로젝트 설명', key: 'projectDesc' },
   { title: 'Url', key: 'url' },
+  { title: '시작 화면', key: 'homeRoute' },
   {
     title: 'SMWP 사용 여부',
     key: 'smwpYn'
   },
   { title: '사용여부', key: 'useYn' },
+  { title: '정렬번호', key: 'sortNo' },
   { title: '등록자', key: 'regNm' },
   { title: '등록일', key: 'regDt' },
   { title: '수정자', key: 'chgNm' },
