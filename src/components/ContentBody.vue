@@ -2,7 +2,7 @@
   <VSheet class="flex-grow-1 overflow-hidden">
     <div class="d-flex flex-column ga-2 h-100">
       <div class="d-flex align-center justify-space-between">
-        <h6>목록</h6>
+        <h6>{{ title }}</h6>
         <div class="d-flex ga-3">
           <VBtn
             v-for="(button, i) in buttons"
@@ -59,6 +59,10 @@ import { getIcon } from '@/utils/common';
 import { v4 as uuidv4 } from 'uuid';
 
 const props = defineProps({
+  title: {
+    type: String,
+    default: '목록'
+  },
   buttons: {
     type: Array,
     default: () => []
