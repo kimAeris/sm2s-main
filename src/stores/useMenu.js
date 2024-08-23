@@ -71,6 +71,9 @@ export const useMenu = defineStore(
       }
     ]);
 
+    // 프로젝트 메뉴 리스트
+    const projectMenu = ref([]);
+
     // 선택한 메뉴
     const mainMenu = ref({
       // menuCd: 1,
@@ -110,6 +113,7 @@ export const useMenu = defineStore(
 
     return {
       menus,
+      projectMenu,
       mainMenu,
       currentPage,
       resetMenu

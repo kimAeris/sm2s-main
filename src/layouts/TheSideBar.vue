@@ -2,7 +2,7 @@
   <VNavigationDrawer v-model="sideBar" temporary>
     <VList class="py-2">
       <VListItem
-        v-for="(item, i) in childMenus"
+        v-for="(item, i) in mainMenu.subMenu"
         :key="i"
         :value="item"
         :active="item.menuCd === currentPage.menuCd"
@@ -25,18 +25,12 @@ import router from '@/router';
 import { useLayout } from '@/stores/useLayout';
 import { useMenu } from '@/stores/useMenu';
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
 
 const layoutStore = useLayout();
 const { sideBar } = storeToRefs(layoutStore);
 
 const menuStore = useMenu();
-const { menus, mainMenu, currentPage } = storeToRefs(menuStore);
-
-const childMenus = computed(
-  () =>
-    menus.value.find((menu) => menu.menuCd === mainMenu.value.menuCd)?.childList
-);
+const { mainMenu, currentPage } = storeToRefs(menuStore);
 
 const moveRoute = (menu) => {
   currentPage.value = menu;

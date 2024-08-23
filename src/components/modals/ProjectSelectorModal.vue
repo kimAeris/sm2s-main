@@ -56,7 +56,7 @@ import { useUser } from '@/stores/useUser';
 import { storeToRefs } from 'pinia';
 
 const { projectList, project } = storeToRefs(useUser());
-const { menus, mainMenu, currentPage } = storeToRefs(useMenu());
+const { menus, projectMenu, mainMenu, currentPage } = storeToRefs(useMenu());
 
 defineProps({
   visible: {
@@ -73,9 +73,16 @@ const selectProject = (selected) => {
   );
 
   project.value = selected;
-  mainMenu.value = menuList;
-  currentPage.value = menuList.childList.find((menu) => menu.path);
+  projectMenu.value = menuList;
+  mainMenu.value = menuList.mainMenu.find((menu) =>
+    menu.subMenu.some((sub) => sub.path === '/system/projects')
+  );
 
+  currentPage.value = mainMenu.value.subMenu.find(
+    (menu) => menu.path === menuList.homeUrl
+  );
+
+  close();
   router.push({ path: menuList.homeUrl });
 };
 

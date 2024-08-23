@@ -1,7 +1,7 @@
 <template>
   <VSheet class="mb-4">
     <div class="text-body-1 d-flex align-center mb-4">
-      <span class="mr-1"> {{ mainMenu.menuNm }} > </span>
+      <span class="mr-1"> {{ mainMenu.mainMenuNm }} > </span>
       <span class="font-weight-bold text-primary">
         {{ currentPage.menuNm }}
       </span>

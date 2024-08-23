@@ -173,64 +173,74 @@ const setMenu = () => {
   menus.value = [
     {
       projectCode: '1',
-      menuCd: 1,
-      menuNm: '시스템',
       homeUrl: '/system/projects',
-      childList: [
+      mainMenu: [
         {
-          menuCd: 1,
-          menuNm: '프로젝트관리',
-          path: '/system/projects'
-        },
-        {
-          menuCd: 2,
-          menuNm: '사용자관리',
-          path: '/system/users'
-        },
-        {
-          menuCd: 3,
-          menuNm: '메뉴관리',
-          path: '/system/menus'
-        },
-        {
-          menuCd: 4,
-          menuNm: '권한관리'
+          mainMenuCd: 'SYSTEM',
+          mainMenuNm: '시스템',
+          subMenu: [
+            {
+              menuCd: 1,
+              menuNm: '프로젝트관리',
+              path: '/system/projects'
+            },
+            {
+              menuCd: 2,
+              menuNm: '사용자관리',
+              path: '/system/users'
+            },
+            {
+              menuCd: 3,
+              menuNm: '메뉴관리',
+              path: '/system/menus'
+            },
+            {
+              menuCd: 4,
+              menuNm: '권한관리'
+            }
+          ]
         }
       ]
     },
     {
       projectCode: '2',
-      menuCd: 2,
-      menuNm: '기초 관리',
-      homeUrl: '/info/client',
-      childList: [
+      homeUrl: '/system/projects',
+      mainMenu: [
         {
-          menuCd: 5,
-          menuNm: '거래처 등록',
-          path: '/info/client'
+          mainMenuCd: 'B1',
+          mainMenuNm: '기초 관리',
+          subMenu: [
+            {
+              menuCd: 1,
+              menuNm: '프로젝트관리',
+              path: '/system/projects'
+            },
+            {
+              menuCd: 2,
+              menuNm: '사용자관리',
+              path: '/system/users'
+            },
+            {
+              menuCd: 3,
+              menuNm: '메뉴관리',
+              path: '/system/menus'
+            },
+            {
+              menuCd: 4,
+              menuNm: '권한관리'
+            }
+          ]
         },
         {
-          menuCd: 6,
-          menuNm: '제품 등록',
-          path: '/info/product'
-        }
-      ]
-    },
-    {
-      projectCode: '3',
-      menuCd: 3,
-      menuNm: '기초 관리',
-      homeUrl: '/info/client',
-      childList: [
-        {
-          menuCd: 7,
-          menuNm: '거래처 등록',
-          path: '/info/client'
-        },
-        {
-          menuCd: 8,
-          menuNm: '제품 등록',
-          path: '/info/product'
+          mainMenuCd: 'B2',
+          mainMenuNm: '기초 관리2',
+          subMenu: [
+            {
+              menuCd: 1,
+              menuNm: '프로젝트관리',
+              path: '/system/projects2'
+            }
+          ]
         }
       ]
     }

@@ -29,14 +29,16 @@
       </VBtn> -->
 
       <VSlideGroup show-arrows class="w-100 px-10">
-        <VSlideGroupItem v-for="menu in menus" :key="menu">
+        <VSlideGroupItem v-for="menu in projectMenu.mainMenu" :key="menu">
           <VBtn
             class="text-body-1"
-            :color="mainMenu.menuCd === menu.menuCd ? 'secondary' : undefined"
             rounded
+            :color="
+              menu.mainMenuCd === mainMenu.mainMenuCd ? 'secondary' : undefined
+            "
             @click="handleMenu(menu)"
           >
-            {{ menu.menuNm }}
+            {{ menu.mainMenuNm }}
           </VBtn>
         </VSlideGroupItem>
       </VSlideGroup>
@@ -72,7 +74,7 @@ const layoutStore = useLayout();
 const menuStore = useMenu();
 
 const { header, sideBar } = storeToRefs(layoutStore);
-const { menus, mainMenu } = storeToRefs(menuStore);
+const { projectMenu, mainMenu } = storeToRefs(menuStore);
 const { toggleSideBar } = layoutStore;
 
 const handleMenu = (menu) => {
