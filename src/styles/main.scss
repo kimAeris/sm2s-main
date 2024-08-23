@@ -22,6 +22,10 @@ body::-webkit-scrollbar {
   white-space: nowrap;
 }
 
+.d-grid {
+  display: grid;
+}
+
 a {
   text-decoration: none;
   color: inherit;

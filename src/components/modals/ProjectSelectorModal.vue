@@ -2,12 +2,14 @@
   <VDialog
     :model-value="visible"
     @update:model-value="emit('close')"
-    max-width="600"
+    class="h-100"
+    max-width="1000"
+    min-height="600"
+    max-height="600"
   >
-    <VCard rounded="lg">
+    <VCard class="flex-grow-1 h-100" rounded="lg">
       <VCardTitle class="d-flex justify-space-between align-center">
         <div class="d-flex align-center">
-          <!-- <VIcon icon="mdi-folder-marker" size="small"></VIcon> -->
           <span class="text-h6 ml-2">프로젝트 목록</span>
         </div>
 
@@ -16,34 +18,20 @@
 
       <VDivider></VDivider>
 
-      <VCardText>
-        <VContainer>
-          <VRow align="center">
-            <VCol
-              cols="6"
-              class="pa-5"
-              v-for="item in projectList"
-              :key="item.projectCode"
-            >
-              <VBtn
-                class="w-100"
-                elevation="4"
-                size="x-large"
-                :variant="
-                  project.projectName === item.projectName ? 'tonal' : undefined
-                "
-                :color="
-                  project.projectName === item.projectName
-                    ? 'primary'
-                    : undefined
-                "
-                @click="selectProject(item)"
-              >
-                {{ item.projectName }}
-              </VBtn>
-            </VCol>
-          </VRow>
-        </VContainer>
+      <VCardText class="d-grid overflow-hidden">
+        <VDataTable
+          class="h-100 overflow-auto"
+          v-model="selectedItems"
+          :headers="headers"
+          :items="projectList"
+          :loading="loading"
+        >
+          <template #item.projectName="{ item, value }">
+            <a class="text-secondary" @click="selectProject(item)">{{
+              value
+            }}</a>
+          </template>
+        </VDataTable>
       </VCardText>
     </VCard>
   </VDialog>
@@ -66,6 +54,17 @@ defineProps({
 });
 
 const emit = defineEmits(['close']);
+
+const headers = [
+  { title: '프로젝트명', key: 'projectName' },
+  { title: '프로젝트 설명', key: 'projectDesc' },
+  { title: '시작 화면', key: 'menuName' },
+  {
+    title: 'SMWP 사용 여부',
+    key: 'smwpYn'
+  },
+  { title: '정렬번호', key: 'sortNo' }
+];
 
 const selectProject = (selected) => {
   const menuList = menus.value.find(
