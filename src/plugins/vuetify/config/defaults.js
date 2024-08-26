@@ -9,6 +9,6 @@ export default {
     class: 'pa-3'
   },
   VSwitch: {
-    color: 'secondary-variant'
+    color: 'secondary'
   }
 };
