@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 const LoginView = () => import('@/views/user/LoginView.vue');
 const ProjectMgmtView = () => import('@/views/system/ProjectMgmtView.vue');
-const CommonCodeView = () => import('@/views/system/CommonCodeView.vue');
 const UserMgmtView = () => import('@/views/system/UserMgmtView.vue');
 const MenuMgmtView = () => import('@/views/system/MenuMgmtView.vue');
 const IframeView = () => import('@/views/common/IframeView.vue');
@@ -29,11 +28,6 @@ const router = createRouter({
       path: '/system/menus',
       name: 'MenuMgmt',
       component: MenuMgmtView
-    },
-    {
-      path: '/system/commonCode',
-      name: 'CommonCode',
-      component: CommonCodeView
     },
     {
       path: '/info/:type',
