@@ -6,7 +6,7 @@
   />
 
   <div class="d-flex overflow-hidden h-100 ga-4" style="padding-bottom: 1px">
-    <ContentBody title="메뉴" min-width="300">
+    <ContentBody title="메뉴" min-width="300" max-width="300">
       <VList color="primary">
         <VSkeletonLoader :loading="loading" type="list-item-two-line">
           <VListGroup
