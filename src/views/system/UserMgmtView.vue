@@ -14,7 +14,6 @@
     canAdd
     canDelete
     canSave
-    item-key="rowId"
     @delete-handler="deleteHandler"
     @save-handler="saveHandler"
   >
@@ -294,8 +293,7 @@ const items = ref([]);
 const addItems = ref([]);
 const defaultItemValue = [
   { key: 'resignYn', value: 'N' },
-  { key: 'adminYn', value: 'N' },
-  { key: 'useYn', value: 'Y' }
+  { key: 'adminYn', value: 'N' }
 ];
 
 const { newToast } = useToast();
