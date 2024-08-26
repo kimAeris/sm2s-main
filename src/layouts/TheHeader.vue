@@ -40,7 +40,7 @@
             "
             @click="handleMenu(menu)"
           >
-            {{ menu.mainMenuNm }}
+            {{ menu.menuName }}
           </VBtn>
         </VSlideGroupItem>
       </VSlideGroup>
