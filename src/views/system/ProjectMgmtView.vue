@@ -1,7 +1,7 @@
 <template>
   <ContentHeader
     v-model:filters="searchFilters"
-    @fetchData="fetchData"
+    @fetch-data="fetchData"
     @refresh="refresh"
   />
 
@@ -9,12 +9,12 @@
     :headers="headers"
     v-model:items="items"
     v-model:addItems="addItems"
-    v-model:selectedItems="selectedItems"
-    canAdd
-    canDelete
-    canSave
-    @deleteHandler="deleteHandler"
-    @saveHandler="saveHandler"
+    v-model:selected-items="selectedItems"
+    can-add
+    can-delete
+    can-save
+    @delete-handler="deleteHandler"
+    @save-handler="saveHandler"
   >
     <VDataTable
       class="h-100 overflow-auto"

@@ -1,7 +1,7 @@
 <template>
   <ContentHeader
     v-model:filters="searchFilters"
-    @fetchData="fetchData"
+    @fetch-data="fetchData"
     @refresh="refresh"
   />
 
@@ -11,9 +11,9 @@
     v-model:addItems="addItems"
     v-model:selected-items="selectedItems"
     :default-item-value="defaultItemValue"
-    canAdd
-    canDelete
-    canSave
+    can-add
+    can-delete
+    can-save
     @delete-handler="deleteHandler"
     @save-handler="saveHandler"
   >
