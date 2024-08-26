@@ -29,3 +29,4 @@ export const common = create('/');
 export const adminUser = create('/admin/users');
 export const projects = create('/admin/projects');
 export const menus = create('/admin/menus');
+export const roles = create('/admin/roles');

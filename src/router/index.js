@@ -3,6 +3,7 @@ const LoginView = () => import('@/views/user/LoginView.vue');
 const ProjectMgmtView = () => import('@/views/system/ProjectMgmtView.vue');
 const UserMgmtView = () => import('@/views/system/UserMgmtView.vue');
 const MenuMgmtView = () => import('@/views/system/MenuMgmtView.vue');
+const RoleMgmtView = () => import('@/views/system/RoleMgmtView.vue');
 const IframeView = () => import('@/views/common/IframeView.vue');
 
 const router = createRouter({
@@ -28,6 +29,11 @@ const router = createRouter({
       path: '/system/menus',
       name: 'MenuMgmt',
       component: MenuMgmtView
+    },
+    {
+      path: '/system/roles',
+      name: 'RoleMgmt',
+      component: RoleMgmtView
     },
     {
       path: '/info/:type',
