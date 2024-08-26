@@ -1,13 +1,16 @@
 <template>
   <VSheet class="mb-4">
-    <div class="text-body-1 d-flex align-center mb-4">
+    <div
+      class="text-body-1 d-flex align-center"
+      :class="isFilter ? ' mb-4' : 'my-1'"
+    >
       <span class="mr-1"> {{ mainMenu.menuName }} > </span>
       <span class="font-weight-bold text-primary">
         {{ currentPage.menuName }}
       </span>
     </div>
 
-    <div class="d-flex align-end justify-space-between">
+    <div v-if="isFilter" class="d-flex align-end justify-space-between">
       <!-- <div class="d-flex w-100 align-center ga-4 py-2 mb-3 px-4"> -->
       <VRow>
         <VCol
@@ -106,6 +109,10 @@ import { storeToRefs } from 'pinia';
 const { mainMenu, currentPage } = storeToRefs(useMenu());
 
 const props = defineProps({
+  isFilter: {
+    type: Boolean,
+    default: true
+  },
   filters: {
     type: Array,
     default: () => []
