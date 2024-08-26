@@ -1,5 +1,9 @@
 <template>
-  <ContentHeader v-model:filters="searchFilters" />
+  <ContentHeader
+    v-model:filters="searchFilters"
+    @fetchData="setMenuList"
+    @refresh="refresh"
+  />
 
   <div class="d-flex overflow-hidden h-100 ga-4" style="padding-bottom: 1px">
     <ContentBody title="메뉴" min-width="300">
@@ -54,7 +58,18 @@
       </VList>
     </ContentBody>
 
-    <ContentBody>
+    <ContentBody
+      :headers="headers"
+      v-model:items="items"
+      v-model:addItems="addItems"
+      v-model:selectedItems="selectedItems"
+      v-model:default-item-value="defaultItemValue"
+      canAdd
+      canDelete
+      canSave
+      @saveHandler="saveHandler"
+      @deleteHandler="deleteHandler"
+    >
       <VDataTable
         class="h-100 overflow-auto"
         v-model="selectedItems"
@@ -139,13 +154,15 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUser } from '@/stores/useUser';
-import { getMenus } from '@/api/system/menus';
+import { getMenus, saveMenus, deleteMenus } from '@/api/system/menus';
 import { useToast } from '@/stores/useToast';
 
 const { projectList } = storeToRefs(useUser());
+
+const activeProjectCode = ref(null);
 
 const activeTab = ref(null);
 const allMenuList = ref([]);
@@ -155,6 +172,15 @@ const loading = ref(false);
 const selectedItems = ref([]);
 const items = ref([]);
 const addItems = ref([]);
+const defaultItemValue = computed(() => {
+  const isProject = activeTab.value?.includes('SCR') ? false : true;
+  return [
+    { key: 'projectCode', value: activeProjectCode.value },
+    { key: 'parentMenuCode', value: activeTab.value },
+    { key: 'level', value: isProject ? '1' : '2' },
+    { key: 'useYn', value: 'Y' }
+  ];
+});
 
 const setProjectOptions = () => {
   const list = projectList.value.map((list) => ({
@@ -186,12 +212,43 @@ const searchFilters = ref([
   }
 ]);
 
+const searchParams = computed(() => {
+  const params = {};
+  searchFilters.value.forEach((filter) => {
+    if (filter?.value) {
+      params[filter.key] = filter.value;
+    }
+  });
+  return params;
+});
+
+const originFilters = JSON.parse(JSON.stringify(searchFilters.value));
+
+const refresh = () => {
+  // 깊은 복사로 강제로 반응성 트리거
+  searchFilters.value = JSON.parse(JSON.stringify(originFilters));
+  setMenuList();
+};
+
+const headers = [
+  { title: '메뉴 코드', key: 'menuCode' },
+  { title: '메뉴명', key: 'menuName' },
+  { title: '메뉴 설명', key: 'menuDesc' },
+  { title: '라우트', key: 'route' },
+  { title: '사용여부', key: 'useYn' },
+  { title: '정렬번호', key: 'sortNo' },
+  { title: '등록자', key: 'regNm' },
+  { title: '등록일', key: 'regDt' },
+  { title: '수정자', key: 'chgNm' },
+  { title: '수정일', key: 'chgDt' }
+];
+
 const { newToast } = useToast();
 
 const setMenuList = async () => {
   loading.value = true;
   try {
-    const res = await getMenus();
+    const res = await getMenus(searchParams.value);
     allMenuList.value = res;
 
     const result = res.reduce((acc, obj) => {
@@ -225,10 +282,61 @@ const setMenuList = async () => {
     }, []);
 
     menuList.value = result;
-
-    console.log('result', result);
   } catch (error) {
     newToast('조회에 실패했습니다.', 'error');
+  } finally {
+    loading.value = false;
+  }
+};
+
+const saveHandler = async () => {
+  loading.value = true;
+  try {
+    const params = selectedItems.value.map((item) => ({
+      menuCode: item.menuCode,
+      projectCode: item.projectCode,
+      menuName: item.menuName,
+      menuDesc: item.menuDesc,
+      parentMenuCode: item.parentMenuCode,
+      level: item.level,
+      sortNo: item.sortNo,
+      route: item.route,
+      useYn: item.useYn
+    }));
+    const res = await saveMenus({ list: params });
+
+    if (res.header.code === 200) {
+      newToast('저장되었습니다', 'success');
+      setMenuList();
+
+      selectedItems.value = [];
+    }
+  } catch (error) {
+    newToast('저장을 실패했습니다.', 'error');
+  } finally {
+    loading.value = false;
+  }
+};
+
+const deleteHandler = async () => {
+  loading.value = true;
+  try {
+    const params = selectedItems.value.map((item) => ({
+      menuCode: item.menuCode,
+      projectCode: item.projectCode
+    }));
+    const res = await deleteMenus({ list: params });
+
+    if (res.header.code === 200) {
+      newToast('삭제되었습니다', 'success');
+
+      items.value = items.value.filter(
+        (item) => !selectedItems.value.includes(item)
+      );
+      selectedItems.value = [];
+    }
+  } catch (error) {
+    newToast('삭제를 실패했습니다.', 'error');
   } finally {
     loading.value = false;
   }
@@ -237,6 +345,7 @@ const setMenuList = async () => {
 // 프로젝트 선택
 const handleProject = (selected) => {
   activeTab.value = selected;
+  activeProjectCode.value = selected;
 
   items.value = menuList.value.find(
     (menu) => menu.projectCode === selected
@@ -259,19 +368,6 @@ const handleMain = (selected) => {
 
   selectedItems.value = [];
 };
-
-const headers = [
-  { title: '메뉴 코드', key: 'menuCode' },
-  { title: '메뉴명', key: 'menuName' },
-  { title: '메뉴 설명', key: 'menuDesc' },
-  { title: '라우트', key: 'route' },
-  { title: '사용여부', key: 'useYn' },
-  { title: '정렬번호', key: 'sortNo' },
-  { title: '등록자', key: 'regNm' },
-  { title: '등록일', key: 'regDt' },
-  { title: '수정자', key: 'chgNm' },
-  { title: '수정일', key: 'chgDt' }
-];
 
 onMounted(() => {
   setMenuList();
