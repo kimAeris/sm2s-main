@@ -13,7 +13,6 @@
     canAdd
     canDelete
     canSave
-    item-key="rowId"
     @deleteHandler="deleteHandler"
     @saveHandler="saveHandler"
   >
