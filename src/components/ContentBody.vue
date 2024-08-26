@@ -1,7 +1,10 @@
 <template>
   <VSheet class="flex-grow-1 overflow-hidden">
     <div class="d-flex flex-column ga-2 h-100">
-      <div class="d-flex align-center justify-space-between">
+      <div
+        class="d-flex align-center justify-space-between"
+        style="height: 36px"
+      >
         <h6>{{ title }}</h6>
         <div class="d-flex ga-3">
           <VBtn
