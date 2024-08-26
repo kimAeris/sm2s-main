@@ -1,3 +1,10 @@
+export const isFailed = (res) => {
+  let result = false;
+  if (res.status < 200 && res.status > 299) result = true;
+  if (res.data.header.code !== 200) result = true;
+  return result;
+};
+
 export const getIcon = (type) => {
   let icon;
   switch (type) {

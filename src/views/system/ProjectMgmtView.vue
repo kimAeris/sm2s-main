@@ -181,7 +181,7 @@ const fetchData = async () => {
   loading.value = true;
   try {
     const res = await getProjects(searchParams.value);
-    items.value = res.body.list;
+    items.value = res;
   } catch (error) {
     newToast('조회에 실패했습니다.', 'error');
   } finally {
@@ -230,7 +230,7 @@ const saveHandler = async () => {
     if (res.header.code === 200) {
       newToast('저장되었습니다', 'success');
       selectedItems.value = [];
-    } else throw res;
+    }
   } catch (error) {
     newToast('저장을 실패했습니다.', 'error');
   } finally {
@@ -254,7 +254,7 @@ const deleteHandler = async () => {
         (item) => !selectedItems.value.includes(item)
       );
       selectedItems.value = [];
-    } else throw res;
+    }
   } catch (error) {
     newToast('삭제를 실패했습니다.', 'error');
   } finally {

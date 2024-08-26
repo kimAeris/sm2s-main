@@ -1,11 +1,11 @@
 import { menus } from '..';
+import { isFailed } from '@/utils/common';
 
 export const getMenus = async (params) => {
   try {
     const res = await menus.get('', { params });
 
-    if (res.data.header.code !== 200) throw res;
-
+    if (isFailed(res)) throw res;
     return res.data.body.list;
   } catch (error) {
     throw error;

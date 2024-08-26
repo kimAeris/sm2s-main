@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const create = (baseURL) => {
   const instance = axios.create({
-    baseURL: `${import.meta.env.VITE_API_BASE_URL}/portal${baseURL}`,
+    baseURL: `${import.meta.env.VITE_APP}/portal${baseURL}`,
     withCredentials: true
   });
 
@@ -28,3 +28,4 @@ const create = (baseURL) => {
 export const common = create('/');
 export const adminUser = create('/admin/users');
 export const projects = create('/admin/projects');
+export const menus = create('/admin/menus');
