@@ -2,17 +2,17 @@
   <VNavigationDrawer v-model="sideBar" temporary>
     <VList class="py-2">
       <VListItem
-        v-for="(item, i) in mainMenu.subMenu"
+        v-for="(item, i) in mainMenu?.subMenu"
         :key="i"
         :value="item"
-        :active="item.menuCd === currentPage.menuCd"
+        :active="item.menuCode === currentPage.menuCode"
         color="primary"
         class="px-4 py-3"
         @click="moveRoute(item)"
       >
         <VListItemTitle>
           <span class="text-subtitle-2">
-            {{ item.menuNm }}
+            {{ item.menuName }}
           </span>
         </VListItemTitle>
       </VListItem>
@@ -36,6 +36,6 @@ const moveRoute = (menu) => {
   currentPage.value = menu;
 
   sideBar.value = false;
-  router.push({ path: menu.path });
+  router.push({ path: menu.route });
 };
 </script>

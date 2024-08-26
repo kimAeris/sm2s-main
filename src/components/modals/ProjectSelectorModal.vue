@@ -21,7 +21,6 @@
       <VCardText class="d-grid overflow-hidden">
         <VDataTable
           class="h-100 overflow-auto"
-          v-model="selectedItems"
           :headers="headers"
           :items="projectList"
           :loading="loading"
@@ -38,6 +37,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import router from '@/router';
 import { useMenu } from '@/stores/useMenu';
 import { useUser } from '@/stores/useUser';
@@ -52,6 +52,8 @@ defineProps({
     required: true
   }
 });
+
+const loading = ref(false);
 
 const emit = defineEmits(['close']);
 
@@ -74,15 +76,15 @@ const selectProject = (selected) => {
   project.value = selected;
   projectMenu.value = menuList;
   mainMenu.value = menuList.mainMenu.find((menu) =>
-    menu.subMenu.some((sub) => sub.path === '/system/projects')
+    menu?.subMenu.some((sub) => sub.route === selected.homeUrl)
   );
 
-  currentPage.value = mainMenu.value.subMenu.find(
-    (menu) => menu.path === menuList.homeUrl
+  currentPage.value = mainMenu.value?.subMenu.find(
+    (menu) => menu.route === selected.homeUrl
   );
 
   close();
-  router.push({ path: menuList.homeUrl });
+  router.push({ path: selected.homeUrl });
 };
 
 const close = () => {

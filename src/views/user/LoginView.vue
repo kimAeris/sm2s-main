@@ -152,7 +152,7 @@ const handleLogin = async () => {
         passwordModal.value = true;
       } else {
         if (projectList.value.length > 1) {
-          setMenu();
+          setMenu(res.body.menuList);
           openProjectModal();
         } else {
           router.replace({ name: 'CommonCode' });
@@ -169,7 +169,39 @@ const handleLogin = async () => {
 };
 
 // TODO: 임의 메뉴 세팅
-const setMenu = () => {
+const setMenu = (res) => {
+  const result = res.reduce((acc, obj) => {
+    let project = acc.find((p) => p.projectCode === obj.projectCode);
+
+    if (!project) {
+      project = {
+        projectCode: obj.projectCode,
+        projectName: obj.projectName,
+        mainMenu: []
+      };
+      acc.push(project);
+    }
+
+    if (obj.level === '1') {
+      project.mainMenu.push({
+        ...obj,
+        subMenu: []
+      });
+    } else if (obj.level === '2') {
+      const mainMenu = project.mainMenu.find(
+        (item) => item.menuCode === obj.parentMenuCode
+      );
+
+      if (mainMenu) {
+        mainMenu.subMenu.push(obj);
+      }
+    }
+
+    return acc;
+  }, []);
+
+  menus.value = result;
+  /*
   menus.value = [
     {
       projectCode: '1',
@@ -245,6 +277,7 @@ const setMenu = () => {
       ]
     }
   ];
+  */
 };
 
 const setLoginInfo = () => {
