@@ -100,7 +100,7 @@ const props = defineProps({
   },
   itemKey: {
     type: String,
-    required: true
+    default: 'rowId'
   }
 });
 
