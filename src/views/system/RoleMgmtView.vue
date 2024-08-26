@@ -37,7 +37,7 @@
           hide-details
         />
         <span v-else>
-          {{ projectList.find((project) => project.value === value).title }}
+          {{ projectList.find((project) => project.value === value)?.title }}
         </span>
       </template>
 
