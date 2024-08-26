@@ -113,7 +113,8 @@ const emits = defineEmits([
 ]);
 
 const defaultItems = props.headers.reduce((acc, header) => {
-  acc[header.key] = '';
+  if (header.key === 'useYn') acc[header.key] = 'Y';
+  else acc[header.key] = '';
   return acc;
 }, {});
 
