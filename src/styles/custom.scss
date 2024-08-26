@@ -5,6 +5,11 @@
   $body-font-family: ('Spoqa Han Sans Neo', 'Noto Sans KR', sans-serif)
 );
 
+.v-list-item,
+.v-list-group {
+  width: 100% !important;
+}
+
 .v-btn--size-default {
   --v-btn-size: 1rem !important;
 }

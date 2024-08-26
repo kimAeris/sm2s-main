@@ -3,30 +3,54 @@
 
   <div class="d-flex overflow-hidden h-100 ga-4" style="padding-bottom: 1px">
     <ContentBody title="메뉴" min-width="300">
-      <VList v-model="list">
-        <VListItem title="전체 목록" value="all" @click="handleAll">
-        </VListItem>
-        <VListGroup
-          v-for="menus in menuList"
-          :key="menus.projectCode"
-          :value="menus.projectName"
-        >
-          <template v-slot:activator="{ props }">
-            <VListItem
-              v-bind="props"
-              :title="menus.projectName"
-              @click="handleProject(menus.projectCode)"
-            ></VListItem>
-          </template>
+      <VList color="primary">
+        <VSkeletonLoader :loading="loading" type="list-item-two-line">
+          <VListGroup
+            v-for="menus in menuList"
+            :key="menus.projectCode"
+            :value="menus.projectCode"
+            :v-slot:activator="true"
+          >
+            <template #activator="activator">
+              <VListItem
+                rounded="lg"
+                :value="menus.projectCode"
+                :active="activeTab === menus.projectCode"
+                @click="handleProject(menus.projectCode)"
+              >
+                {{ menus.projectName }}
 
-          <VListItem
-            v-for="menu in menus.mainMenu"
-            :key="menu.menuCode"
-            :title="menu.menuName"
-            :value="menu.menuCode"
-            @click="handleMain(menu)"
-          ></VListItem>
-        </VListGroup>
+                <template #append>
+                  <VBtn
+                    v-if="activator.isOpen"
+                    v-bind="activator.props"
+                    icon="mdi-chevron-up"
+                    variant="text"
+                    size="small"
+                  >
+                  </VBtn>
+                  <VBtn
+                    v-else
+                    v-bind="activator.props"
+                    icon="mdi-chevron-down"
+                    variant="text"
+                    size="small"
+                  />
+                </template>
+              </VListItem>
+            </template>
+
+            <VListItem
+              v-for="menu in menus.mainMenu"
+              :active="activeTab === menu.menuCode"
+              :key="menu.menuCode"
+              :title="menu.menuName"
+              :value="menu.menuCode"
+              @click="handleMain(menu)"
+            >
+            </VListItem>
+          </VListGroup>
+        </VSkeletonLoader>
       </VList>
     </ContentBody>
 
@@ -39,6 +63,76 @@
         :loading="loading"
         show-select
       >
+        <template #item.menuName="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.menuName"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
+
+        <template #item.menuDesc="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.menuDesc"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
+
+        <template #item.route="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.route"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
+
+        <template #item.useYn="{ item, value }">
+          <VSwitch
+            v-if="selectedItems.includes(item)"
+            v-model="item.useYn"
+            false-value="N"
+            true-value="Y"
+            color="secondary"
+            hide-details
+          >
+          </VSwitch>
+
+          <span v-else>
+            <VBadge :color="value === 'Y' ? 'success' : ''" inline dot />
+
+            {{ value === 'Y' ? '사용' : '미사용' }}
+          </span>
+        </template>
+
+        <template #item.sortNo="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.sortNo"
+            variant="outlined"
+            density="compact"
+            type="number"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
       </VDataTable>
     </ContentBody>
   </div>
@@ -49,10 +143,11 @@ import { onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUser } from '@/stores/useUser';
 import { getMenus } from '@/api/system/menus';
+import { useToast } from '@/stores/useToast';
 
 const { projectList } = storeToRefs(useUser());
 
-const list = ref('all');
+const activeTab = ref(null);
 const allMenuList = ref([]);
 const menuList = ref([]);
 
@@ -91,7 +186,10 @@ const searchFilters = ref([
   }
 ]);
 
+const { newToast } = useToast();
+
 const setMenuList = async () => {
+  loading.value = true;
   try {
     const res = await getMenus();
     allMenuList.value = res;
@@ -130,21 +228,27 @@ const setMenuList = async () => {
 
     console.log('result', result);
   } catch (error) {
-    console.error(error);
+    newToast('조회에 실패했습니다.', 'error');
+  } finally {
+    loading.value = false;
   }
 };
 
-const handleAll = () => {
-  items.value = allMenuList.value;
-};
-
+// 프로젝트 선택
 const handleProject = (selected) => {
+  activeTab.value = selected;
+
   items.value = menuList.value.find(
     (menu) => menu.projectCode === selected
   ).mainMenu;
+
+  selectedItems.value = [];
 };
 
+// 메뉴 선택
 const handleMain = (selected) => {
+  activeTab.value = selected.menuCode;
+
   const mainMenu = menuList.value.find(
     (item) => item.projectCode === selected.projectCode
   ).mainMenu;
@@ -152,12 +256,15 @@ const handleMain = (selected) => {
   items.value = mainMenu.find(
     (item) => item.menuCode === selected.menuCode
   ).subMenu;
+
+  selectedItems.value = [];
 };
 
 const headers = [
   { title: '메뉴 코드', key: 'menuCode' },
   { title: '메뉴명', key: 'menuName' },
   { title: '메뉴 설명', key: 'menuDesc' },
+  { title: '라우트', key: 'route' },
   { title: '사용여부', key: 'useYn' },
   { title: '정렬번호', key: 'sortNo' },
   { title: '등록자', key: 'regNm' },
