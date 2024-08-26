@@ -213,17 +213,16 @@ const addItems = ref([]);
 const saveHandler = async () => {
   loading.value = true;
   try {
-    const params = selectedItems.value.map((item) => {
-      if (item.rowId) {
-        delete item.rowId;
-        delete item.projectCode;
-        delete item.regDt;
-        delete item.regNm;
-        delete item.chgNm;
-        delete item.chgDt;
-      }
-      return item;
-    });
+    const params = selectedItems.value.map((item) => ({
+      projectCode: item.projectCode,
+      projectName: item.projectName,
+      projectDesc: item.projectDesc,
+      smwpYn: item.smwpYn,
+      url: item.url,
+      homeRoute: item.homeRoute,
+      sortNo: item.sortNo,
+      useYn: item.useYn
+    }));
     const res = await saveProjects({ list: params });
 
     if (res.header.code === 200) {
