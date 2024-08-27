@@ -155,12 +155,8 @@
 
 <script setup>
 import { onMounted, ref, computed } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useUser } from '@/stores/useUser';
 import { getMenus, saveMenus, deleteMenus } from '@/api/system/menus';
 import { useToast } from '@/stores/useToast';
-
-const { projectList } = storeToRefs(useUser());
 
 const activeProjectCode = ref(null);
 
@@ -182,22 +178,7 @@ const defaultItemValue = computed(() => {
   ];
 });
 
-const setProjectOptions = () => {
-  const list = projectList.value.map((list) => ({
-    title: list.projectName,
-    value: list.projectCode
-  }));
-  return [{ title: '전체', value: '' }, ...list];
-};
-
 const searchFilters = ref([
-  {
-    label: '프로젝트명',
-    key: 'projectCode',
-    type: 'select',
-    value: '',
-    options: setProjectOptions()
-  },
   {
     label: '메뉴명',
     key: 'menuName',
