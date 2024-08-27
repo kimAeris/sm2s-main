@@ -138,7 +138,6 @@ const headers = ref([
     title: '프로젝트명',
     key: 'projectCode'
   },
-  { title: '권한 코드', key: 'roleCode' },
   { title: '권한명', key: 'roleName' },
   { title: '권한 설명', key: 'roleDesc' },
   { title: '사용여부', key: 'useYn' },
