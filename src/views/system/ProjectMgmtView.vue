@@ -118,6 +118,10 @@
           {{ value }}
         </span>
       </template>
+
+      <template #loading>
+        <VSkeletonLoader type="table-tbody"></VSkeletonLoader>
+      </template>
     </VDataTable>
   </ContentBody>
 

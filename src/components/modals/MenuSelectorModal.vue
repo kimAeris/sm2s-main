@@ -34,6 +34,10 @@
             {{ value }}
           </a>
         </template>
+
+        <template #loading>
+          <VSkeletonLoader type="table-tbody"></VSkeletonLoader>
+        </template>
       </VDataTable>
     </div>
   </AppModal>

@@ -180,6 +180,10 @@
           {{ value === 'Y' ? '사용' : '미사용' }}
         </div>
       </template>
+
+      <template #loading>
+        <VSkeletonLoader type="table-tbody"></VSkeletonLoader>
+      </template>
     </VDataTable>
   </ContentBody>
 </template>

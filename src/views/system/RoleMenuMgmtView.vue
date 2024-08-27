@@ -20,6 +20,10 @@
             {{ value }} {{ item.roleCode }} {{ selectedRole }}
           </a>
         </template>
+
+        <template #loading>
+          <VSkeletonLoader type="table-tbody"></VSkeletonLoader>
+        </template>
       </VDataTable>
     </ContentBody>
     <ContentBody
@@ -45,6 +49,10 @@
             hide-details
           >
           </VSwitch>
+        </template>
+
+        <template #loading>
+          <VSkeletonLoader type="table-tbody"></VSkeletonLoader>
         </template>
       </VDataTable>
     </ContentBody>

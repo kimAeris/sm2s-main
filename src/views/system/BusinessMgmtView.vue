@@ -67,7 +67,7 @@
       </template>
 
       <template #loading>
-        <VSkeletonLoader type="table-row@10" />
+        <VSkeletonLoader type="table-tbody"></VSkeletonLoader>
       </template>
     </VDataTable>
   </ContentBody>

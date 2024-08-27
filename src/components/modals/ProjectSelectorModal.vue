@@ -17,6 +17,10 @@
       <template #item.projectName="{ item, value }">
         <a class="text-secondary" @click="selectProject(item)">{{ value }}</a>
       </template>
+
+      <template #loading>
+        <VSkeletonLoader type="table-tbody"></VSkeletonLoader>
+      </template>
     </VDataTable>
   </AppModal>
 </template>
