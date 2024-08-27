@@ -34,7 +34,7 @@
             class="text-body-1"
             rounded
             :color="
-              menu.mainMenuCd === mainMenu.mainMenuCd
+              menu.menuCode === mainMenu.menuCode
                 ? 'secondary-variant'
                 : undefined
             "
