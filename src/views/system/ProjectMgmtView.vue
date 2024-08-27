@@ -61,17 +61,15 @@
           {{ value }}
         </span>
       </template>
-      <template #item.homeRoute="{ item, value }">
-        <VTextField
+      <template #item.menuName="{ item, value }">
+        <a
           v-if="selectedItems.includes(item)"
-          v-model="item.homeRoute"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
+          class="text-secondary"
+          @click="openMenuModal(item.projectCode)"
+        >
+          {{ value ? value : '(선택)' }}
+        </a>
+        <a v-else> {{ value }}</a>
       </template>
       <template #item.smwpYn="{ item, value }">
         <VSwitch
@@ -122,6 +120,14 @@
       </template>
     </VDataTable>
   </ContentBody>
+
+  <MenuSelectorModal
+    v-if="menuVisible"
+    :visible="menuVisible"
+    v-model:projectCode="selectedProjectCode"
+    @selectMenu="selectMenu"
+    @close="closeMenuModal"
+  />
 </template>
 
 <script setup>
@@ -132,6 +138,19 @@ import {
 } from '@/api/system/projects';
 import { useToast } from '@/stores/useToast';
 import { computed, onMounted, ref } from 'vue';
+import MenuSelectorModal from '@/components/modals/MenuSelectorModal.vue';
+
+const menuVisible = ref(false);
+const selectedProjectCode = ref(null);
+
+const openMenuModal = (projectCode) => {
+  selectedProjectCode.value = projectCode;
+  menuVisible.value = true;
+};
+
+const closeMenuModal = () => {
+  menuVisible.value = false;
+};
 
 const loading = ref(false);
 
@@ -193,7 +212,7 @@ const headers = [
   { title: '프로젝트명', key: 'projectName' },
   { title: '프로젝트 설명', key: 'projectDesc' },
   { title: 'Url', key: 'url' },
-  { title: '시작 화면', key: 'homeRoute' },
+  { title: '시작 화면', key: 'menuName' },
   {
     title: 'SMWP 사용 여부',
     key: 'smwpYn'
@@ -217,6 +236,7 @@ const saveHandler = async () => {
       projectCode: item.projectCode,
       projectName: item.projectName,
       projectDesc: item.projectDesc,
+      menuCode: item.menuCode,
       smwpYn: item.smwpYn,
       url: item.url,
       homeRoute: item.homeRoute,
@@ -257,6 +277,14 @@ const deleteHandler = async () => {
     newToast('삭제를 실패했습니다.', 'error');
   } finally {
     loading.value = false;
+  }
+};
+
+const selectMenu = ({ projectCode, menuCode, menuName }) => {
+  const row = items.value.find((item) => item.projectCode === projectCode);
+  if (row) {
+    row.menuCode = menuCode;
+    row.menuName = menuName;
   }
 };
 
