@@ -71,6 +71,8 @@ import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import ProjectSelector from '@/components/modals/ProjectSelectorModal.vue';
+import { useFeedback } from '@/stores/useFeedback';
+import { logout } from '@/api/common';
 
 const layoutStore = useLayout();
 const menuStore = useMenu();
@@ -110,9 +112,26 @@ const closeProjectModal = () => {
   projectModal.value = false;
 };
 
-const handleLogout = () => {
-  userStore.resetUser();
-  menuStore.resetMenu();
-  router.push({ name: 'Login' });
+const { openFeedback } = useFeedback();
+const handleLogout = async () => {
+  const feedback = await openFeedback(
+    'error',
+    'LOGOUT',
+    '로그아웃 하시겠습니까?',
+    '취소',
+    '확인'
+  );
+
+  if (!feedback) return;
+
+  try {
+    await logout();
+
+    userStore.resetUser();
+    menuStore.resetMenu();
+    router.push({ name: 'Login' });
+  } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
+  }
 };
 </script>
