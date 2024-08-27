@@ -7,6 +7,7 @@
 
   <ContentBody
     :headers="headers"
+    :buttons="buttons"
     v-model:items="items"
     v-model:addItems="addItems"
     v-model:selected-items="selectedItems"
@@ -189,7 +190,7 @@
 </template>
 
 <script setup>
-import { deleteUser, getUserList, saveUser } from '@/api/user';
+import { deleteUser, getUserList, initPassword, saveUser } from '@/api/user';
 import { useToast } from '@/stores/useToast';
 import { computed, onMounted, ref } from 'vue';
 
@@ -221,12 +222,6 @@ const searchFilters = ref([
   {
     label: '사용자명',
     key: 'userName',
-    type: 'text',
-    value: ''
-  },
-  {
-    label: '부서코드',
-    key: 'departmentCode',
     type: 'text',
     value: ''
   },
@@ -276,10 +271,41 @@ const headers = [
   { title: '퇴사여부', key: 'resignYn' },
   { title: '관리자여부', key: 'adminYn' },
   { title: '사용여부', key: 'useYn' },
+  { title: '초기화여부', key: 'initYn' },
   { title: '등록자', key: 'regNm' },
   { title: '등록일', key: 'regDt' },
   { title: '수정자', key: 'chgNm' },
   { title: '수정일', key: 'chgDt' }
+];
+
+const setInitPassword = async () => {
+  loading.value = true;
+  try {
+    const params = selectedItems.value.map((item) => ({
+      userCode: item.userCode,
+      userId: item.userId
+    }));
+    const res = await initPassword({ list: params });
+
+    if (res.header.code === 200) {
+      newToast('초기화되었습니다', 'success');
+
+      selectedItems.value = [];
+      fetchData();
+    } else throw res;
+  } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
+    newToast('초기화를 실패했습니다.', 'error');
+  } finally {
+    loading.value = false;
+  }
+};
+
+const buttons = [
+  {
+    title: '비밀번호 초기화',
+    event: setInitPassword
+  }
 ];
 
 const searchParams = computed(() => {
