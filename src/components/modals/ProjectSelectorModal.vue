@@ -1,39 +1,24 @@
 <template>
-  <VDialog
-    :model-value="visible"
-    @update:model-value="emit('close')"
-    class="h-100"
+  <AppModal
     max-width="1000"
     min-height="600"
     max-height="600"
+    title="프로젝트 목록"
+    :visible="visible"
+    @update:model-value="$emit('close')"
+    @close="$emit('close')"
   >
-    <VCard class="flex-grow-1 h-100" rounded="lg">
-      <VCardTitle class="d-flex justify-space-between align-center">
-        <div class="d-flex align-center">
-          <span class="text-h6 ml-2">프로젝트 목록</span>
-        </div>
-
-        <VBtn icon="mdi-close" variant="text" @click="close"></VBtn>
-      </VCardTitle>
-
-      <VDivider></VDivider>
-
-      <VCardText class="d-grid overflow-hidden">
-        <VDataTable
-          class="h-100 overflow-auto"
-          :headers="headers"
-          :items="projectList"
-          :loading="loading"
-        >
-          <template #item.projectName="{ item, value }">
-            <a class="text-secondary" @click="selectProject(item)">{{
-              value
-            }}</a>
-          </template>
-        </VDataTable>
-      </VCardText>
-    </VCard>
-  </VDialog>
+    <VDataTable
+      class="h-100 overflow-auto"
+      :headers="headers"
+      :items="projectList"
+      :loading="loading"
+    >
+      <template #item.projectName="{ item, value }">
+        <a class="text-secondary" @click="selectProject(item)">{{ value }}</a>
+      </template>
+    </VDataTable>
+  </AppModal>
 </template>
 
 <script setup>
@@ -42,6 +27,7 @@ import router from '@/router';
 import { useMenu } from '@/stores/useMenu';
 import { useUser } from '@/stores/useUser';
 import { storeToRefs } from 'pinia';
+import AppModal from '@/components/app/AppModal.vue';
 
 const { projectList, project } = storeToRefs(useUser());
 const { menus, projectMenu, mainMenu, currentPage } = storeToRefs(useMenu());
@@ -72,6 +58,9 @@ const selectProject = (selected) => {
   const menuList = menus.value.find(
     (menu) => String(menu.projectCode) === selected.projectCode
   );
+
+  //TODO: 임시
+  if (!selected.homeUrl) selected.homeUrl = '/system/projects';
 
   project.value = selected;
   projectMenu.value = menuList;

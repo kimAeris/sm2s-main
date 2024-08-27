@@ -1,21 +1,18 @@
 <template>
-  <VDialog>
-    <VCard rounded="lg">
+  <VDialog class="h-100" :model-value="visible">
+    <VCard class="flex-grow-1 h-100" rounded="lg">
       <VCardTitle class="d-flex justify-space-between align-center">
         <div class="d-flex align-center">
-          <!-- <VIcon icon="mdi-folder-marker" size="small"></VIcon> -->
           <span class="text-h6 ml-2">{{ title }}</span>
         </div>
 
-        <VBtn icon="mdi-close" variant="text" @click="close"></VBtn>
+        <VBtn icon="mdi-close" variant="text" @click="$emit('close')"></VBtn>
       </VCardTitle>
 
       <VDivider></VDivider>
 
-      <VCardText>
-        <VContainer>
-          <slot />
-        </VContainer>
+      <VCardText class="d-grid overflow-hidden">
+        <slot />
       </VCardText>
     </VCard>
   </VDialog>
@@ -32,10 +29,4 @@ defineProps({
     required: true
   }
 });
-
-const emit = defineEmits(['close']);
-
-const close = () => {
-  emit('close');
-};
 </script>
