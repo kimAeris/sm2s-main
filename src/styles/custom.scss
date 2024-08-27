@@ -18,12 +18,16 @@
   border-color: rgba(var(--v-border-color), 0.5) !important;
 }
 
-// 스위치 미선택시 색상
+.v-navigation-drawer__content .v-list-item {
+  border-bottom: 1px solid rgba(var(--v-theme-primary), var(--v-border-opacity)) !important;
+}
+
+// 스위치 미선택 색상
 .v-selection-control--disabled.v-selection-control--dirty .v-switch__track {
   background-color: rgb(var(--v-theme-secondary)) !important;
 }
 
-// 스위치 미선택시 불투명도
+// 스위치 미선택 불투명도
 .v-selection-control--disabled.v-selection-control--density-default {
   opacity: 0.7 !important;
 }
