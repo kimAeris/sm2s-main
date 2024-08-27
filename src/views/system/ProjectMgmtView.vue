@@ -82,11 +82,11 @@
         >
         </VSwitch>
 
-        <span v-else>
+        <div class="badge-text" v-else>
           <VBadge :color="value === 'Y' ? 'success' : ''" inline dot />
 
           {{ value === 'Y' ? '사용' : '미사용' }}
-        </span>
+        </div>
       </template>
       <template #item.useYn="{ item, value }">
         <VSwitch
@@ -99,11 +99,11 @@
         >
         </VSwitch>
 
-        <span v-else>
+        <div class="badge-text" v-else>
           <VBadge :color="value === 'Y' ? 'success' : ''" inline dot />
 
           {{ value === 'Y' ? '사용' : '미사용' }}
-        </span>
+        </div>
       </template>
       <template #item.sortNo="{ item, value }">
         <VTextField

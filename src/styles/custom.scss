@@ -13,13 +13,24 @@
 .v-btn--size-default {
   --v-btn-size: 1rem !important;
 }
-
+.v-btn.text-error {
+  border-color: rgba(var(--v-theme-error), 0.7) !important;
+}
 .v-btn--variant-outlined {
   border-color: rgba(var(--v-border-color), 0.5) !important;
 }
 
 .v-navigation-drawer__content .v-list-item {
   border-bottom: 1px solid rgba(var(--v-theme-primary), var(--v-border-opacity)) !important;
+}
+
+.v-badge--inline .v-badge__wrapper {
+  display: flex !important;
+}
+
+.v-badge__badge {
+  width: 7px !important;
+  height: 7px !important;
 }
 
 // 스위치 미선택 색상

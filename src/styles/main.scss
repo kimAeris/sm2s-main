@@ -26,6 +26,13 @@ body::-webkit-scrollbar {
   display: grid;
 }
 
+// 뱃지+텍스트 정렬
+.badge-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 a {
   text-decoration: none;
   color: inherit;

@@ -70,11 +70,12 @@
                   "
                   inline
                   dot
-                ></VBadge>
+                >
+                </VBadge>
               </template>
               <template #item="{ props, item }">
                 <VListItem v-bind="props" :title="undefined">
-                  <div class="d-flex align-center ga-2">
+                  <div class="badge-text">
                     <VBadge :color="item.raw?.status" inline dot></VBadge>
                     <span> {{ item.raw.title }}</span>
                   </div>
