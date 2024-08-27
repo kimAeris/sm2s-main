@@ -17,6 +17,7 @@
           >
             <template #activator="activator">
               <VListItem
+                :id="`list-${menus.projectCode}`"
                 rounded="lg"
                 :value="menus.projectCode"
                 :active="activeTab === menus.projectCode"
@@ -46,6 +47,7 @@
 
             <VListItem
               v-for="menu in menus.mainMenu"
+              :id="`list-${menus.menuCode}`"
               :active="activeTab === menu.menuCode"
               :key="menu.menuCode"
               :title="menu.menuName"
@@ -289,6 +291,11 @@ const saveHandler = async () => {
     if (res.header.code === 200) {
       newToast('저장되었습니다', 'success');
       setMenuList();
+
+      const tabEl = document.querySelector(`list-${activeTab.value}`);
+      if (tabEl) {
+        tabEl.click(); // DOM 요소에 대해 직접 클릭 이벤트 트리거
+      }
 
       selectedItems.value = [];
     }
