@@ -36,6 +36,8 @@ const moveRoute = (menu) => {
   currentPage.value = menu;
 
   sideBar.value = false;
-  router.push({ path: menu.route });
+
+  if (menu.route) router.push({ path: menu.route });
+  else router.push({ path: '/developing' });
 };
 </script>

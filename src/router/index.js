@@ -5,7 +5,9 @@ const UserMgmtView = () => import('@/views/system/UserMgmtView.vue');
 const MenuMgmtView = () => import('@/views/system/MenuMgmtView.vue');
 const RoleMgmtView = () => import('@/views/system/RoleMgmtView.vue');
 const RoleMenuMgmtView = () => import('@/views/system/RoleMenuMgmtView.vue');
+const UserRolesMgmtView = () => import('@/views/system/UserRolesMgmtView.vue');
 const IframeView = () => import('@/views/common/IframeView.vue');
+const DevelopingView = () => import('@/views/common/DevelopingView.vue');
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -42,6 +44,11 @@ const router = createRouter({
       component: RoleMenuMgmtView
     },
     {
+      path: '/system/userRoles',
+      name: 'UserRolesMgmt',
+      component: UserRolesMgmtView
+    },
+    {
       path: '/info/:type',
       name: 'ClientMgmt',
       component: IframeView,
@@ -59,6 +66,10 @@ const router = createRouter({
       props: {
         url: `http://221.151.122.208:11005/?Pro=%EA%B3%B5%EB%B0%A9#BI_002`
       }
+    },
+    {
+      path: '/developing',
+      component: DevelopingView
     }
   ]
 });
