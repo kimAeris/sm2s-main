@@ -11,7 +11,7 @@
 
       <VDivider></VDivider>
 
-      <VCardText class="d-grid overflow-hidden">
+      <VCardText class="d-grid overflow-hidden bg-background pa-5">
         <slot />
       </VCardText>
     </VCard>
