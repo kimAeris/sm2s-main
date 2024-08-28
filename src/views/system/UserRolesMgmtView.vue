@@ -7,7 +7,7 @@
   <ContentHeader :is-filter="false" />
 
   <div class="content-body-row">
-    <ContentBody title="유저" max-width="560">
+    <ContentBody title="사용자" max-width="560">
       <VDataTable
         class="h-100 overflow-auto"
         :headers="userHeaders"
@@ -131,7 +131,7 @@ const headers = [
 const fetchUserData = async () => {
   userLoading.value = true;
   try {
-    const res = await getUserList();
+    const res = await getUserList({ adminYn: 'N' });
     userItems.value = res;
 
     selectUser(res[0].userCode);
