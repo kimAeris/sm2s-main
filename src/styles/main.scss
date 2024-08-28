@@ -18,6 +18,15 @@ body::-webkit-scrollbar {
   height: calc(100vh - 52px);
 }
 
+// Content-body 부모
+.content-body-row {
+  display: flex;
+  overflow: hidden;
+  height: 100%;
+  gap: 16px;
+  padding-bottom: 1px;
+}
+
 .nowrap {
   white-space: nowrap;
 }

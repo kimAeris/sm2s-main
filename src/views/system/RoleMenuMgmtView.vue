@@ -1,6 +1,6 @@
 <template>
   <ContentHeader :is-filter="false" />
-  <div class="d-flex overflow-hidden h-100 ga-4" style="padding-bottom: 1px">
+  <div class="content-body-row">
     <ContentBody title="권한" max-width="600">
       <VDataTable
         class="h-100 overflow-auto"
