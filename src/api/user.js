@@ -4,7 +4,7 @@ export const getUserList = async (params) => {
   try {
     const res = await adminUser.get('', { params });
 
-    return res.data;
+    return res.data.body.list;
   } catch (error) {
     throw error;
   }
