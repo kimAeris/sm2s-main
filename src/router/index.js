@@ -5,7 +5,7 @@ const UserMgmtView = () => import('@/views/system/UserMgmtView.vue');
 const MenuMgmtView = () => import('@/views/system/MenuMgmtView.vue');
 const RoleMgmtView = () => import('@/views/system/RoleMgmtView.vue');
 const RoleMenuMgmtView = () => import('@/views/system/RoleMenuMgmtView.vue');
-// const UserRolesMgmtView = () => import('@/views/system/UserRolesMgmtView.vue');
+const UserRolesMgmtView = () => import('@/views/system/UserRolesMgmtView.vue');
 const CompanyMgmtView = () => import('@/views/system/CompanyMgmtView.vue');
 const IframeView = () => import('@/views/common/IframeView.vue');
 const DevelopingView = () => import('@/views/common/DevelopingView.vue');
@@ -44,11 +44,11 @@ const router = createRouter({
       name: 'RoleMenuMgmt',
       component: RoleMenuMgmtView
     },
-    // {
-    //   path: '/system/userRoles',
-    //   name: 'UserRolesMgmt',
-    //   component: UserRolesMgmtView
-    // },
+    {
+      path: '/system/userRoles',
+      name: 'UserRolesMgmt',
+      component: UserRolesMgmtView
+    },
     {
       path: '/system/companys',
       name: 'CompanyMgmt',
