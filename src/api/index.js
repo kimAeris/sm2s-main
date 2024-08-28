@@ -26,8 +26,10 @@ const create = (baseURL) => {
 };
 
 export const common = create('/');
+
 export const adminUser = create('/admin/users');
 export const projects = create('/admin/projects');
 export const menus = create('/admin/menus');
 export const roles = create('/admin/roles');
 export const roleMenus = create('/admin/role-menus');
+export const company = create('/admin/companys');
