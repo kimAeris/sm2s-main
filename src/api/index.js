@@ -1,9 +1,11 @@
 import { useUser } from '@/stores/useUser';
 import axios from 'axios';
 
+const API = import.meta.env.VITE_APP;
+
 const create = (baseURL) => {
   const instance = axios.create({
-    baseURL: `${import.meta.env.VITE_APP}/portal${baseURL}`,
+    baseURL: `${API}/portal${baseURL}`,
     withCredentials: true
   });
 
@@ -21,6 +23,34 @@ const create = (baseURL) => {
     }
     return req;
   });
+
+  instance.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async (error) => {
+      // 토큰 만료시 재발급
+      if (error.response.status === 401) {
+        try {
+          const {
+            data: {
+              body: { Authorization }
+            }
+          } = await axios.post(`${API}/portal/reissue`, {});
+
+          if (Authorization) {
+            const userStore = useUser();
+            error.config.headers.Authorization = userStore.accessToken =
+              Authorization;
+            return await axios.request(error.config);
+          }
+        } catch (error) {
+          if (import.meta.env.DEV) console.error(error);
+        }
+      }
+      return Promise.reject(error);
+    }
+  );
 
   return instance;
 };
