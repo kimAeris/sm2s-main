@@ -326,7 +326,7 @@ const fetchData = async () => {
   loading.value = true;
   try {
     const res = await getUserList(searchParams.value);
-    items.value = res.body.list;
+    items.value = res;
   } catch (error) {
     if (import.meta.env.DEV) console.error(error);
     newToast(error, 'error');
