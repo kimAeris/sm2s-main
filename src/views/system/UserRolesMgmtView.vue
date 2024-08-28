@@ -7,7 +7,7 @@
   <ContentHeader :is-filter="false" />
 
   <div class="content-body-row">
-    <ContentBody title="유저" min-width="500" max-width="520">
+    <ContentBody title="유저" max-width="560">
       <VDataTable
         class="h-100 overflow-auto"
         :headers="userHeaders"
@@ -33,7 +33,14 @@
         </template>
       </VDataTable>
     </ContentBody>
-    <ContentBody :headers="headers" v-model:items="items" can-delete can-save>
+
+    <ContentBody
+      :headers="headers"
+      v-model:items="items"
+      v-model:selected-items="selectedItems"
+      can-save
+      @save-handler="saveHandler"
+    >
       <VDataTable
         class="h-100 overflow-auto"
         v-model="selectedItems"
@@ -43,6 +50,17 @@
         return-object
         show-select
       >
+        <template #item.grantYn="{ item }">
+          <VSwitch
+            v-model="item.grantYn"
+            :disabled="!selectedItems.includes(item)"
+            false-value="N"
+            true-value="Y"
+            hide-details
+          >
+          </VSwitch>
+        </template>
+
         <template #loading>
           <VSkeletonLoader type="table-tbody"></VSkeletonLoader>
         </template>
@@ -55,7 +73,7 @@
 import { onMounted, ref } from 'vue';
 import { useToast } from '@/stores/useToast';
 import { getUserList } from '@/api/user';
-import { getUserRoles } from '@/api/system/userRoles';
+import { getUserRoles, saveUserRoles } from '@/api/system/userRoles';
 
 const { newToast } = useToast();
 
@@ -135,6 +153,27 @@ const fetchData = async (userCode) => {
     newToast('조회에 실패했습니다.', 'error');
   } finally {
     loading.value = false;
+  }
+};
+
+const saveHandler = async () => {
+  try {
+    const params = selectedItems.value.map((item) => ({
+      userCode: selectedUserCode.value,
+      roleCode: item.roleCode,
+      grantYn: item.grantYn
+    }));
+    const res = await saveUserRoles({ list: params });
+
+    if (res.header.code === 200) {
+      newToast('저장되었습니다', 'success');
+      fetchUserData();
+
+      selectedItems.value = [];
+    }
+  } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
+    newToast(error, 'error');
   }
 };
 
