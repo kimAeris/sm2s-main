@@ -15,262 +15,264 @@
     @delete-handler="deleteHandler"
     @save-handler="saveHandler"
   >
-    <VDataTable
-      class="h-100 overflow-auto"
-      v-model="selectedItems"
-      :headers="headers"
-      :items="items"
-      :loading="loading"
-      return-object
-      show-select
-    >
-      <template #item.businessNumber="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item) && item.rowId"
-          style="min-width: 140px !important"
-          v-model="item.businessNumber"
-          placeholder="000-00-00000"
-          maxlength="12"
-          variant="outlined"
-          density="compact"
-          hide-details
-          @input="setBusinessNumber($event, item)"
-        />
-        <!-- :rules="[businessRules]" -->
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+    <VForm ref="form" validate-on="input">
+      <VDataTable
+        class="h-100 overflow-auto"
+        v-model="selectedItems"
+        :headers="headers"
+        :items="items"
+        :loading="loading"
+        return-object
+        show-select
+      >
+        <template #item.businessNumber="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item) && item.rowId"
+            style="min-width: 140px !important"
+            v-model="item.businessNumber"
+            placeholder="000-00-00000"
+            maxlength="12"
+            variant="outlined"
+            density="compact"
+            hide-details
+            :rules="[businessRules]"
+            @input="setBusinessNumber($event, item)"
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.companyName="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.companyName"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.companyName="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.companyName"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.companyAlias="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.companyAlias"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.companyAlias="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.companyAlias"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.ceo="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.ceo"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.ceo="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.ceo"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.businessType="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.businessType"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.businessType="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.businessType"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.item="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item['item']"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.item="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item['item']"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.postalCode="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.postalCode"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.postalCode="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.postalCode"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.address="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.address"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.address="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.address"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.detailedAddress="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.detailedAddress"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
+        <template #item.detailedAddress="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.detailedAddress"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
 
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.openingDate="{ item, value }">
-        <AppDatePicker
-          v-if="selectedItems.includes(item)"
-          v-model="item.openingDate"
-        />
+        <template #item.openingDate="{ item, value }">
+          <AppDatePicker
+            v-if="selectedItems.includes(item)"
+            v-model="item.openingDate"
+          />
 
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.corporateNumber="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.corporateNumber"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.corporateNumber="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.corporateNumber"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.phoneNumber="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.phoneNumber"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.phoneNumber="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.phoneNumber"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.faxNumber="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.faxNumber"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.faxNumber="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.faxNumber"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.email="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.email"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.email="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.email"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.manager="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.manager"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.manager="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.manager"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.managerPhoneNumber="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.managerPhoneNumber"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.managerPhoneNumber="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.managerPhoneNumber"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.website="{ item, value }">
-        <VTextField
-          v-if="selectedItems.includes(item)"
-          v-model="item.website"
-          variant="outlined"
-          density="compact"
-          hide-details
-        />
-        <span v-else>
-          {{ value }}
-        </span>
-      </template>
+        <template #item.website="{ item, value }">
+          <VTextField
+            v-if="selectedItems.includes(item)"
+            v-model="item.website"
+            variant="outlined"
+            density="compact"
+            hide-details
+          />
+          <span v-else>
+            {{ value }}
+          </span>
+        </template>
 
-      <template #item.useYn="{ item, value }">
-        <VSwitch
-          v-if="selectedItems.includes(item)"
-          v-model="item.useYn"
-          false-value="N"
-          true-value="Y"
-          color="secondary"
-          hide-details
-        >
-        </VSwitch>
+        <template #item.useYn="{ item, value }">
+          <VSwitch
+            v-if="selectedItems.includes(item)"
+            v-model="item.useYn"
+            false-value="N"
+            true-value="Y"
+            color="secondary"
+            hide-details
+          >
+          </VSwitch>
 
-        <div class="badge-text" v-else>
-          <VBadge :color="value === 'Y' ? 'success' : ''" inline dot />
+          <div class="badge-text" v-else>
+            <VBadge :color="value === 'Y' ? 'success' : ''" inline dot />
 
-          {{ value === 'Y' ? '사용' : '미사용' }}
-        </div>
-      </template>
+            {{ value === 'Y' ? '사용' : '미사용' }}
+          </div>
+        </template>
 
-      <template #loading>
-        <VSkeletonLoader type="table-tbody"></VSkeletonLoader>
-      </template>
-    </VDataTable>
+        <template #loading>
+          <VSkeletonLoader type="table-tbody"></VSkeletonLoader>
+        </template>
+      </VDataTable>
+    </VForm>
   </ContentBody>
 </template>
 
@@ -285,7 +287,9 @@ import {
 
 import AppDatePicker from '@/components/app/AppDatePicker.vue';
 import { formatBusinessNumber } from '@/utils/common';
+import { validBusinessNumber } from '@/utils/regex';
 
+const form = ref(null);
 const loading = ref(false);
 const selectedItems = ref([]);
 const items = ref([]);
@@ -371,9 +375,25 @@ const fetchData = async () => {
 const setBusinessNumber = (event, item) => {
   item.businessNumber = formatBusinessNumber(event.target);
 };
-// const businessRules = (v) =>
+
+const businessRules = (v) => validBusinessNumber(v);
+
+const checkValidForm = async () => {
+  if (form.value) {
+    const { valid } = await form.value.validate();
+
+    if (!valid) {
+      newToast('사업자번호를 확인해주세요', 'error');
+      return false;
+    }
+  }
+  return true;
+};
 
 const saveHandler = async () => {
+  const isValid = await checkValidForm();
+  if (!isValid) return;
+
   loading.value = true;
   try {
     const params = selectedItems.value.map((item) => ({
