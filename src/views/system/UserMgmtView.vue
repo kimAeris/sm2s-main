@@ -333,6 +333,7 @@ const fetchData = async () => {
     const res = await getUserList(searchParams.value);
     items.value = res.body.list;
   } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
     newToast('조회에 실패했습니다.', 'error');
   } finally {
     loading.value = false;
@@ -362,6 +363,7 @@ const saveHandler = async () => {
       fetchData();
     } else throw res;
   } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
     newToast('저장을 실패했습니다.', 'error');
   } finally {
     loading.value = false;
@@ -385,6 +387,7 @@ const deleteHandler = async () => {
       selectedItems.value = [];
     } else throw res;
   } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
     newToast('삭제를 실패했습니다.', 'error');
   } finally {
     loading.value = false;

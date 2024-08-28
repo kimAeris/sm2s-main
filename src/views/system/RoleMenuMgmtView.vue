@@ -90,6 +90,7 @@ const getRolesData = async () => {
 
     getMenusData(res[0].projectCode, res[0].roleCode);
   } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
     newToast('조회에 실패했습니다.', 'error');
   } finally {
     roleLoading.value = false;
@@ -124,6 +125,7 @@ const getMenusData = async (projectCode, roleCode) => {
     });
     menuItems.value = res;
   } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
     newToast('조회에 실패했습니다.', 'error');
   } finally {
     menuLoading.value = false;
@@ -147,6 +149,7 @@ const saveHandler = async () => {
       selectedItems.value = [];
     }
   } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
     newToast('저장을 실패했습니다.', 'error');
   }
 };

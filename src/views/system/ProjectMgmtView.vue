@@ -205,6 +205,7 @@ const fetchData = async () => {
     const res = await getProjects(searchParams.value);
     items.value = res;
   } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
     newToast('조회에 실패했습니다.', 'error');
   } finally {
     loading.value = false;
@@ -251,12 +252,14 @@ const saveHandler = async () => {
 
     if (res.header.code === 200) {
       newToast('저장되었습니다', 'success');
+
+      fetchData();
       selectedItems.value = [];
     }
   } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
     newToast('저장을 실패했습니다.', 'error');
   } finally {
-    fetchData();
     loading.value = false;
   }
 };
@@ -278,6 +281,7 @@ const deleteHandler = async () => {
       selectedItems.value = [];
     }
   } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
     newToast('삭제를 실패했습니다.', 'error');
   } finally {
     loading.value = false;
