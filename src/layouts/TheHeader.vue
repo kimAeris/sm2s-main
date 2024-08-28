@@ -115,7 +115,7 @@ const closeProjectModal = () => {
 const { openFeedback } = useFeedback();
 const handleLogout = async () => {
   const feedback = await openFeedback(
-    'error',
+    'info',
     'LOGOUT',
     '로그아웃 하시겠습니까?',
     '취소',

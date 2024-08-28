@@ -26,6 +26,9 @@ export const getIcon = (type) => {
     case 'success':
       icon = 'mdi-check-circle';
       break;
+    case 'info':
+      icon = 'mdi-information-variant-circle';
+      break;
   }
   return icon;
 };
