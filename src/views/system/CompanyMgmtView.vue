@@ -26,12 +26,17 @@
     >
       <template #item.businessNumber="{ item, value }">
         <VTextField
-          v-if="selectedItems.includes(item)"
+          v-if="selectedItems.includes(item) && item.rowId"
+          style="min-width: 140px !important"
           v-model="item.businessNumber"
+          placeholder="000-00-00000"
+          maxlength="12"
           variant="outlined"
           density="compact"
           hide-details
+          @input="setBusinessNumber($event, item)"
         />
+        <!-- :rules="[businessRules]" -->
         <span v-else>
           {{ value }}
         </span>
@@ -231,10 +236,10 @@
         </span>
       </template>
 
-      <template #item.webSite="{ item, value }">
+      <template #item.website="{ item, value }">
         <VTextField
           v-if="selectedItems.includes(item)"
-          v-model="item.webSite"
+          v-model="item.website"
           variant="outlined"
           density="compact"
           hide-details
@@ -279,6 +284,7 @@ import {
 } from '@/api/system/companys';
 
 import AppDatePicker from '@/components/app/AppDatePicker.vue';
+import { formatBusinessNumber } from '@/utils/common';
 
 const loading = ref(false);
 const selectedItems = ref([]);
@@ -319,7 +325,6 @@ const searchParams = computed(() => {
 const originFilters = JSON.parse(JSON.stringify(searchFilters.value));
 
 const refresh = () => {
-  // 깊은 복사로 강제로 반응성 트리거
   searchFilters.value = JSON.parse(JSON.stringify(originFilters));
   fetchData();
 };
@@ -341,9 +346,8 @@ const headers = [
   { title: '이메일', key: 'email' },
   { title: '담당자', key: 'manager' },
   { title: '담당자 전화번호', key: 'managerPhoneNumber' },
-  { title: '웹사이트', key: 'webSite' },
+  { title: '웹사이트', key: 'website' },
   { title: '사용여부', key: 'useYn' },
-  { title: '정렬번호', key: 'sortNo' },
   { title: '등록자', key: 'regNm' },
   { title: '등록일', key: 'regDt' },
   { title: '수정자', key: 'chgNm' },
@@ -358,11 +362,16 @@ const fetchData = async () => {
     items.value = res;
   } catch (error) {
     if (import.meta.env.DEV) console.error(error);
-    newToast('조회에 실패했습니다.', 'error');
+    newToast(error, 'error');
   } finally {
     loading.value = false;
   }
 };
+
+const setBusinessNumber = (event, item) => {
+  item.businessNumber = formatBusinessNumber(event.target);
+};
+// const businessRules = (v) =>
 
 const saveHandler = async () => {
   loading.value = true;
@@ -387,17 +396,16 @@ const saveHandler = async () => {
       website: item.website,
       useYn: item.useYn
     }));
-    const res = await saveCompanys({ list: params });
 
-    if (res.header.code === 200) {
-      newToast('저장되었습니다', 'success');
+    await saveCompanys({ list: params });
 
-      fetchData();
-      selectedItems.value = [];
-    }
+    newToast('저장되었습니다', 'success');
+
+    fetchData();
+    selectedItems.value = [];
   } catch (error) {
     if (import.meta.env.DEV) console.error(error);
-    newToast('저장을 실패했습니다.', 'error');
+    newToast(error, 'error');
   } finally {
     loading.value = false;
   }
@@ -421,7 +429,7 @@ const deleteHandler = async () => {
     }
   } catch (error) {
     if (import.meta.env.DEV) console.error(error);
-    newToast('삭제를 실패했습니다.', 'error');
+    newToast(error, 'error');
   } finally {
     loading.value = false;
   }

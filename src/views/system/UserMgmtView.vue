@@ -37,7 +37,7 @@
           variant="outlined"
           density="compact"
           hide-details
-          @input="formatBusinessNumber(item)"
+          @input="setBusinessNumber($event, item)"
         />
         <span v-else>
           {{ value }}
@@ -193,17 +193,12 @@
 import { deleteUser, getUserList, initPassword, saveUser } from '@/api/user';
 import { useToast } from '@/stores/useToast';
 import { computed, onMounted, ref } from 'vue';
+import { formatBusinessNumber } from '@/utils/common';
 
 const loading = ref(false);
 
-const formatBusinessNumber = (item) => {
-  let rawValue = item.businessNumber.replace(/[^0-9-]/g, '');
-
-  if (rawValue.length === 3 || rawValue.length === 6) {
-    rawValue += '-';
-  }
-
-  item.businessNumber = rawValue;
+const setBusinessNumber = (event, item) => {
+  item.businessNumber = formatBusinessNumber(event.target);
 };
 
 const searchFilters = ref([

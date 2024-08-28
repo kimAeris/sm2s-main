@@ -30,12 +30,19 @@ export const getIcon = (type) => {
   return icon;
 };
 
-export const formatBusinessNumber = (item) => {
-  let rawValue = item.businessNumber.replace(/[^0-9-]/g, '');
+export const formatBusinessNumber = (target) => {
+  let rawValue = target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
+  let formattedValue = '';
 
-  if (rawValue.length === 3 || rawValue.length === 6) {
-    rawValue += '-';
+  if (rawValue.length > 0) {
+    formattedValue = rawValue.slice(0, 3); // 처음 3자리
+  }
+  if (rawValue.length > 3) {
+    formattedValue += '-' + rawValue.slice(3, 5); // 중간 2자리
+  }
+  if (rawValue.length > 5) {
+    formattedValue += '-' + rawValue.slice(5, 10); // 나머지 숫자
   }
 
-  item.businessNumber = rawValue;
+  return formattedValue;
 };

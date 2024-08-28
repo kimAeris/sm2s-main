@@ -13,7 +13,7 @@
             prepend-inner-icon="mdi-domain"
             placeholder="000-00-00000"
             maxlength="12"
-            @input="formatBusinessNumber"
+            @input="setBusinessNumber($event)"
             required
             :rules="[businessRules]"
           />
@@ -77,6 +77,7 @@ import { useToast } from '@/stores/useToast';
 import PasswordModal from '@/components/modals/PasswordModal.vue';
 import ProjectSelector from '@/components/modals/ProjectSelectorModal.vue';
 import { useMenu } from '@/stores/useMenu';
+import { formatBusinessNumber } from '@/utils/common';
 
 const { accessToken, user, projectList } = storeToRefs(useUser());
 const { newToast } = useToast();
@@ -101,14 +102,8 @@ const closeProjectModal = () => {
   projectModal.value = false;
 };
 
-const formatBusinessNumber = () => {
-  let rawValue = businessNumber.value.replace(/[^0-9-]/g, '');
-
-  if (rawValue.length === 3 || rawValue.length === 6) {
-    rawValue += '-';
-  }
-
-  businessNumber.value = rawValue;
+const setBusinessNumber = (event) => {
+  businessNumber.value = formatBusinessNumber(event.target);
 };
 
 const businessRules = (v) => {
