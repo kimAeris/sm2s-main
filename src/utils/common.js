@@ -29,3 +29,13 @@ export const getIcon = (type) => {
   }
   return icon;
 };
+
+export const formatBusinessNumber = (item) => {
+  let rawValue = item.businessNumber.replace(/[^0-9-]/g, '');
+
+  if (rawValue.length === 3 || rawValue.length === 6) {
+    rawValue += '-';
+  }
+
+  item.businessNumber = rawValue;
+};

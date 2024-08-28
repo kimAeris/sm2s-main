@@ -102,7 +102,7 @@ const fetchData = async () => {
     handleProject(menus[0].menuCode);
   } catch (error) {
     if (import.meta.env.DEV) console.error(error);
-    newToast('조회에 실패했습니다.', 'error');
+    newToast(error, 'error');
   } finally {
     loading.value = false;
   }

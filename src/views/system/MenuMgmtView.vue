@@ -271,7 +271,7 @@ const setMenuList = async () => {
     menuList.value = result;
   } catch (error) {
     if (import.meta.env.DEV) console.error(error);
-    newToast('조회에 실패했습니다.', 'error');
+    newToast(error, 'error');
   } finally {
     loading.value = false;
   }
@@ -306,7 +306,7 @@ const saveHandler = async () => {
     }
   } catch (error) {
     if (import.meta.env.DEV) console.error(error);
-    newToast('저장을 실패했습니다.', 'error');
+    newToast(error, 'error');
   } finally {
     loading.value = false;
   }
@@ -331,7 +331,7 @@ const deleteHandler = async () => {
     }
   } catch (error) {
     if (import.meta.env.DEV) console.error(error);
-    newToast('삭제를 실패했습니다.', 'error');
+    newToast(error, 'error');
   } finally {
     loading.value = false;
   }
