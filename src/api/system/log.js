@@ -1,7 +1,7 @@
 import { log } from '..';
 import { isFailed } from '@/utils/common';
 
-export const getLoginLog = async (params) => {
+export const retrieveLoginLog = async (params) => {
   try {
     const res = await log.get('/login', { params });
 
