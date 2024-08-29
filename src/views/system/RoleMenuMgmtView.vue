@@ -17,7 +17,7 @@
             "
             @click="selectRole(item)"
           >
-            {{ value }} {{ item.roleCode }} {{ selectedRole }}
+            {{ value }}
           </a>
         </template>
 
@@ -73,7 +73,7 @@ const { newToast } = useToast();
 const roleHeaders = ref([
   {
     title: '프로젝트명',
-    key: 'projectCode'
+    key: 'projectName'
   },
   { title: '권한명', key: 'roleName' },
   { title: '권한 설명', key: 'roleDesc' }
@@ -101,11 +101,7 @@ const menuHeaders = ref([
   { title: '메뉴 코드', key: 'menuCode' },
   { title: '메뉴명', key: 'menuName' },
   { title: '메뉴 설명', key: 'menuDesc' },
-  { title: '권한여부', key: 'grantYn' },
-  { title: '등록자', key: 'regNm' },
-  { title: '등록일', key: 'regDt' },
-  { title: '수정자', key: 'chgNm' },
-  { title: '수정일', key: 'chgDt' }
+  { title: '권한여부', key: 'grantYn' }
 ]);
 
 const menuItems = ref([]);
