@@ -164,26 +164,9 @@ import { onMounted, ref, computed } from 'vue';
 import { retrieveMenus, updateMenus, deleteMenus } from '@/api/system/menus';
 import { useToast } from '@/stores/useToast';
 
-const activeProjectCode = ref(null);
+const { newToast } = useToast();
 
-const activeTab = ref(null);
-const allMenuList = ref([]);
-const menuList = ref([]);
-
-const loading = ref(false);
-const selectedItems = ref([]);
-const items = ref([]);
-const addItems = ref([]);
-const defaultItemValue = computed(() => {
-  const isProject = activeTab.value?.includes('SCR') ? false : true;
-  return [
-    { key: 'projectCode', value: activeProjectCode.value },
-    { key: 'parentMenuCode', value: activeTab.value },
-    { key: 'level', value: isProject ? '1' : '2' },
-    { key: 'useYn', value: 'Y' }
-  ];
-});
-
+// 검색 조건
 const searchFilters = ref([
   {
     label: '메뉴명',
@@ -217,6 +200,52 @@ const refresh = () => {
   setMenuList();
 };
 
+// 리스트
+const activeProjectCode = ref(null);
+const activeTab = ref(null);
+const menuList = ref([]);
+
+// 프로젝트 선택
+const handleProject = (selected) => {
+  activeTab.value = selected;
+  activeProjectCode.value = selected;
+
+  items.value = menuList.value.find(
+    (menu) => menu.projectCode === selected
+  ).mainMenu;
+
+  selectedItems.value = [];
+};
+
+// 메뉴 선택
+const handleMain = (selected) => {
+  activeTab.value = selected.menuCode;
+
+  const mainMenu = menuList.value.find(
+    (item) => item.projectCode === selected.projectCode
+  ).mainMenu;
+
+  items.value = mainMenu.find(
+    (item) => item.menuCode === selected.menuCode
+  ).subMenu;
+
+  selectedItems.value = [];
+};
+
+// 테이블
+const loading = ref(false);
+const selectedItems = ref([]);
+const items = ref([]);
+const addItems = ref([]);
+const defaultItemValue = computed(() => {
+  const isProject = activeTab.value?.includes('SCR') ? false : true;
+  return [
+    { key: 'projectCode', value: activeProjectCode.value },
+    { key: 'parentMenuCode', value: activeTab.value },
+    { key: 'level', value: isProject ? '1' : '2' },
+    { key: 'useYn', value: 'Y' }
+  ];
+});
 const headers = [
   { title: '메뉴 코드', key: 'menuCode' },
   { title: '메뉴명', key: 'menuName' },
@@ -230,13 +259,10 @@ const headers = [
   { title: '수정일', key: 'chgDt' }
 ];
 
-const { newToast } = useToast();
-
 const setMenuList = async () => {
   loading.value = true;
   try {
     const res = await retrieveMenus(searchParams.value);
-    allMenuList.value = res;
 
     const result = res.reduce((acc, obj) => {
       let project = acc.find((p) => p.projectCode === obj.projectCode);
@@ -335,33 +361,6 @@ const handleDelete = async () => {
   } finally {
     loading.value = false;
   }
-};
-
-// 프로젝트 선택
-const handleProject = (selected) => {
-  activeTab.value = selected;
-  activeProjectCode.value = selected;
-
-  items.value = menuList.value.find(
-    (menu) => menu.projectCode === selected
-  ).mainMenu;
-
-  selectedItems.value = [];
-};
-
-// 메뉴 선택
-const handleMain = (selected) => {
-  activeTab.value = selected.menuCode;
-
-  const mainMenu = menuList.value.find(
-    (item) => item.projectCode === selected.projectCode
-  ).mainMenu;
-
-  items.value = mainMenu.find(
-    (item) => item.menuCode === selected.menuCode
-  ).subMenu;
-
-  selectedItems.value = [];
 };
 
 onMounted(() => {
