@@ -94,7 +94,7 @@
 
 <script setup>
 import { retrieveProjects } from '@/api/system/projects';
-import { deleteRoles, getRoles, saveRoles } from '@/api/system/roles';
+import { deleteRoles, retrieveRoles, updateRoles } from '@/api/system/roles';
 import { useToast } from '@/stores/useToast';
 import { computed, onMounted, ref } from 'vue';
 
@@ -170,7 +170,7 @@ const getProjectList = async () => {
 const fetchData = async () => {
   loading.value = true;
   try {
-    const res = await getRoles(searchParams.value);
+    const res = await retrieveRoles(searchParams.value);
     items.value = res;
   } catch (error) {
     if (import.meta.env.DEV) console.error(error);
@@ -190,7 +190,7 @@ const handleSave = async () => {
       roleDesc: item.roleDesc,
       useYn: item.useYn
     }));
-    const res = await saveRoles({ list: params });
+    const res = await updateRoles({ list: params });
 
     if (res.header.code === 200) {
       newToast('저장되었습니다', 'success');

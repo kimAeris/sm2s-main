@@ -1,7 +1,7 @@
 import { roles } from '..';
 import { isFailed } from '@/utils/common';
 
-export const getRoles = async (params) => {
+export const retrieveRoles = async (params) => {
   try {
     const res = await roles.get('', { params });
 
@@ -12,7 +12,7 @@ export const getRoles = async (params) => {
   }
 };
 
-export const saveRoles = async (params) => {
+export const updateRoles = async (params) => {
   try {
     const res = await roles.post(`/status/1`, params);
 

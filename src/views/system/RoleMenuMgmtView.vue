@@ -61,7 +61,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { getRoles } from '@/api/system/roles';
+import { retrieveRoles } from '@/api/system/roles';
 import { useToast } from '@/stores/useToast';
 import { retrieveRoleMenus, updateRoleMenus } from '@/api/system/roleMenus';
 
@@ -84,7 +84,7 @@ const roleItems = ref([]);
 const getRolesData = async () => {
   roleLoading.value = true;
   try {
-    const res = await getRoles();
+    const res = await retrieveRoles();
     roleItems.value = res;
     selectedRole.value = res[0].roleCode;
 
