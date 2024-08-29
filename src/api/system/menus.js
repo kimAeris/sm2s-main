@@ -1,7 +1,7 @@
 import { menus } from '..';
 import { isFailed } from '@/utils/common';
 
-export const getMenus = async (params) => {
+export const retrieveMenus = async (params) => {
   try {
     const res = await menus.get('', { params });
 
@@ -12,7 +12,7 @@ export const getMenus = async (params) => {
   }
 };
 
-export const saveMenus = async (params) => {
+export const updateMenus = async (params) => {
   try {
     const res = await menus.post(`/status/1`, params);
 

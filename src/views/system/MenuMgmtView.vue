@@ -161,7 +161,7 @@
 
 <script setup>
 import { onMounted, ref, computed } from 'vue';
-import { getMenus, saveMenus, deleteMenus } from '@/api/system/menus';
+import { retrieveMenus, updateMenus, deleteMenus } from '@/api/system/menus';
 import { useToast } from '@/stores/useToast';
 
 const activeProjectCode = ref(null);
@@ -235,7 +235,7 @@ const { newToast } = useToast();
 const setMenuList = async () => {
   loading.value = true;
   try {
-    const res = await getMenus(searchParams.value);
+    const res = await retrieveMenus(searchParams.value);
     allMenuList.value = res;
 
     const result = res.reduce((acc, obj) => {
@@ -291,7 +291,7 @@ const handleSave = async () => {
       route: item.route,
       useYn: item.useYn
     }));
-    const res = await saveMenus({ list: params });
+    const res = await updateMenus({ list: params });
 
     if (res.header.code === 200) {
       newToast('저장되었습니다', 'success');

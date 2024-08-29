@@ -46,7 +46,7 @@
 <script setup>
 import AppModal from '@/components/app/AppModal.vue';
 import { onMounted, ref } from 'vue';
-import { getMenus } from '@/api/system/menus';
+import { retrieveMenus } from '@/api/system/menus';
 import { useToast } from '@/stores/useToast';
 
 const props = defineProps({
@@ -76,7 +76,7 @@ const activeMenuCode = ref(null);
 const fetchData = async () => {
   loading.value = true;
   try {
-    const res = await getMenus({
+    const res = await retrieveMenus({
       projectCode: props.projectCode
     });
 
