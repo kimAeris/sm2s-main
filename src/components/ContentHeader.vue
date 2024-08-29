@@ -19,6 +19,10 @@
           :key="i"
           style="min-width: 160px"
         >
+          <template v-if="filter.type === 'date'">
+            <AppDatePicker v-model="filter.value" :label="filter.label" />
+          </template>
+
           <template v-if="filter.type === 'text'">
             <VTextField
               v-model="filter.value"
@@ -106,6 +110,7 @@
 <script setup>
 import { useMenu } from '@/stores/useMenu';
 import { storeToRefs } from 'pinia';
+import AppDatePicker from '@/components/app/AppDatePicker.vue';
 
 const { mainMenu, currentPage } = storeToRefs(useMenu());
 
