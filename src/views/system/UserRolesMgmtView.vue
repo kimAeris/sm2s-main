@@ -73,7 +73,7 @@
 import { onMounted, ref } from 'vue';
 import { useToast } from '@/stores/useToast';
 import { retrieveUser } from '@/api/user';
-import { getUserRoles, saveUserRoles } from '@/api/system/userRoles';
+import { retrieveUserRoles, updateUserRoles } from '@/api/system/userRoles';
 
 const { newToast } = useToast();
 
@@ -147,7 +147,7 @@ const fetchUserData = async () => {
 const fetchData = async (userCode) => {
   loading.value = true;
   try {
-    const res = await getUserRoles({ userCode });
+    const res = await retrieveUserRoles({ userCode });
     items.value = res;
   } catch (error) {
     if (import.meta.env.DEV) console.error(error);
@@ -164,7 +164,7 @@ const handleSave = async () => {
       roleCode: item.roleCode,
       grantYn: item.grantYn
     }));
-    const res = await saveUserRoles({ list: params });
+    const res = await updateUserRoles({ list: params });
 
     if (res.header.code === 200) {
       newToast('저장되었습니다', 'success');
