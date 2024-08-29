@@ -1,15 +1,15 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-const LoginView = () => import('@/views/user/LoginView.vue');
-const ProjectMgmtView = () => import('@/views/system/ProjectMgmtView.vue');
-const UserMgmtView = () => import('@/views/system/UserMgmtView.vue');
-const MenuMgmtView = () => import('@/views/system/MenuMgmtView.vue');
-const RoleMgmtView = () => import('@/views/system/RoleMgmtView.vue');
-const RoleMenuMgmtView = () => import('@/views/system/RoleMenuMgmtView.vue');
-const UserRolesMgmtView = () => import('@/views/system/UserRolesMgmtView.vue');
-const CompanyMgmtView = () => import('@/views/system/CompanyMgmtView.vue');
-const LogMgmtView = () => import('@/views/system/LogMgmtView.vue');
-const IframeView = () => import('@/views/common/IframeView.vue');
-const DevelopingView = () => import('@/views/common/DevelopingView.vue');
+import LoginView from '@/views/user/LoginView.vue';
+import ProjectMgmtView from '@/views/system/ProjectMgmtView.vue';
+import UserMgmtView from '@/views/system/UserMgmtView.vue';
+import MenuMgmtView from '@/views/system/MenuMgmtView.vue';
+import RoleMgmtView from '@/views/system/RoleMgmtView.vue';
+import RoleMenuMgmtView from '@/views/system/RoleMenuMgmtView.vue';
+import UserRolesMgmtView from '@/views/system/UserRolesMgmtView.vue';
+import CompanyMgmtView from '@/views/system/CompanyMgmtView.vue';
+import LogMgmtView from '@/views/system/LogMgmtView.vue';
+import IframeView from '@/views/common/IframeView.vue';
+import DevelopingView from '@/views/common/DevelopingView.vue';
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
