@@ -69,7 +69,7 @@
         >
           {{ value ? value : '(선택)' }}
         </a>
-        <a v-else> {{ value }}</a>
+        <span v-else> {{ value }}</span>
       </template>
       <template #item.smwpYn="{ item, value }">
         <VSwitch
