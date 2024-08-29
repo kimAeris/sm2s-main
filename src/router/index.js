@@ -7,6 +7,7 @@ const RoleMgmtView = () => import('@/views/system/RoleMgmtView.vue');
 const RoleMenuMgmtView = () => import('@/views/system/RoleMenuMgmtView.vue');
 const UserRolesMgmtView = () => import('@/views/system/UserRolesMgmtView.vue');
 const CompanyMgmtView = () => import('@/views/system/CompanyMgmtView.vue');
+const LogMgmtView = () => import('@/views/system/LogMgmtView.vue');
 const IframeView = () => import('@/views/common/IframeView.vue');
 const DevelopingView = () => import('@/views/common/DevelopingView.vue');
 
@@ -48,6 +49,11 @@ const router = createRouter({
       path: '/system/userRoles',
       name: 'UserRolesMgmt',
       component: UserRolesMgmtView
+    },
+    {
+      path: '/system/log',
+      name: 'LogMgmt',
+      component: LogMgmtView
     },
     {
       path: '/system/companys',
