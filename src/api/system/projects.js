@@ -1,7 +1,7 @@
 import { projects } from '..';
 import { isFailed } from '@/utils/common';
 
-export const getProjects = async (params) => {
+export const retrieveProjects = async (params) => {
   try {
     const res = await projects.get('', { params });
 
@@ -12,7 +12,7 @@ export const getProjects = async (params) => {
   }
 };
 
-export const saveProjects = async (params) => {
+export const updateProjects = async (params) => {
   try {
     const res = await projects.post(`/status/1`, params);
 

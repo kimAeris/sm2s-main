@@ -13,8 +13,8 @@
     can-add
     can-delete
     can-save
-    @delete-handler="deleteHandler"
-    @save-handler="saveHandler"
+    @delete-handler="handleDelete"
+    @save-handler="handleSave"
   >
     <VDataTable
       class="h-100 overflow-auto"
@@ -126,8 +126,8 @@
   </ContentBody>
 
   <MenuSelectorModal
-    v-if="menuVisible"
-    :visible="menuVisible"
+    v-if="menuModal"
+    :visible="menuModal"
     v-model:projectCode="selectedProjectCode"
     @selectMenu="selectMenu"
     @close="closeMenuModal"
@@ -137,27 +137,37 @@
 <script setup>
 import {
   deleteProjects,
-  getProjects,
-  saveProjects
+  retrieveProjects,
+  updateProjects
 } from '@/api/system/projects';
 import { useToast } from '@/stores/useToast';
 import { computed, onMounted, ref } from 'vue';
 import MenuSelectorModal from '@/components/modals/MenuSelectorModal.vue';
 
-const menuVisible = ref(false);
+const { newToast } = useToast();
+
+// 메뉴선택 모달
+const menuModal = ref(false);
 const selectedProjectCode = ref(null);
 
 const openMenuModal = (projectCode) => {
   selectedProjectCode.value = projectCode;
-  menuVisible.value = true;
+  menuModal.value = true;
 };
 
 const closeMenuModal = () => {
-  menuVisible.value = false;
+  menuModal.value = false;
 };
 
-const loading = ref(false);
+const selectMenu = ({ projectCode, menuCode, menuName }) => {
+  const row = items.value.find((item) => item.projectCode === projectCode);
+  if (row) {
+    row.menuCode = menuCode;
+    row.menuName = menuName;
+  }
+};
 
+// 검색 조건건
 const searchFilters = ref([
   {
     label: '프로젝트명',
@@ -193,25 +203,15 @@ const searchParams = computed(() => {
 const originFilters = JSON.parse(JSON.stringify(searchFilters.value));
 
 const refresh = () => {
-  // 깊은 복사로 강제로 반응성 트리거
   searchFilters.value = JSON.parse(JSON.stringify(originFilters));
   fetchData();
 };
 
-const { newToast } = useToast();
-const fetchData = async () => {
-  loading.value = true;
-  try {
-    const res = await getProjects(searchParams.value);
-    items.value = res;
-  } catch (error) {
-    if (import.meta.env.DEV) console.error(error);
-    newToast(error, 'error');
-  } finally {
-    loading.value = false;
-  }
-};
-
+// 테이블
+const loading = ref(false);
+const selectedItems = ref([]);
+const items = ref([]);
+const addItems = ref([]);
 const headers = [
   { title: '프로젝트 코드', key: 'projectCode' },
   { title: '프로젝트명', key: 'projectName' },
@@ -230,11 +230,20 @@ const headers = [
   { title: '수정일', key: 'chgDt' }
 ];
 
-const selectedItems = ref([]);
-const items = ref([]);
-const addItems = ref([]);
+const fetchData = async () => {
+  loading.value = true;
+  try {
+    const res = await retrieveProjects(searchParams.value);
+    items.value = res;
+  } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
+    newToast(error, 'error');
+  } finally {
+    loading.value = false;
+  }
+};
 
-const saveHandler = async () => {
+const handleSave = async () => {
   loading.value = true;
   try {
     const params = selectedItems.value.map((item) => ({
@@ -248,7 +257,7 @@ const saveHandler = async () => {
       sortNo: item.sortNo,
       useYn: item.useYn
     }));
-    const res = await saveProjects({ list: params });
+    const res = await updateProjects({ list: params });
 
     if (res.header.code === 200) {
       newToast('저장되었습니다', 'success');
@@ -264,7 +273,7 @@ const saveHandler = async () => {
   }
 };
 
-const deleteHandler = async () => {
+const handleDelete = async () => {
   loading.value = true;
   try {
     const params = selectedItems.value.map((item) => ({
@@ -285,14 +294,6 @@ const deleteHandler = async () => {
     newToast(error, 'error');
   } finally {
     loading.value = false;
-  }
-};
-
-const selectMenu = ({ projectCode, menuCode, menuName }) => {
-  const row = items.value.find((item) => item.projectCode === projectCode);
-  if (row) {
-    row.menuCode = menuCode;
-    row.menuName = menuName;
   }
 };
 

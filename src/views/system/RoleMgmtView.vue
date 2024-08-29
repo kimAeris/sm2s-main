@@ -93,7 +93,7 @@
 </template>
 
 <script setup>
-import { getProjects } from '@/api/system/projects';
+import { retrieveProjects } from '@/api/system/projects';
 import { deleteRoles, getRoles, saveRoles } from '@/api/system/roles';
 import { useToast } from '@/stores/useToast';
 import { computed, onMounted, ref } from 'vue';
@@ -156,7 +156,7 @@ const { newToast } = useToast();
 const projectList = ref([]);
 const getProjectList = async () => {
   try {
-    const res = await getProjects();
+    const res = await retrieveProjects();
     projectList.value = res.map((item) => ({
       title: item.projectName,
       value: item.projectCode
