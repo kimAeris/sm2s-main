@@ -72,7 +72,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useToast } from '@/stores/useToast';
-import { getUserList } from '@/api/user';
+import { retrieveUser } from '@/api/user';
 import { getUserRoles, saveUserRoles } from '@/api/system/userRoles';
 
 const { newToast } = useToast();
@@ -132,7 +132,7 @@ const headers = [
 const fetchUserData = async () => {
   userLoading.value = true;
   try {
-    const res = await getUserList({ adminYn: 'N' });
+    const res = await retrieveUser({ adminYn: 'N' });
     userItems.value = res;
 
     selectUser(res[0].userCode);

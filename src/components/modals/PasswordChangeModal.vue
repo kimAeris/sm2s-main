@@ -64,7 +64,7 @@
 
 <script setup>
 import AppModal from '@/components/app/AppModal.vue';
-import { passwordChange } from '@/api/user';
+import { updatePassword } from '@/api/user';
 import { ref } from 'vue';
 import { useUser } from '@/stores/useUser';
 import { useFeedback } from '@/stores/useFeedback';
@@ -147,7 +147,7 @@ const handlePasswordChange = async () => {
 
   try {
     loading.value = true;
-    const res = await passwordChange({
+    const res = await updatePassword({
       userCode: userStore.user.userCode,
       userPwd: currentPassword.value,
       changeUserPwd: newPassword.value

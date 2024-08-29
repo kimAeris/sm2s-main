@@ -190,7 +190,7 @@
 </template>
 
 <script setup>
-import { deleteUser, getUserList, initPassword, saveUser } from '@/api/user';
+import { deleteUser, retrieveUser, initPassword, updateUser } from '@/api/user';
 import { useToast } from '@/stores/useToast';
 import { computed, onMounted, ref } from 'vue';
 import { formatBusinessNumber } from '@/utils/common';
@@ -325,7 +325,7 @@ const { newToast } = useToast();
 const fetchData = async () => {
   loading.value = true;
   try {
-    const res = await getUserList(searchParams.value);
+    const res = await retrieveUser(searchParams.value);
     items.value = res;
   } catch (error) {
     if (import.meta.env.DEV) console.error(error);
@@ -349,7 +349,7 @@ const handleSave = async () => {
       }
       return item;
     });
-    const res = await saveUser({ list: params });
+    const res = await updateUser({ list: params });
 
     if (res.header.code === 200) {
       newToast('저장되었습니다', 'success');

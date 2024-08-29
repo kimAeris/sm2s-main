@@ -1,6 +1,6 @@
 import { adminUser } from '.';
 
-export const getUserList = async (params) => {
+export const retrieveUser = async (params) => {
   try {
     const res = await adminUser.get('', { params });
 
@@ -10,7 +10,7 @@ export const getUserList = async (params) => {
   }
 };
 
-export const saveUser = async (params) => {
+export const updateUser = async (params) => {
   try {
     const res = await adminUser.post('/status/1', params);
 
@@ -30,7 +30,7 @@ export const deleteUser = async (params) => {
   }
 };
 
-export const passwordChange = async (params) => {
+export const updatePassword = async (params) => {
   try {
     const res = await adminUser.post(`/password/status/1`, params);
 
