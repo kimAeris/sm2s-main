@@ -4,6 +4,7 @@
       <div v-bind="props">
         <VTextField
           v-model="datePicker"
+          :label="label ? label : ''"
           prepend-inner-icon="mdi-calendar-blank"
           variant="outlined"
           density="compact"
@@ -35,7 +36,12 @@ const { format } = useDate();
 
 const props = defineProps({
   modelValue: {
-    type: String
+    type: String,
+    required: true
+  },
+  label: {
+    type: String,
+    default: ''
   }
 });
 
