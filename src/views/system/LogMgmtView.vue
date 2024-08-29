@@ -33,22 +33,18 @@
 import { retrieveLoginLog } from '@/api/system/log';
 import { useToast } from '@/stores/useToast';
 import { computed, onMounted, ref } from 'vue';
+import { useDate } from 'vuetify';
 
 const { newToast } = useToast();
 
 // 검색 조건
 const searchFilters = ref([
   {
-    label: '시작일자',
-    key: 'startDt',
-    type: 'date',
-    value: ''
-  },
-  {
-    label: '종료일자',
-    key: 'endDt',
-    type: 'date',
-    value: ''
+    label: '일자',
+    key: 'dateRange',
+    type: 'dateRange',
+    value: ['2024-08-29', '2024-09-01'],
+    cols: '3'
   },
   {
     label: '사업자번호',
@@ -107,10 +103,22 @@ const headers = [
 const items = ref([]);
 const selectedItems = ref([]);
 
+const { format } = useDate();
 const fetchData = async () => {
   loading.value = true;
   try {
-    const res = await retrieveLoginLog(searchParams.value);
+    const {
+      dateRange: [startDt, endDt],
+      ...rest
+    } = searchParams.value;
+
+    const params = {
+      ...rest,
+      startDt: format(startDt, 'isoFullDate'),
+      endDt: format(endDt, 'isoFullDate')
+    };
+
+    const res = await retrieveLoginLog(params);
     items.value = res;
   } catch (error) {
     if (import.meta.env.DEV) console.error(error);
