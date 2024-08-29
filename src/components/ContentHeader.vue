@@ -12,7 +12,7 @@
 
     <div v-if="isFilter" class="d-flex align-end justify-space-between">
       <!-- <div class="d-flex w-100 align-center ga-4 py-2 mb-3 px-4"> -->
-      <VRow>
+      <VRow class="mr-3">
         <VCol
           v-for="(filter, i) in filters"
           :cols="filter.cols || 2"
