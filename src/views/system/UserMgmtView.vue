@@ -15,8 +15,8 @@
     can-add
     can-delete
     can-save
-    @delete-handler="deleteHandler"
-    @save-handler="saveHandler"
+    @delete-handler="handleDelete"
+    @save-handler="handleSave"
   >
     <VDataTable
       class="h-100 overflow-auto"
@@ -335,7 +335,7 @@ const fetchData = async () => {
   }
 };
 
-const saveHandler = async () => {
+const handleSave = async () => {
   loading.value = true;
   try {
     const params = selectedItems.value.map((item) => {
@@ -365,7 +365,7 @@ const saveHandler = async () => {
   }
 };
 
-const deleteHandler = async () => {
+const handleDelete = async () => {
   loading.value = true;
   try {
     const params = selectedItems.value.map((item) => ({

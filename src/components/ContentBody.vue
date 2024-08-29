@@ -32,7 +32,7 @@
             :prepend-icon="getIcon('save')"
             variant="outlined"
             rounded="xl"
-            @click="saveHandler"
+            @click="handleSave"
           >
             저장
           </VBtn>
@@ -42,7 +42,7 @@
             color="error"
             variant="outlined"
             rounded="xl"
-            @click="deleteHandler"
+            @click="handleDelete"
           >
             삭제
           </VBtn>
@@ -111,8 +111,8 @@ const emits = defineEmits([
   'update:items',
   'update:addItems',
   'update:selectedItems',
-  'deleteHandler',
-  'saveHandler'
+  'handleDelete',
+  'handleSave'
 ]);
 
 const defaultItems = props.headers.reduce((acc, header) => {
@@ -139,16 +139,16 @@ const addHandler = () => {
 const { openFeedback } = useFeedback();
 const { newToast } = useToast();
 
-const saveHandler = async () => {
+const handleSave = async () => {
   if (props.selectedItems.length < 1) {
     newToast('데이터를 선택해주세요.', 'error');
     return;
   }
 
-  emits('saveHandler');
+  emits('handleSave');
 };
 
-const deleteHandler = async () => {
+const handleDelete = async () => {
   if (props.selectedItems.length < 1) {
     newToast('데이터를 선택해주세요.', 'error');
     return;
@@ -164,6 +164,6 @@ const deleteHandler = async () => {
 
   if (!feedback) return;
 
-  emits('deleteHandler');
+  emits('handleDelete');
 };
 </script>

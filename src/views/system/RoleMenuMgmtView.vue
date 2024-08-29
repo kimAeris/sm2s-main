@@ -29,7 +29,7 @@
     <ContentBody
       v-model:selected-items="selectedItems"
       can-save
-      @save-handler="saveHandler"
+      @save-handler="handleSave"
     >
       <VDataTable
         class="h-100 overflow-auto"
@@ -128,7 +128,7 @@ const getMenusData = async (projectCode, roleCode) => {
   }
 };
 
-const saveHandler = async () => {
+const handleSave = async () => {
   try {
     const params = selectedItems.value.map((item) => ({
       projectCode: item.projectCode,

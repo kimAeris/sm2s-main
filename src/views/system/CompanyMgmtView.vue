@@ -12,8 +12,8 @@
     can-add
     can-delete
     can-save
-    @delete-handler="deleteHandler"
-    @save-handler="saveHandler"
+    @delete-handler="handleDelete"
+    @save-handler="handleSave"
   >
     <VForm ref="form" validate-on="input">
       <VDataTable
@@ -393,7 +393,7 @@ const fetchData = async () => {
   }
 };
 
-const saveHandler = async () => {
+const handleSave = async () => {
   const isValid = await checkValidForm();
   if (!isValid) return;
 
@@ -434,7 +434,7 @@ const saveHandler = async () => {
   }
 };
 
-const deleteHandler = async () => {
+const handleDelete = async () => {
   loading.value = true;
   try {
     const params = selectedItems.value.map((item) => ({

@@ -39,7 +39,7 @@
       v-model:items="items"
       v-model:selected-items="selectedItems"
       can-save
-      @save-handler="saveHandler"
+      @save-handler="handleSave"
     >
       <VDataTable
         class="h-100 overflow-auto"
@@ -157,7 +157,7 @@ const fetchData = async (userCode) => {
   }
 };
 
-const saveHandler = async () => {
+const handleSave = async () => {
   try {
     const params = selectedItems.value.map((item) => ({
       userCode: selectedUserCode.value,
