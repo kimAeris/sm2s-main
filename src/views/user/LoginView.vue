@@ -63,7 +63,7 @@
     </VCard>
   </div>
 
-  <PasswordModal :visible="passwordModal" @close="closePasswordModal" />
+  <PasswordChangeModal :visible="passwordModal" @close="closePasswordModal" />
   <ProjectSelector :visible="projectModal" @close="closeProjectModal" />
 </template>
 
@@ -74,7 +74,7 @@ import { login } from '@/api/common';
 import { useUser } from '@/stores/useUser';
 import { storeToRefs } from 'pinia';
 import { useToast } from '@/stores/useToast';
-import PasswordModal from '@/components/modals/PasswordModal.vue';
+import PasswordChangeModal from '@/components/modals/PasswordChangeModal.vue';
 import ProjectSelector from '@/components/modals/ProjectSelectorModal.vue';
 import { useMenu } from '@/stores/useMenu';
 import { formatBusinessNumber } from '@/utils/common';
