@@ -1,7 +1,8 @@
 export default {
   VDataTable: {
     fixedHeader: true,
-    returnObject: true
+    returnObject: true,
+    itemsPerPage: 25
   },
   VSheet: {
     rounded: 'lg',

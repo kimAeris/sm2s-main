@@ -16,6 +16,12 @@
       :loading="loading"
       return-object
     >
+      <template #item.loginYn="{ value }">
+        <VChip :color="value === 'Y' ? 'primary' : 'secondary'">
+          {{ value === 'Y' ? '로그인' : '로그아웃' }}
+        </VChip>
+      </template>
+
       <template #loading>
         <VSkeletonLoader type="table-tbody"></VSkeletonLoader>
       </template>
@@ -35,13 +41,13 @@ const searchFilters = ref([
   {
     label: '시작일자',
     key: 'startDt',
-    type: 'text',
+    type: 'date',
     value: ''
   },
   {
     label: '종료일자',
     key: 'endDt',
-    type: 'text',
+    type: 'date',
     value: ''
   },
   {
@@ -85,10 +91,11 @@ const refresh = () => {
 const loading = ref(false);
 const headers = [
   { title: '사업자번호', key: 'businessNumber' },
+  { title: '업체명', key: 'companyName' },
   { title: '아이디', key: 'userId' },
   { title: '사용자명', key: 'userName' },
   { title: '관리자여부', key: 'adminYn' },
-  { title: '로그인여부', key: 'loginYn' },
+  { title: '로그인 상태', key: 'loginYn' },
   { title: '등록일', key: 'regDt' }
 ];
 const items = ref([]);
