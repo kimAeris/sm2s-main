@@ -31,17 +31,17 @@
             label="비밀번호"
             variant="outlined"
             prepend-inner-icon="mdi-lock-outline"
-            :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-            :type="visible ? 'text' : 'password'"
+            :append-inner-icon="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+            :type="passwordVisible ? 'text' : 'password'"
             clearable
             required
             :rules="[(v) => !!v || '비밀번호를 입력하세요']"
-            @click:append-inner="visible = !visible"
+            @click:append-inner="passwordVisible = !passwordVisible"
           />
         </div>
 
         <VCheckbox
-          v-model="isInfoSave"
+          v-model="loginInfoSaved"
           label="로그인 정보 저장"
           density="compact"
           hide-details
@@ -84,39 +84,43 @@ const { newToast } = useToast();
 const { menus } = storeToRefs(useMenu());
 
 const loading = ref(false);
-const visible = ref(false);
 
+// 로그인 폼
 const loginForm = ref(null);
-
 const businessNumber = ref(null);
 const id = ref(null);
 const pw = ref(null);
+const passwordVisible = ref(false);
+const loginInfoSaved = ref(false);
 
+// 프로젝트 선택 모달
 const projectModal = ref(false);
 
 const openProjectModal = () => {
   projectModal.value = true;
 };
-
 const closeProjectModal = () => {
   projectModal.value = false;
 };
 
+// 패스워드 변경 모달
+const passwordModal = ref(false);
+const closePasswordModal = () => (passwordModal.value = false);
+
+// 사업자번호 관련 로직
 const setBusinessNumber = (event) => {
   businessNumber.value = formatBusinessNumber(event.target);
 };
-
 const businessRules = (v) => {
   if (!v) {
     return '사업자 번호를 입력하세요.';
-  } else if (businessNumber.value.length < 12) {
+  } else if (v.length < 12) {
     return '사업자 번호는 10자리 입니다.';
   }
   return true;
 };
 
-const isInfoSave = ref(false);
-
+// 로그인 이벤트 핸들러
 const handleLogin = async () => {
   const { valid } = await loginForm.value.validate();
   if (!valid) return;
@@ -131,7 +135,7 @@ const handleLogin = async () => {
       projectList.value = res.body.projectList;
 
       // 로그인 정보 기억
-      if (isInfoSave.value) {
+      if (loginInfoSaved.value) {
         localStorage.setItem(
           'info',
           JSON.stringify({
@@ -147,7 +151,7 @@ const handleLogin = async () => {
         passwordModal.value = true;
       } else {
         if (projectList.value.length > 1) {
-          setMenu(res.body.menuList);
+          buildMenuTree(res.body.menuList);
           openProjectModal();
         } else {
           router.replace({ name: 'CommonCode' });
@@ -163,8 +167,8 @@ const handleLogin = async () => {
   }
 };
 
-// TODO: 임의 메뉴 세팅
-const setMenu = (res) => {
+// 메뉴 트리구조 생성
+const buildMenuTree = (res) => {
   const result = res.reduce((acc, obj) => {
     let project = acc.find((p) => p.projectCode === obj.projectCode);
 
@@ -275,22 +279,19 @@ const setMenu = (res) => {
   */
 };
 
+// 저장된 로그인 정보 가져오기
 const setLoginInfo = () => {
   const info = JSON.parse(localStorage.getItem('info'));
 
   if (!info) return;
   else {
-    isInfoSave.value = true;
+    loginInfoSaved.value = true;
     businessNumber.value = info.businessNumber;
     id.value = info.id;
   }
 
   return;
 };
-
-const passwordModal = ref(false);
-
-const closePasswordModal = () => (passwordModal.value = false);
 
 onMounted(() => {
   setLoginInfo();
