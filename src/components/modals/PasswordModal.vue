@@ -53,7 +53,7 @@
           block
           rounded
           :loading="loading"
-          @click="changePassword"
+          @click="handlePasswordChange"
         >
           비밀번호 변경
         </VBtn>
@@ -80,12 +80,13 @@ const emit = defineEmits(['close']);
 
 const loading = ref(false);
 
+// 비밀번호 변경 폼
 const form = ref(null);
-
 const currentPassword = ref(null);
 const newPassword = ref(null);
 const newCheckPassword = ref(null);
 
+// 텍스트 숨김 아이콘
 const showCurrentPassword = ref(false);
 const showNewPassword = ref(false);
 const showNewCheckPassword = ref(false);
@@ -100,6 +101,21 @@ const toggleNewCheckPassword = () => {
   showNewCheckPassword.value = !showNewCheckPassword.value;
 };
 
+const passwordAttrs = (isShow) => {
+  if (isShow) {
+    return {
+      icon: 'mdi-eye',
+      type: 'text'
+    };
+  } else {
+    return {
+      icon: 'mdi-eye-off',
+      type: 'password'
+    };
+  }
+};
+
+// 유효성 검사
 let returnCode = 0;
 const currentPasswordRules = [
   (v) => {
@@ -117,24 +133,11 @@ const newCheckPasswordRules = [
   }
 ];
 
-const passwordAttrs = (isShow) => {
-  if (isShow) {
-    return {
-      icon: 'mdi-eye',
-      type: 'text'
-    };
-  } else {
-    return {
-      icon: 'mdi-eye-off',
-      type: 'password'
-    };
-  }
-};
-
 const userStore = useUser();
 const { openFeedback } = useFeedback();
 
-const changePassword = async () => {
+// 비밀번호 변경
+const handlePasswordChange = async () => {
   const { valid } = await form.value.validate();
   if (!valid) return;
 
@@ -168,7 +171,7 @@ const changePassword = async () => {
       '확인'
     );
   } catch (error) {
-    console.error(error);
+    if (import.meta.env.DEV) console.error(error);
   } finally {
     loading.value = false;
   }
