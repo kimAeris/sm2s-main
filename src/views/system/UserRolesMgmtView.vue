@@ -108,6 +108,7 @@ const userLoading = ref(false);
 const userItems = ref([]);
 const userHeaders = [
   { title: '사업자번호', key: 'businessNumber' },
+  { title: '업체명', key: 'companyName' },
   { title: '아이디', key: 'userId' },
   { title: '사용자명', key: 'userName' }
 ];
