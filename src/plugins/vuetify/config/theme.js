@@ -9,10 +9,10 @@ export default {
         primary: '#002b5c',
         secondary: '#4A90E2',
         'secondary-variant': '#93c1f5',
-        error: '#B00020',
         info: '#2196F3',
-        success: '#4CAF50'
-        // warning: '#FB8C00'
+        success: '#4CAF50',
+        warning: '#FB8C00',
+        error: '#B00020'
         // background: "#E6EAF2",
         // surface: "#FBFCFF",
         // "on-surface": "#1C1B1F",
