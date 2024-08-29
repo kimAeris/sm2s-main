@@ -63,7 +63,7 @@
 import { ref, onMounted } from 'vue';
 import { getRoles } from '@/api/system/roles';
 import { useToast } from '@/stores/useToast';
-import { getRoleMenus, saveRoleMenus } from '@/api/system/roleMenus';
+import { retrieveRoleMenus, updateRoleMenus } from '@/api/system/roleMenus';
 
 const roleLoading = ref(false);
 const menuLoading = ref(false);
@@ -115,7 +115,7 @@ const selectRole = async (item) => {
 const getMenusData = async (projectCode, roleCode) => {
   menuLoading.value = true;
   try {
-    const res = await getRoleMenus({
+    const res = await retrieveRoleMenus({
       projectCode: projectCode,
       roleCode: roleCode
     });
@@ -136,7 +136,7 @@ const handleSave = async () => {
       menuCode: item.menuCode,
       grantYn: item.grantYn
     }));
-    const res = await saveRoleMenus({ list: params });
+    const res = await updateRoleMenus({ list: params });
 
     if (res.header.code === 200) {
       newToast('저장되었습니다', 'success');

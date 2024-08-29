@@ -1,7 +1,7 @@
 import { roleMenus } from '..';
 import { isFailed } from '@/utils/common';
 
-export const getRoleMenus = async (params) => {
+export const retrieveRoleMenus = async (params) => {
   try {
     const res = await roleMenus.get('', { params });
 
@@ -12,7 +12,7 @@ export const getRoleMenus = async (params) => {
   }
 };
 
-export const saveRoleMenus = async (params) => {
+export const updateRoleMenus = async (params) => {
   try {
     const res = await roleMenus.post(`/status/1`, params);
 
