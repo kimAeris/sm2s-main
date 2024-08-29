@@ -1,7 +1,7 @@
 import { company } from '..';
 import { isFailed } from '@/utils/common';
 
-export const getCompanys = async (params) => {
+export const retrieveCompanys = async (params) => {
   try {
     const res = await company.get('', { params });
 
@@ -12,7 +12,7 @@ export const getCompanys = async (params) => {
   }
 };
 
-export const saveCompanys = async (params) => {
+export const updateCompanys = async (params) => {
   try {
     const res = await company.post(`/status/1`, params);
 

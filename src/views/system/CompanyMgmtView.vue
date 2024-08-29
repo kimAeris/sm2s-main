@@ -280,8 +280,8 @@
 import { useToast } from '@/stores/useToast';
 import { computed, onMounted, ref } from 'vue';
 import {
-  getCompanys,
-  saveCompanys,
+  retrieveCompanys,
+  updateCompanys,
   deleteCompanys
 } from '@/api/system/companys';
 
@@ -289,12 +289,8 @@ import AppDatePicker from '@/components/app/AppDatePicker.vue';
 import { formatBusinessNumber } from '@/utils/common';
 import { validBusinessNumber } from '@/utils/regex';
 
-const form = ref(null);
-const loading = ref(false);
-const selectedItems = ref([]);
-const items = ref([]);
-const addItems = ref([]);
-
+const { newToast } = useToast();
+// 검색 조건
 const searchFilters = ref([
   {
     label: '사업자번호',
@@ -333,6 +329,11 @@ const refresh = () => {
   fetchData();
 };
 
+// 테이블
+const loading = ref(false);
+const selectedItems = ref([]);
+const items = ref([]);
+const addItems = ref([]);
 const headers = [
   { title: '사업자번호', key: 'businessNumber' },
   { title: '업체명', key: 'companyName' },
@@ -358,19 +359,8 @@ const headers = [
   { title: '수정일', key: 'chgDt' }
 ];
 
-const { newToast } = useToast();
-const fetchData = async () => {
-  loading.value = true;
-  try {
-    const res = await getCompanys(searchParams.value);
-    items.value = res;
-  } catch (error) {
-    if (import.meta.env.DEV) console.error(error);
-    newToast(error, 'error');
-  } finally {
-    loading.value = false;
-  }
-};
+// 사업자 번호 유효성
+const form = ref(null);
 
 const setBusinessNumber = (event, item) => {
   item.businessNumber = formatBusinessNumber(event.target);
@@ -388,6 +378,19 @@ const checkValidForm = async () => {
     }
   }
   return true;
+};
+
+const fetchData = async () => {
+  loading.value = true;
+  try {
+    const res = await retrieveCompanys(searchParams.value);
+    items.value = res;
+  } catch (error) {
+    if (import.meta.env.DEV) console.error(error);
+    newToast(error, 'error');
+  } finally {
+    loading.value = false;
+  }
 };
 
 const saveHandler = async () => {
@@ -417,7 +420,7 @@ const saveHandler = async () => {
       useYn: item.useYn
     }));
 
-    await saveCompanys({ list: params });
+    await updateCompanys({ list: params });
 
     newToast('저장되었습니다', 'success');
 
