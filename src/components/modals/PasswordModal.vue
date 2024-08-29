@@ -17,7 +17,7 @@
           :append-inner-icon="passwordAttrs(showCurrentPassword).icon"
           :type="passwordAttrs(showCurrentPassword).type"
           @click:append-inner="toggleCurrentPassword"
-          :rules="currentPasswordRules"
+          :rules="[currentPasswordRules]"
           clearable
           required
         />
@@ -29,7 +29,7 @@
           :append-inner-icon="passwordAttrs(showNewPassword).icon"
           :type="passwordAttrs(showNewPassword).type"
           @click:append-inner="toggleNewPassword"
-          :rules="[(v) => !!v || '새 비밀번호를 입력하세요']"
+          :rules="[newPasswordRules]"
           clearable
           required
         />
@@ -41,7 +41,7 @@
           :append-inner-icon="passwordAttrs(showNewCheckPassword).icon"
           :type="passwordAttrs(showNewCheckPassword).type"
           @click:append-inner="toggleNewCheckPassword"
-          :rules="newCheckPasswordRules"
+          :rules="[newCheckPasswordRules]"
           clearable
           required
         />
@@ -86,6 +86,28 @@ const currentPassword = ref(null);
 const newPassword = ref(null);
 const newCheckPassword = ref(null);
 
+// 유효성 검사
+let returnCode = 0;
+const currentPasswordRules = (v) => {
+  if (!v) return '현재 비밀번호를 입력하세요';
+  else if (returnCode === 401) return '현재 비밀번호가 틀립니다.';
+  else return true;
+};
+
+const newPasswordRules = (v) => {
+  if (!v) return '비밀번호를 입력하세요';
+  else if (v === currentPassword.value) {
+    return '현재 비밀번호와 동일합니다.';
+  } else return true;
+};
+
+const newCheckPasswordRules = (v) => {
+  if (!v) return '비밀번호를 입력하세요';
+  else if (v !== newPassword.value) {
+    return '비밀번호를 확인해주세요';
+  } else return true;
+};
+
 // 텍스트 숨김 아이콘
 const showCurrentPassword = ref(false);
 const showNewPassword = ref(false);
@@ -114,24 +136,6 @@ const passwordAttrs = (isShow) => {
     };
   }
 };
-
-// 유효성 검사
-let returnCode = 0;
-const currentPasswordRules = [
-  (v) => {
-    if (!v) return '현재 비밀번호를 입력하세요';
-    else if (returnCode === 401) return '현재 비밀번호가 틀립니다.';
-    else return true;
-  }
-];
-
-const newCheckPasswordRules = [
-  (v) => {
-    if (v !== newPassword.value) {
-      return '비밀번호를 확인해주세요';
-    } else return true;
-  }
-];
 
 const userStore = useUser();
 const { openFeedback } = useFeedback();
