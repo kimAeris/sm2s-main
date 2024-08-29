@@ -57,8 +57,14 @@ const searchFilters = ref([
     value: ''
   },
   {
-    label: '아이디',
+    label: '업체명',
     key: 'companyName',
+    type: 'text',
+    value: ''
+  },
+  {
+    label: '아이디',
+    key: 'userId',
     type: 'text',
     value: ''
   },
