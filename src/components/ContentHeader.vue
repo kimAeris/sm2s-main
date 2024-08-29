@@ -23,6 +23,10 @@
             <AppDatePicker v-model="filter.value" :label="filter.label" />
           </template>
 
+          <template v-if="filter.type === 'dateRange'">
+            <AppDateRangePicker v-model="filter.value" :label="filter.label" />
+          </template>
+
           <template v-if="filter.type === 'text'">
             <VTextField
               v-model="filter.value"
@@ -111,6 +115,7 @@
 import { useMenu } from '@/stores/useMenu';
 import { storeToRefs } from 'pinia';
 import AppDatePicker from '@/components/app/AppDatePicker.vue';
+import AppDateRangePicker from '@/components/app/AppDateRangePicker.vue';
 
 const { mainMenu, currentPage } = storeToRefs(useMenu());
 
