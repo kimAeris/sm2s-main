@@ -98,12 +98,9 @@ import { deleteRoles, retrieveRoles, updateRoles } from '@/api/system/roles';
 import { useToast } from '@/stores/useToast';
 import { computed, onMounted, ref } from 'vue';
 
-const loading = ref(false);
+const { newToast } = useToast();
 
-const selectedItems = ref([]);
-const items = ref([]);
-const addItems = ref([]);
-
+// 검색 조건
 const searchFilters = ref([
   {
     label: '권한명',
@@ -137,6 +134,11 @@ const refresh = () => {
   fetchData();
 };
 
+// 테이블
+const loading = ref(false);
+const selectedItems = ref([]);
+const items = ref([]);
+const addItems = ref([]);
 const headers = ref([
   {
     title: '프로젝트명',
@@ -151,10 +153,9 @@ const headers = ref([
   { title: '수정일', key: 'chgDt' }
 ]);
 
-const { newToast } = useToast();
-
+// 프로젝트 셀렉트박스 목록
 const projectList = ref([]);
-const getProjectList = async () => {
+const fetchProjectList = async () => {
   try {
     const res = await retrieveProjects();
     projectList.value = res.map((item) => ({
@@ -231,7 +232,7 @@ const handleDelete = async () => {
 };
 
 onMounted(() => {
-  getProjectList();
+  fetchProjectList();
   fetchData();
 });
 </script>
