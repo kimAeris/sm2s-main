@@ -111,8 +111,8 @@ const emits = defineEmits([
   'update:items',
   'update:addItems',
   'update:selectedItems',
-  'handleDelete',
-  'handleSave'
+  'saveHandler',
+  'deleteHandler'
 ]);
 
 const defaultItems = props.headers.reduce((acc, header) => {
@@ -145,7 +145,7 @@ const handleSave = async () => {
     return;
   }
 
-  emits('handleSave');
+  emits('saveHandler');
 };
 
 const handleDelete = async () => {
@@ -164,6 +164,6 @@ const handleDelete = async () => {
 
   if (!feedback) return;
 
-  emits('handleDelete');
+  emits('deleteHandler');
 };
 </script>
