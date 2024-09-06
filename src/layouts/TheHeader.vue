@@ -10,23 +10,6 @@
           {{ project.projectName }}
         </a>
       </VBtn>
-      <!-- <VBtn class="ml-2" height="46" rounded="xl">
-
-        <VMenu activator="parent">
-          <VList>
-            <VListItem
-              v-for="(item, i) in projectList"
-              :key="i"
-              :value="item"
-              :active="item.code === project.code"
-              color="primary"
-              @click="selectProject(item)"
-            >
-              <VListItemTitle>{{ item.name }}</VListItemTitle>
-            </VListItem>
-          </VList>
-        </VMenu>
-      </VBtn> -->
 
       <VSlideGroup show-arrows class="w-100 px-10">
         <VSlideGroupItem v-for="menu in projectMenu.mainMenu" :key="menu">
@@ -34,7 +17,7 @@
             class="text-body-1"
             rounded
             :color="
-              menu.menuCode === mainMenu.menuCode
+              menu?.menuCode === mainMenu?.menuCode
                 ? 'secondary-variant'
                 : undefined
             "
@@ -47,10 +30,6 @@
 
       <div class="d-flex align-center ml-auto">
         <span class="mr-4 text-body-2 nowrap">사용자</span>
-
-        <!-- <VBtn icon @click="openProjectModal">
-          <VIcon icon="mdi-folder-marker-outline" size="small"></VIcon>
-        </VBtn> -->
 
         <VBtn icon @click="handleLogout">
           <VIcon icon="mdi-logout" size="small"></VIcon>

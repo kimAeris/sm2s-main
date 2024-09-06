@@ -30,14 +30,23 @@ const layoutStore = useLayout();
 const { sideBar } = storeToRefs(layoutStore);
 
 const menuStore = useMenu();
-const { mainMenu, currentPage } = storeToRefs(menuStore);
+const { mainMenu, currentPage, projectMenu } = storeToRefs(menuStore);
 
 const moveRoute = (menu) => {
   currentPage.value = menu;
 
   sideBar.value = false;
-
-  if (menu.route) router.push({ path: menu.route });
-  else router.push({ path: '/developing' });
+  if (projectMenu.value.smwpYn === 'Y') {
+    if (menu.route)
+      router.push({
+        path: `/view`,
+        query: {
+          scrId: menu.route
+        }
+      });
+  } else {
+    if (menu.route) router.push({ path: menu.route });
+    else router.push({ path: '/developing' });
+  }
 };
 </script>

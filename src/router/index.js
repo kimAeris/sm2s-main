@@ -61,23 +61,12 @@ const router = createRouter({
       component: CompanyMgmtView
     },
     {
-      path: '/info/:type',
-      name: 'ClientMgmt',
+      path: '/view',
+      name: 'IframeView',
       component: IframeView,
-      meta: {
-        admin: true
-      },
-      props: {
-        url: `http://221.151.122.208:11005/?Pro=%EA%B3%B5%EB%B0%A9#BI_001`
-      }
-    },
-    {
-      path: '/info/product',
-      name: 'ProductMgmt',
-      component: IframeView,
-      props: {
-        url: `http://221.151.122.208:11005/?Pro=%EA%B3%B5%EB%B0%A9#BI_002`
-      }
+      props: ({ query }) => ({
+        scrId: query.scrId
+      })
     },
     {
       path: '/developing',

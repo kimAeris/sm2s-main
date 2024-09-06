@@ -63,11 +63,14 @@ const selectProject = (selected) => {
     (menu) => String(menu.projectCode) === selected.projectCode
   );
 
-  //TODO: 임시
-  if (!selected.homeUrl) selected.homeUrl = '/system/projects';
-
   project.value = selected;
-  projectMenu.value = menuList;
+  projectMenu.value = { ...menuList, smwpYn: selected.smwpYn };
+
+  if (!selected.homeUrl) {
+    router.push({ path: '/developing' });
+    return;
+  }
+
   mainMenu.value = menuList.mainMenu.find((menu) =>
     menu?.subMenu.some((sub) => sub.route === selected.homeUrl)
   );
@@ -77,7 +80,17 @@ const selectProject = (selected) => {
   );
 
   close();
-  router.push({ path: selected.homeUrl });
+
+  if (selected.smwpYn === 'Y') {
+    router.push({
+      path: `/view`,
+      query: {
+        scrId: selected.homeUrl
+      }
+    });
+  } else {
+    router.push({ path: selected.homeUrl });
+  }
 };
 
 const close = () => {
