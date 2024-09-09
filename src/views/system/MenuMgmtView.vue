@@ -20,7 +20,7 @@
                 :id="`list-${menus.projectCode}`"
                 rounded="lg"
                 :value="menus.projectCode"
-                :active="activeTab === menus.projectCode"
+                :active="activeMenuCode === menus.projectCode"
                 @click="handleProject(menus.projectCode)"
               >
                 {{ menus.projectName }}
@@ -32,6 +32,7 @@
                     icon="mdi-chevron-up"
                     variant="text"
                     size="small"
+                    @click="handleProject(menus.projectCode)"
                   >
                   </VBtn>
                   <VBtn
@@ -40,6 +41,7 @@
                     icon="mdi-chevron-down"
                     variant="text"
                     size="small"
+                    @click="handleProject(menus.projectCode)"
                   />
                 </template>
               </VListItem>
@@ -48,7 +50,7 @@
             <VListItem
               v-for="menu in menus.mainMenu"
               :id="`list-${menus.menuCode}`"
-              :active="activeTab === menu.menuCode"
+              :active="activeMenuCode === menu.menuCode"
               :key="menu.menuCode"
               :title="menu.menuName"
               :value="menu.menuCode"
@@ -202,12 +204,12 @@ const refresh = () => {
 
 // 리스트
 const activeProjectCode = ref(null);
-const activeTab = ref(null);
+const activeMenuCode = ref(null);
 const menuList = ref([]);
 
 // 프로젝트 선택
 const handleProject = (selected) => {
-  activeTab.value = selected;
+  activeMenuCode.value = selected;
   activeProjectCode.value = selected;
 
   items.value = menuList.value.find(
@@ -219,7 +221,7 @@ const handleProject = (selected) => {
 
 // 메뉴 선택
 const handleMain = (selected) => {
-  activeTab.value = selected.menuCode;
+  activeMenuCode.value = selected.menuCode;
 
   const mainMenu = menuList.value.find(
     (item) => item.projectCode === selected.projectCode
@@ -238,10 +240,10 @@ const selectedItems = ref([]);
 const items = ref([]);
 const addItems = ref([]);
 const defaultItemValue = computed(() => {
-  const isProject = activeTab.value?.includes('SCR') ? false : true;
+  const isProject = activeMenuCode.value?.includes('SCR') ? false : true;
   return [
     { key: 'projectCode', value: activeProjectCode.value },
-    { key: 'parentMenuCode', value: activeTab.value },
+    { key: 'parentMenuCode', value: activeMenuCode.value },
     { key: 'level', value: isProject ? '1' : '2' },
     { key: 'useYn', value: 'Y' }
   ];
@@ -321,9 +323,15 @@ const handleSave = async () => {
 
     if (res.header.code === 200) {
       newToast('저장되었습니다', 'success');
+      // 메뉴코드 새로고침 위한 재조회
       setMenuList();
+      // 메뉴 클릭하여 세팅
+      handleMain({
+        projectCode: activeProjectCode.value,
+        menuCode: activeMenuCode.value
+      });
 
-      const tabEl = document.querySelector(`list-${activeTab.value}`);
+      const tabEl = document.querySelector(`list-${activeMenuCode.value}`);
       if (tabEl) {
         tabEl.click(); // DOM 요소에 대해 직접 클릭 이벤트 트리거
       }
