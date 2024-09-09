@@ -64,4 +64,5 @@ export const roles = create('/admin/roles');
 export const roleMenus = create('/admin/role-menus');
 export const userRoles = create('/admin/user-roles');
 export const company = create('/admin/companys');
+export const companyProjects = create('/admin/company-projects');
 export const log = create('/admin/log');

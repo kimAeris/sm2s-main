@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import LoginView from '@/views/user/LoginView.vue';
 import ProjectMgmtView from '@/views/system/ProjectMgmtView.vue';
+import CompanyProjectsMgmtView from '@/views/system/CompanyProjectsMgmtView.vue';
 import UserMgmtView from '@/views/system/UserMgmtView.vue';
 import MenuMgmtView from '@/views/system/MenuMgmtView.vue';
 import RoleMgmtView from '@/views/system/RoleMgmtView.vue';
@@ -24,6 +25,11 @@ const router = createRouter({
       path: '/system/projects',
       name: 'ProjectMgmt',
       component: ProjectMgmtView
+    },
+    {
+      path: '/system/company-projects',
+      name: 'CompanyProjectsMgmt',
+      component: CompanyProjectsMgmtView
     },
     {
       path: '/system/users',
