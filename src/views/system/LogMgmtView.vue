@@ -36,6 +36,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useDate } from 'vuetify';
 
 const { newToast } = useToast();
+const { format } = useDate();
 
 // 검색 조건
 const searchFilters = ref([
@@ -43,7 +44,7 @@ const searchFilters = ref([
     label: '일자',
     key: 'dateRange',
     type: 'dateRange',
-    value: ['2024-08-29', '2024-09-01'],
+    value: [new Date(), new Date()],
     cols: '3'
   },
   {
@@ -103,17 +104,16 @@ const headers = [
 const items = ref([]);
 const selectedItems = ref([]);
 
-const { format } = useDate();
 const fetchData = async () => {
   loading.value = true;
   try {
-    const {
-      dateRange: [startDt, endDt],
-      ...rest
-    } = searchParams.value;
+    const { dateRange, ...searchParam } = searchParams.value;
+
+    const startDt = dateRange[0];
+    const endDt = dateRange.at(-1);
 
     const params = {
-      ...rest,
+      ...searchParam,
       startDt: format(startDt, 'isoFullDate'),
       endDt: format(endDt, 'isoFullDate')
     };
