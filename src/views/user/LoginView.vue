@@ -79,7 +79,7 @@ import ProjectSelector from '@/components/modals/ProjectSelectorModal.vue';
 import { useMenu } from '@/stores/useMenu';
 import { formatBusinessNumber } from '@/utils/common';
 
-const { accessToken, user, projectList } = storeToRefs(useUser());
+const { accessToken, refreshToken, user, projectList } = storeToRefs(useUser());
 const { newToast } = useToast();
 const { menus } = storeToRefs(useMenu());
 
@@ -131,6 +131,7 @@ const handleLogin = async () => {
     const res = await login(businessNumber.value, id.value, pw.value);
     if (res.header.code === 200) {
       accessToken.value = res.body.Authorization;
+      refreshToken.value = res.body.refreshToken;
       user.value = res.body.userInfo;
       projectList.value = res.body.projectList;
 

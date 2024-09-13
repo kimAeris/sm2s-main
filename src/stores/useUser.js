@@ -5,6 +5,7 @@ export const useUser = defineStore(
   'user',
   () => {
     const accessToken = ref(null);
+    const refreshToken = ref(null);
     const user = ref([]);
     const projectList = ref([]);
 
@@ -12,6 +13,7 @@ export const useUser = defineStore(
 
     const resetUser = () => {
       accessToken.value = null;
+      refreshToken.value = null;
       user.value = [];
       projectList.value = [];
       project.value = {};
@@ -19,6 +21,7 @@ export const useUser = defineStore(
 
     return {
       accessToken,
+      refreshToken,
       user,
       projectList,
       project,
